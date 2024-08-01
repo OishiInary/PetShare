@@ -5,12 +5,24 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <script src="https://kit.fontawesome.com/2918437a6a.js" crossorigin="anonymous"></script>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+    <div class="row">
+      <div class="col-2">
+        <%= render 'layouts/sidebar' %>
+      </div>
+      <div class="col-10">
+        <%= render 'layouts/header' %>
+         <main>
+      
+         <%= yield %>
+        </main>
+        <%= render 'layouts/footer' %>
+     </div>
+    </div>
   </body>
 </html>
