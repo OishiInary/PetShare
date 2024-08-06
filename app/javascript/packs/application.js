@@ -12,9 +12,11 @@ import "jquery";
 import "popper.js";
 import "bootstrap";
 import "../stylesheets/application"; 
-
-
+//import "packs/game.js";
 
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+document.addEventListener('turbolinks:load', function() {
+  // require cat
+});
