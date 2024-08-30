@@ -1,7 +1,28 @@
 <div class="container">
   <div class="row justify-content-center text-center">
-    <div class="col">
-        <p>hello</p>
+    <div class="col-12 mt-4 mb-4">
+      <div class="row bg-primary-subtle text-emphasis-primary justify-content-center">
+        <div class="col border border-4">
+         <%= link_to "Home", homes_entrance_path %>
+        </div>
+        <div class="col border border-4 text-center">
+         <%= link_to "MyPage", users_path %>
+        </div>
+        <div class="col border border-4">
+         <%= link_to "Ranking" %>
+        </div>
+        <div class="col border border-4">
+         <%= link_to "Save", homes_save_path %>
+        </div>
+        <div class="col border border-4 text-center justify-content-center">
+          <% if user_signed_in? %>
+          <div class="row"><%= link_to 'ログアウト', destroy_user_session_path %></div>
+          <% else %>
+          <div class="row text-center"><%= link_to '新規会員登録', new_user_registration_path %></div>
+          <div class="row text-center"><%= link_to 'ログイン', new_user_session_path %></div>
+          <%  end %>
+        </div>
+      </div>
     </div>
   </div>
 </div>
