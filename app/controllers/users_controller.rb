@@ -20,5 +20,5 @@ class UsersController < ApplicationController
   
   def user_params
     params.require(:user).parmit(:name, :introduction, :gender, :birthday, :postcode, :phone, :password, :address, :email)
-  
+  end
 end

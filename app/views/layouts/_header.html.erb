@@ -3,7 +3,10 @@
     <div class="col-12 mt-4 mb-4">
       <div class="row bg-primary-subtle text-emphasis-primary justify-content-center">
         <div class="col border border-4">
-         <%= link_to "Home", homes_entrance_path %>
+         <%= link_to "Home", entrance_path %>
+        </div>
+         <div class="col border border-4 text-center">
+         <%= link_to "About", about_path %>
         </div>
         <div class="col border border-4 text-center">
          <%= link_to "MyPage", users_path %>
@@ -12,7 +15,7 @@
          <%= link_to "Ranking" %>
         </div>
         <div class="col border border-4">
-         <%= link_to "Save", homes_save_path %>
+         <%= link_to "Save", save_path %>
         </div>
         <div class="col border border-4 text-center justify-content-center">
           <% if user_signed_in? %>

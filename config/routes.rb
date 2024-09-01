@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :users, only:[:index, :show, :edit, :update,]
   resources :pets, only:[:index, :show, :edit, :update, :destroy] 
   
-  get "homes/entrance" => "homes#entrance"
-  get "homes/save"  => "homes#save"
-  
+  get "homes/entrance" => "homes#entrance", as: "entrance"
+  get "homes/save"  => "homes#save", as: "save"
+  get "homes/about" => "homes#anout", as: "about"
 end

@@ -6,6 +6,11 @@ class User < ApplicationRecord
          
   has_one_attached :image
          
+  validates :name,presence: { message: "の入力は必須です", full_message:false}
+         
+         
   has_many :pets, dependent: :destroy    
   has_many :album, dependent: :destroy
+  has_many :comment, dependent: :destroy
+  has_many :favorites, dependent: :destroy
 end

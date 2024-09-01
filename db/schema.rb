@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(version: 2024_08_30_023337) do
     t.string "type"
     t.string "phone"
     t.date "birthday"
+    t.integer "is_active"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
