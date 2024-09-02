@@ -6,6 +6,10 @@ class Album < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :comments, dependent: :destroy
   
+  validates :title, presence: { message: "の入力は必須です" }
+  validates :body, presence: { message: "の入力は必須です" }
+  
+  
   def self.last_week #週間でいいねが高いランキングを作る
     # Album.joins(:favorites).where(favorites:{ created_at:0.days.ago.prev_week..0.days.ago.prev_week(:sunday)}).group(:id).order("count(*) desc")
   end

@@ -1,0 +1,72 @@
+<h2>新規会員登録</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= render "public/shared/error_messages", resource: resource %>
+
+   <div class="field">
+    <%= f.label :name %><br />
+    <%= f.email_field :name, autofocus: true %>
+  </div>
+ 
+  <div class="field">
+    <%= f.label :introduction %><br />
+    <%= f.email_field :introduction %>
+  </div>
+ 
+  <div class="field">
+    <%= f.label :birthday, "生年月日" %><br>
+    <%= f.date_select :birthday, {start_year: 1950, end_year: 2050,
+    include_blank: true, use_two_digit_numbers: true},
+    {class: "input-tab birthday-select"}%>
+  </div> 
+ 
+  <div class="mb-3">
+     <%= f.label :gender %>
+     <%= f.select :gender,options_for_select_from_enum(User, :gender) %>
+  </div>
+ 
+  <div class="mb-3">
+     <%= f.label :type %>
+     <%= f.select :type,options_for_select_from_enum(User, :type)%>
+  </div>
+ 
+ 
+  <div class="field">
+    <%= f.label :phone %><br />
+    <%= f.email_field :phone %>
+  </div>
+ 
+  <div class="field">
+    <%= f.label :post_code %><br />
+    <%= f.email_field :post_code %>
+  </div>
+ 
+  <div class="field">
+    <%= f.label :address %><br />
+    <%= f.email_field :address %>
+  </div>
+ 
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autocomplete: "email" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "new-password" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "登録" %>
+  </div>
+<% end %>
+
+<%= render "public/shared/links" %>
