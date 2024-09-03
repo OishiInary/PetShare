@@ -25,6 +25,8 @@ Rails.application.routes.draw do
     get "homes/save"  => "homes#save", as: "save"
     get "homes/about" => "homes#about", as: "about"
     get "homes/mypage" => "homes#mypage", as: "mypage"
+    patch "users/withdraw" => "users#withdraw", as:"withdraw"
+    get "users/unsubscribe" => "users#unsubscribe", as:"unsubscribe"
     resources :categories, only:[:index, :show]
     resources :users, only:[:index, :show, :edit, :update,]do
       resource :relationships, only: [:create,:destroy]
@@ -47,6 +49,7 @@ Rails.application.routes.draw do
     resources :rooms, only:[:create, :show]do
       resources :messages, only:[:create]
     end
+
   end
 
   

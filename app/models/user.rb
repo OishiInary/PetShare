@@ -6,18 +6,16 @@ class User < ApplicationRecord
          
   has_one_attached :image
   
-  enum gender: {other: 0 , male: 1, female: 2}
-  enum type: {nom: 0 , req: 1, can: 2}
+  enum gender: {other: 0, male: 1, female: 2}
+  enum hope: {nom: 0, req: 1, can: 2}
   
   validates :name,presence: { message: "の入力は必須です", full_message:false}
-  validates :image, presence: true
   validates :address, presence: true
-  validates :introduction, presence: true
   validates :gender, presence: true
   validates :post_code, presence: true
   validates :phone, presence: true
   validates :birthday, presence: true
-  validates :type, presence: true
+  validates :hope, presence: true
   validates :is_active, presence: true
          
   has_many :pets, dependent: :destroy    
@@ -30,4 +28,9 @@ class User < ApplicationRecord
   has_many :rooms, dependent: :destroy
   has_many :entries, dependent: :destroy
   has_many :messages, dependent: :destroy
+  
+  def mypets
+   self.pets
+  end
+  
 end

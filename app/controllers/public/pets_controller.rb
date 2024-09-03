@@ -1,5 +1,5 @@
 class Public::PetsController < ApplicationController
-before_action :authenticate_user!,except: [:index, :show]
+before_action :authenticate_user!,except: [:show]
   def new
     @pet = Pet.new
   end
@@ -8,10 +8,12 @@ before_action :authenticate_user!,except: [:index, :show]
     @pet = Pet.new(pet_params)
     @pet.user_id = current_user.id
     @pet.save
-   redirect_to pet_path(@pet.id)
+   redirect_to mypage_path
+  end
   
   def index
-    @pets = Pet.all
+    @pets  = Pet.where(user_id: current_user)
+
   end  
   
   def show
@@ -37,7 +39,8 @@ before_action :authenticate_user!,except: [:index, :show]
   
   private
   
-  def pets_params
-    params.require(:pets).permit(:name,:image,:age,:breed)
+  def pet_params
+    params.require(:pet).permit(:name, :image, :gender, :age, :category_id, :user_id)
   end
+  
 end

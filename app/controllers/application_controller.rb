@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :email, :post_code, :address, :phone, :type, :gender, :birthday, :introduction])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :email, :post_code, :address, :phone, :hope, :gender, :birthday, :introduction])
   end
   
 end

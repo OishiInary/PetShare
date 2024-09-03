@@ -193,7 +193,7 @@ ActiveRecord::Schema.define(version: 2024_09_02_115641) do
     t.integer "gender", default: 0, null: false
     t.string "post_code", null: false
     t.string "name", null: false
-    t.integer "type", default: 0, null: false
+    t.integer "hope", default: 0, null: false
     t.string "phone", null: false
     t.date "birthday", null: false
     t.boolean "is_active", default: true, null: false

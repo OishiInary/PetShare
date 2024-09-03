@@ -1,0 +1,8 @@
+class Public::RelationshipController < ApplicationController
+  def create
+  end
+  
+  def destroy
+  end
+  
+end

@@ -1,0 +1,19 @@
+<div class="listings">
+  <div class="row justify-content-center text-center">
+   <div class="listings_channels">
+    <h2 class="listings_header">
+    </h2>
+    <ul class="channel_list">
+      <%= sidebar_link_item('アルバム投稿', new_album_path) %>
+      <%= sidebar_link_item('マイアルバム', albums_path) %>
+      <%= sidebar_link_item('ペット登録', new_pet_path) %>
+      <%= sidebar_link_item('マイペット一覧', pets_path) %>
+      <%= sidebar_link_item('参加グループ一覧', groups_path) %>
+      <%= sidebar_link_item('お気に入り投稿一覧', albums_path) %>
+      <%= sidebar_link_item('お気に入りペット一覧', pets_path) %>
+      <%= sidebar_link_item('フォロー一覧', users_path) %>
+      <%= sidebar_link_item('登録情報の編集', edit_user_path(current_user.id)) %>
+    </ul>
+   </div>
+  </div>
+</div>

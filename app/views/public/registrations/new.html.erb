@@ -3,55 +3,63 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "public/shared/error_messages", resource: resource %>
 
-   <div class="field">
+   <div class="mb-3">
     <%= f.label :name %><br />
-    <%= f.email_field :name, autofocus: true %>
+    <%= f.text_field :name, autofocus: true %>
   </div>
  
-  <div class="field">
-    <%= f.label :introduction %><br />
-    <%= f.email_field :introduction %>
+  <div class="mb-3">
+    <%= f.label :introduction %><span>省略可</span><br />
+    <%= f.text_field :introduction %>
   </div>
  
-  <div class="field">
+  <div class="mb-3">
     <%= f.label :birthday, "生年月日" %><br>
     <%= f.date_select :birthday, {start_year: 1950, end_year: 2050,
     include_blank: true, use_two_digit_numbers: true},
     {class: "input-tab birthday-select"}%>
   </div> 
- 
   <div class="mb-3">
-     <%= f.label :gender %>
-     <%= f.select :gender,options_for_select_from_enum(User, :gender) %>
+    <%= f.label :gender %><br />
+    <%= f.label :other  %>
+    <%= f.radio_button :gender, :other %>
+    <%= f.label :male  %>
+    <%= f.radio_button :gender, :male %>
+    <%= f.label :female  %>
+    <%= f.radio_button :gender, :female %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :hope %><br />
+    <%= f.label :nom  %>
+    <%= f.radio_button :hope, :nom %>
+    <%= f.label :req  %>
+    <%= f.radio_button :hope, :req %>
+    <%= f.label :can  %>
+    <%= f.radio_button :hope, :can %>
   </div>
  
+ 
   <div class="mb-3">
-     <%= f.label :type %>
-     <%= f.select :type,options_for_select_from_enum(User, :type)%>
-  </div>
- 
- 
-  <div class="field">
     <%= f.label :phone %><br />
-    <%= f.email_field :phone %>
+    <%= f.text_field :phone %>
   </div>
  
-  <div class="field">
+  <div class="mb-3">
     <%= f.label :post_code %><br />
-    <%= f.email_field :post_code %>
+    <%= f.text_field :post_code %>
   </div>
  
-  <div class="field">
+  <div class="mb-3">
     <%= f.label :address %><br />
-    <%= f.email_field :address %>
+    <%= f.text_field :address %>
   </div>
  
-  <div class="field">
+  <div class="mb-3">
     <%= f.label :email %><br />
     <%= f.email_field :email, autocomplete: "email" %>
   </div>
 
-  <div class="field">
+  <div class="mb-3">
     <%= f.label :password %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
@@ -59,14 +67,15 @@
     <%= f.password_field :password, autocomplete: "new-password" %>
   </div>
 
-  <div class="field">
+  <div class="mb-3">
     <%= f.label :password_confirmation %><br />
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
 
-  <div class="actions">
-    <%= f.submit "登録" %>
+  <div class="actions mb-5">
+    <%= f.submit "登録", class: "btn btn-success " %>
   </div>
 <% end %>
-
+<div class="mb-5">
 <%= render "public/shared/links" %>
+</div>

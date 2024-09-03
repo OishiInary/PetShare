@@ -1,14 +1,14 @@
 ja:
   enums:
-    user
-    gender:
-      other: 'その他'
-      male: '男性'
-      female: '女性'
-    type:
-      nom: '未設定'
-      req: '里親募集'
-      can: '里子'
+    user:
+      gender:
+        other: 'その他'
+        male: '男性'
+        female: '女性'
+      hope:
+        nom: '未設定'
+        req: '里親募集'
+        can: '里子'
   activerecord:
     errors:
       messages:
