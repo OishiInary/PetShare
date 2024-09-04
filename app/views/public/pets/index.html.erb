@@ -1,28 +1,35 @@
 <div class="container">
-  <table class="table w-100">
-    <thead>
-      <tr>
-        <th class="table-active" style="padding: 10px;">あ</th>
-        <th class="table-active" style="padding: 10px;">い</th>
-        <th class="table-active" style="padding: 10px;">う</th>
-        <th class="table-active" style="padding: 10px;">え</th>
-        <th class="table-active" style="padding: 10px;">お</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @pets.each do |pet| %>
-        <tr>
-          <td style="padding: 10px;"><%= pet.id %></td>
-          <td style="padding: 10px;">
-            <%= link_to pets_path(pet.id), style: 'color: black; text-decoration: underline;' do %>
-              <%= pet.name %>
+  <div class="row">
+    <div class="container col-3">
+      <%= render "public/homes/sidebar" %>
+    </div>  
+      <div class="container col-9">
+        <table class="table w-100">
+          <thead>
+            <tr>
+              <th class="table-active" style="padding: 10px;">写真</th>
+              <th class="table-active" style="padding: 10px;">お名前</th>
+              <th class="table-active" style="padding: 10px;">年齢</th>
+              <th class="table-active" style="padding: 10px;">性別</th>
+              <th class="table-active" style="padding: 10px;">種類</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @pets.each do |pet| %>
+              <tr>
+                <td style="padding: 10px;"><%= image_tag pet.image, size: '100x100' %></td>
+                <td style="padding: 10px;">
+                  <%= link_to pets_path(pet.id), style: 'color: black; text-decoration: underline;' do %>
+                    <%= pet.name %>
+                  <% end %>
+                </td>
+                <td style="padding: 10px;"><%= pet.age %>歳</td>
+                <td style="padding: 10px;"><%= pet.gender %></td>
+                <td style="padding: 10px;"><%= pet.category.name %></td>
+              </tr>
             <% end %>
-          </td>
-          <td style="padding: 10px;"><%= pet.age %>歳</td>
-          <td style="padding: 10px;"><%= pet.gender %></td>
-          <td style="padding: 10px;"><%= pet.category %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+          </tbody>
+        </table>
+      </div>
+  </div>
 </div>

@@ -11,11 +11,11 @@ Rails.application.routes.draw do
   
     
   namespace :admin do
-    resources :users, only:[:index, :show, :edit, :update]
-    resources :categories, only:[:new, :index, :show, :create, :edit, :update, :destroy]
-    resources :albums, only:[:index, :show, :edit, :update, :destroy]
-    resources :groups, only:[:index, :show, :edit, :update, :destroy]
-    resources :rooms, only:[:index, :show, :edit, :update, :destroy]
+    resources :users, only:[ :show, :index, :edit, :update]
+    resources :categories, only:[:new,:show,:index, :create, :edit, :update, :destroy]
+    resources :albums, only:[:show,:index, :edit, :update, :destroy]
+    resources :groups, only:[:show,:index, :edit, :update, :destroy]
+    resources :rooms, only:[:show,:index, :edit, :update, :destroy]
     get "/" => "homes#top"
   end
   

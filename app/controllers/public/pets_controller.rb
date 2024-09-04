@@ -8,17 +8,17 @@ before_action :authenticate_user!,except: [:show]
     @pet = Pet.new(pet_params)
     @pet.user_id = current_user.id
     @pet.save
-   redirect_to mypage_path
+   redirect_to pets_path
   end
   
   def index
     @pets  = Pet.where(user_id: current_user)
-
   end  
   
   def show
     @pet = Pet.find(params[:id])
     @user = @pet.user
+    @album = @pet.album.all
   end
   
   def edit
@@ -26,6 +26,15 @@ before_action :authenticate_user!,except: [:show]
   end
   
   def update
+    @pet = Pet.find(params[:id])
+    if @pet.update(pet_params)
+      flash[:notice] = "更新に成功しました"
+      redirect_to pets_path(@pet.id)
+    else
+      flash[:notice] = "更新に失敗しました"
+      @pet = Pet.find(params[:id])
+      redirect_back(fallback_location: root_path)
+    end
   end
   
   def destroy
@@ -33,9 +42,6 @@ before_action :authenticate_user!,except: [:show]
     @pet.destroy
     render :index
   end
-  
-  
-  
   
   private
   
