@@ -10,4 +10,12 @@
     ・個人情報とペット情報の編集<br>
     が行うことが出来なくなります。</h4>
   </div>
+    <div class="row mt-4">
+    <div class="col-3"></div>
+    <div class="col-3">
+      <%= link_to "退会しない　", mypage_path, class: "btn btn-primary" %></div>
+    <div class="col-3">
+      <%= link_to "退会する　　", withdraw_path, class: "btn btn-danger", method: :patch,  data: { confilm: "本当に退会しますか？" } %></div>
+    <div class="col-3"></div>
+</div>
 </div>

@@ -1,9 +1,46 @@
 <div class="container">
   <div class="row">
-    <div class="container col-3">
-      <%= render "sidebar" %>
+    <div class="container">
+      <div class="row">
+        <div class="col mb-5">
+          <%= image_tag @pet.image, size: '300x300' %>
+        </div>
+        <div class="col">
+          <table class="table">
+            <tr>
+              <td>獲得いいね数</td>
+              <td><%= @pet.pet_favorites.count %>個</td>
+            </tr>
+            <tr>
+              <td>投稿数</td>
+              <td><%= @pet.album.count %></td>
+            </tr>
+            <tr>
+              <td>お名前</td>
+              <td><%= @pet.name %></td>
+            </tr>
+            <tr>
+              <td>年齢</td>
+              <td><%= @pet.age %></td>
+            </tr>
+            <tr>
+              <td>種類</td>
+              <td><%= @pet.category.name %></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col mb-5">
+          <tabel ="table">
+            <thead><tr><th>飼い主</th></tr></thead><br>
+            <tbody><tr><td><%= @pet.user.name %></td></tr></tbody>
+          </tabel>
+        </div>
+      </div>
     </div>
-    
-    
   </div>
+  <% if @pet.user.id == current_user.id %>
+     <%= link_to "編集する", edit_pet_path(@pet), class: "btn btn-successe" %>
+   <% end %>
 </div>

@@ -11,19 +11,17 @@
     <%= javascript_pack_tag 'cat', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body class="d-flex flex-colum vh-100">
     <div class="container">
       <div class="row">
-
-         <div class="col-11">
+        <div class="col-11">
           <%= render 'layouts/header' %>
-          <main>
-      
+          <main class="mb-auto">
           <%= yield %>
           </main>
-          <%= render 'layouts/footer' %>
         </div>
       </div>
+      <%= render 'layouts/footer' %>
     </div>
   </body>
 </html>

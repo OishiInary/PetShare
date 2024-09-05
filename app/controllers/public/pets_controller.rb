@@ -7,8 +7,12 @@ before_action :authenticate_user!,except: [:show]
   def create
     @pet = Pet.new(pet_params)
     @pet.user_id = current_user.id
-    @pet.save
-   redirect_to pets_path
+    if @pet.save
+      redirect_to pets_path
+    else
+      @pet = Pet.new
+      redirect_back(fallback_location: root_path)
+    end
   end
   
   def index
@@ -17,8 +21,6 @@ before_action :authenticate_user!,except: [:show]
   
   def show
     @pet = Pet.find(params[:id])
-    @user = @pet.user
-    @album = @pet.album.all
   end
   
   def edit

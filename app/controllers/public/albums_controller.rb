@@ -2,12 +2,12 @@ class Public::AlbumsController < ApplicationController
 before_action :authenticate_user!
     
     def show
-    @album = Album.find(params[:id])
+      @album = Album.find(params[:id])
+      @albums = @album.pet.album.all
     end 
     
     def index
-    @user = User.all
-    @albums = Album.all
+      @albums = Album.all
     # @calbum = Album.find
     end
 
