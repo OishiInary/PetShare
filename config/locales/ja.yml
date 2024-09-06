@@ -8,7 +8,7 @@ ja:
       hope:
         nom: '未設定'
         req: '里親募集'
-        can: '里子'
+        can: '里子募集'
   activerecord:
     errors:
       messages:

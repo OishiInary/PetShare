@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="row">
+    <div class="container col-3">
+      <%= render "sidebar" %>
+    </div>
+    <div class="container col-9">
+      <div class="row mb-4">
+        <h2>フォロワーさん</h2>
+      </div>
+       <div class="row mb-4">
+         <% @followers.each do |user| %>
+         <div class="col">
+          <%= link_to user_path(user) do %>
+            <% if user.image.attached? %>
+              <%= image_tag user.image, size: "50x50" %>
+            <% else %>
+              <%= image_tag 'no_image', size: "50x50" %>
+            <% end %>
+          <%= user.name %>
+          <% end %>
+          </div>
+         <% end %>
+      </div>
+      
+
+     <div class="row mb-4">
+      <h2>フォローリスト</h2>
+      </div>
+       <div class="row mb-4">
+         <% @followings.each do |user| %>
+           <div class="col">
+           <%= link_to user_path(user) do %>
+            <% if user.image.attached? %>
+              <%= image_tag user.image, size: "50x50" %>
+            <% else %>
+              <%= image_tag 'no_image', size: "50x50" %>
+            <% end %>
+          <%= user.name %>
+          <% end %>
+          </div>
+         <% end %>
+        
+       </div>
+    </div>
+  </div>
+</div>

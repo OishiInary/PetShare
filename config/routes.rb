@@ -25,13 +25,16 @@ Rails.application.routes.draw do
     get "homes/save"  => "homes#save", as: "save"
     get "homes/about" => "homes#about", as: "about"
     get "homes/mypage" => "homes#mypage", as: "mypage"
-    patch "users/withdraw" => "users#withdraw", as:"withdraw"
-    get "users/unsubscribe" => "users#unsubscribe", as:"unsubscribe"
+    get "homes/my_album" => "homes#my_album", as: "my_album"
+    get "homes/follow_list" => "homes#follow_list", as: "follow_list"
+    patch "users/withdraw" => "users#withdraw", as: "withdraw"
+    get "users/unsubscribe" => "users#unsubscribe", as: "unsubscribe"
     resources :categories, only:[:index, :show]
     resources :users, only:[:index, :show, :edit, :update,]do
       resource :relationships, only: [:create,:destroy]
         get "followings" => "relationships#followings", as: "followings"
         get "followers"  => "relationships#followers",  as: "followers"
+        get "users/follow_list" => "users/follow_list", as: "follow_list"
     end
     resources :pets, only:[:index, :show, :new, :create, :edit, :update, :destroy]do
       resource :pet_favorites, only:[:create, :destroy]

@@ -4,7 +4,7 @@
   </div>
   <div class="row">
     <% @albums.each do |album| %>
-    <div class ="col">
+    <div class ="col-2 mb-3">
       <%= link_to album_path(album.id) do %>
       <div class="row">
         <%= image_tag album.image, size: '100x100' %>

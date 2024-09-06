@@ -1,15 +1,25 @@
 class Public::UsersController < ApplicationController
 before_action :authenticate_user!, except: [:index, :show]
+before_action :ensure_correct_user, only: [:edit, :update]
+before_action :set_user, only: [:show,:followings, :followers]
   
   def unsubscribe
   end
   
+  def follow_list
+    @followings = @user.followings
+    @followerds = @user.followerd
+  end
+  
+  
   def index
-    
+    @users = User.all
   end
 
   def show
-     @user = User.find(params[:id])
+    @user = User.find(params[:id])
+    today = Date.today
+    @age = today.year - @user.birthday.year
   end
 
   def edit
@@ -40,6 +50,18 @@ before_action :authenticate_user!, except: [:index, :show]
   private
   
   def user_params
-    params.require(:user).permit(:name, :introduction, :gender, :birthday, :post_code, :hope, :phone, :address, :email)
+    params.require(:user).permit(:name, :introduction, :gender, :birthday, :post_code, :hope, :phone, :address, :email, :image)
   end
+  
+  def set_user
+    @user = User.find(params[:id])
+  end
+  
+  def ensure_correct_user
+    @user = User.find(params[:id])
+    unless @user == current_user
+      redirect_to user_path(current_user)
+    end
+  end
+  
 end

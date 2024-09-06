@@ -5,16 +5,27 @@
     </div>
     <div class="container col-9">
       <div class="row m-2">
-        <div class="col-10">
+        <div class="col-9">
           <h2><%= current_user.name %>さんのマイページ</h2>
+          <div class="row m-4">
+            <% if current_user.image.attached? %>
+              <%= image_tag current_user.image, size: "300x300" %>
+            <% else %>
+              <%= image_tag 'no_image', size: "50x50" %>
+            <% end %>
+          </div>
         </div>
-        <div class="col text-center">
-          <div class="row"><h4>SAVE活動</h4></div>
-          <div class="row"><h5><%= current_user.hope_i18n %></h5></div>
+        <div class="col">
+        <table class='table'>
+            <tbody>
+              <tr><td><h4>SAVE活動</h4></td></tr>
+              <tr><td><h5><%= current_user.hope_i18n %></h5></td></tr>
+              <tr><td><%= current_user.gender_i18n %>-<%= @age %>歳</td></tr>
+              <tr><td>フォロー数: <%= current_user.followings.count %></td></tr>
+              <tr><td>フォロワー数: <%= current_user.followers.count %></td></tr>
+            </tbody>
+          </table>
         </div>
-      </div>
-      <div class="row m-4">
-        
       </div>
       <div class="row col-12 m-2">
         <h3 class="text-center">マイメニュー</h3>
@@ -30,12 +41,12 @@
         </div>
         <div class="col m-2 border ">
           <%= link_to "グループ作成", new_group_path %>
-          <p>新規でグループを<br>作成します</p>
+          <p>新規でグループを<br>作成します(工事中)</p>
         </div>
       </div>
       <div class="row m-2">
         <div class="col m-2 border ">
-          <%= link_to "アルバム管理", albums_path %>
+          <%= link_to "アルバム管理", my_album_path %>
           <p>投稿したアルバムを<br>管理できます</p>
         </div>
         <div class="col m-2  border ">
@@ -44,7 +55,7 @@
         </div>
         <div class="col m-2 border ">
           <%= link_to "参加グループ", groups_path %>
-          <p>参加済グループの<br>一覧です</p>
+          <p>参加済グループの<br>一覧です(工事中)</p>
         </div>
       </div>
       <div class="row m-2">
@@ -57,12 +68,13 @@
           <p>お気に入りペットの<br>一覧です</p>
         </div>
         <div class="col m-2 border">
-          <%= link_to "フォロー＆フォロワー", groups_path %>
+          <%= link_to "フォロー＆フォロワー", follow_list_path %>
           <p>フォロー関係者の<br>一覧です</p>
         </div>
       </div>
     </div>
   </div>
+  <div class="row mt-5"></div>
   <div class="row mt-5">
      <%= link_to "退会する", unsubscribe_path, class: "btn btn-danger" %>
   </div>

@@ -15,10 +15,10 @@
             </h4>
           </div>
         </div>
-        <div class="row">
+        <div class="row m-3">
           <%= @album.body %>
         </div>
-        <div class="row">
+        <div class="row m-3">
           <%= link_to user_path(@album.user.id) do %>
           <%= @album.user.name %>
           <% end %>
@@ -30,9 +30,9 @@
         <div class="row">
           <%= link_to pet_path(@album.pet.id) do %>
           <%= @album.pet.name %>
-          <% end %>
+          <% end %>の写真一覧
         </div>
-        <div class="row">
+        <div class="row col-6 bg bg-color-blue">
           <% @albums.each do |album| %>
           <div class="col m-2">
             <%= link_to album_path(album) do %>
@@ -42,6 +42,29 @@
           <% end %>
         </div>
       </div>
+    </div>
+    <div class="container">
+      <h2>コメント</h2>
+      <table class="table">
+        <tbody>
+      <% @album.comments.each do |comment| %>
+       <tr><td>
+        <div class="row m-3">
+          <div class="col-2 mr-3"><strong><%= comment.user.name %></strong></div>
+          <div class="col-9 text-left"><%= comment.body %></div>
+        </div>
+        </td></tr>
+      <% end %>
+      </tbody>
+      </table>
+      <%= form_with model: [ @album, @album.comments.build ] do |form| %>
+      <%= form.hidden_field :user_id, :value => current_user.id %>
+        <div class="row m-3">
+          <div><%= form.label :コメント %></div>
+          <div><%= form.text_area :body ,size: "100x5" %></div>
+        </div>
+        <div class="row"><%= form.submit "送信する" %></div>
+      <% end %>
     </div>
   </div>
 </div>

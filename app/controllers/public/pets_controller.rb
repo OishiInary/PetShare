@@ -1,5 +1,6 @@
 class Public::PetsController < ApplicationController
 before_action :authenticate_user!,except: [:show]
+before_action :ensure_correct_user, only: [:edit, :update]
   def new
     @pet = Pet.new
   end
@@ -51,4 +52,12 @@ before_action :authenticate_user!,except: [:show]
     params.require(:pet).permit(:name, :image, :gender, :age, :category_id, :user_id)
   end
   
+  
+    def ensure_correct_user
+      @pet = Pet.find(params[:id])
+      @user = User.find(@pet.user.id)
+      unless @user == current_user
+        redirect_to mypage_path
+      end
+    end
 end

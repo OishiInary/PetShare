@@ -3,7 +3,8 @@ before_action :authenticate_user!
     
     def show
       @album = Album.find(params[:id])
-      @albums = @album.pet.album.all
+      @albums = @album.pet.album.all.limit(4)
+      @comment = current_user.comments.new
     end 
     
     def index
@@ -19,7 +20,7 @@ before_action :authenticate_user!
       @album = Album.new(album_params)
       @album.user_id = current_user.id
       @album.save
-      redirect_to albums_path(@album[:id])
+      redirect_to album_path(@album[:id])
     end 
     
     def edit
