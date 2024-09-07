@@ -4,6 +4,7 @@
     <h2 class="listings_header">
     </h2>
     <ul class="channel_list">
+      <% unless user.guest_user? %>
       <%= sidebar_link_item('アルバム投稿', new_album_path) %>
       <%= sidebar_link_item('マイアルバム', albums_path) %>
       <%= sidebar_link_item('ペット登録', new_pet_path) %>
@@ -13,6 +14,7 @@
       <%= sidebar_link_item('お気に入りペット一覧', pets_path) %>
       <%= sidebar_link_item('フォロー一覧', follow_list_path) %>
       <%= sidebar_link_item('登録情報の編集', edit_user_path(current_user.id)) %>
+      <% end %>
     </ul>
    </div>
   </div>

@@ -1,5 +1,6 @@
 class Public::HomesController < ApplicationController
 before_action :authenticate_user!, except: [:top, :about, :entrance, :save]
+ before_action :ensure_guest_user, only: [:mypage,:follow_list,:my_album,]
   def top
   end  
   
@@ -28,5 +29,15 @@ before_action :authenticate_user!, except: [:top, :about, :entrance, :save]
     # @req_users = User.find(user.hope == 1)
     # @can_users = User.find(user.hope == 2)
   end  
+  
+  private
+  
+  def ensure_guest_user
+    @user = User.find(params[:id])
+    if @user.email == "guest@example.com"
+      redirect_to user_path(current_user) , notice: "ゲストユーザーはプロフィール編集画面へ遷移できません。"
+    end
+  end  
+  
   
 end

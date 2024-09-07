@@ -1,5 +1,6 @@
 class Public::AlbumsController < ApplicationController
 before_action :authenticate_user!
+before_action :ensure_guest_user, only: [:new,:destroy,:edit]
     
     def show
       @album = Album.find(params[:id])
@@ -45,7 +46,16 @@ before_action :authenticate_user!
     
     private
     
-    def album_params
-        params.require(:album).permit(:title, :body, :image, :user_id, :pet_id)
+  def album_params
+      params.require(:album).permit(:title, :body, :image, :user_id, :pet_id)
+  end
+    
+  def ensure_guest_user
+    @user = User.find(params[:id])
+    if @user.guest_user?
+      redirect_to user_path(current_user) , notice: "ゲストユーザーはこの画面へ遷移できません。"
     end
+  end  
+    
+    
 end

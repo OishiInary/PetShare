@@ -24,7 +24,7 @@ class User < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :pet_favorites, dependent: :destroy
   has_many :groups, through: :group_users, dependent: :destroy
-  has_many :group_users, dependent: :destroy, dependent: :destroy
+  has_many :group_users, dependent: :destroy
   has_many :group_chats, dependent: :destroy
   has_many :rooms, dependent: :destroy
   has_many :entries, dependent: :destroy
@@ -35,6 +35,15 @@ class User < ApplicationRecord
   
   has_many :followings, through: :active_relationships,  source: :followed
   has_many :followers,  through: :passive_relationships, source: :follower
+  
+  GUEST_USER_EMAIL = "guest@exsample.com"
+  
+  def self.guest
+    find_or_create_by!(email: GUEST_USER_EMAIL) do |user|
+      user.passsword = SecureRandom.urlsafe_base64
+      user.name = "guestuser"
+    end
+  end
   
   def follow(user)
     active_relationships.create(followed_id: user.id)
@@ -52,5 +61,7 @@ class User < ApplicationRecord
    self.pets
   end
   
-
+  def guest_user?
+    email == GUEST_USER_EMAIL
+  end
 end

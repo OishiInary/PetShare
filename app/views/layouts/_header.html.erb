@@ -6,10 +6,12 @@
          <%= link_to "トップ", entrance_path %>
         </div>
          <div class="col border border-4 text-center">
-         <%= link_to "アバウト", about_path %>
-        </div>
+         <div class="row"><%= link_to "アバウト", about_path %></div>
+        <div class="row"><%= link_to "ゲストログイン", user_guest_sign_in_path, class: "btn btn-secondary btn-sm btn-block mb-3 sign-in", method: :post %></div>
         <div class="col border border-4 text-center">
-         <%= link_to "マイページ", mypage_path %>
+         <% unless user.guest_user? %>
+           <%= link_to "マイページ", mypage_path %>
+         <% end %>
         </div>
         <div class="col border border-4">
          <%= link_to "写真を見る", albums_path %>

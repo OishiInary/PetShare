@@ -1,7 +1,7 @@
 class Public::GroupsController < ApplicationController
 before_action :authenticate_user!, except: [:index]
 before_action :set_group, only: [:edit, :update]
-
+before_action :ensure_guest_user, only: [:new,:edit, :destroy]
   def index
       @group_lists = Group.all
       @group_joining = GroupUser.where(user_id: current_user.id)
@@ -15,6 +15,7 @@ before_action :set_group, only: [:edit, :update]
 
   def create
       @group = Group.new(group_params)
+      @group.owner_id = current_user.id
       if @group.save
           redirect_to groups_url, notice: 'グループを作成しました。'
       else
@@ -47,12 +48,18 @@ before_action :set_group, only: [:edit, :update]
   end
 
   private
-      def set_group
-          @group = Group.find(params[:id])
-      end
+  def set_group
+      @group = Group.find(params[:id])
+  end
 
-      def group_params
-          params.require(:group).permit(:name, user_ids: [])
-      end
-
+  def group_params
+      params.require(:group).permit(:name, user_ids:[])
+  end
+  
+  def ensure_guest_user
+    @user = User.find(params[:id])
+    if @user.guest_user?
+      redirect_to user_path(current_user) , notice: "ゲストユーザーはこの画面へ遷移できません。"
+    end
+  end
 end
