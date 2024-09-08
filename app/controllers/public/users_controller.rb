@@ -3,6 +3,7 @@ before_action :authenticate_user!, except: [:index, :show]
 before_action :ensure_correct_user, only: [:edit, :update]
 before_action :set_user, only: [:show,:followings, :followers]
 before_action :ensure_guest_user, only: [:follow_list,:unsubscribe,:edit]
+before_action :current_my_page, only: [:show]  
   
   def unsubscribe
   end
@@ -19,6 +20,7 @@ before_action :ensure_guest_user, only: [:follow_list,:unsubscribe,:edit]
 
   def show
     @user = User.find(params[:id])
+    @pets = @user.pets
     today = Date.today
     @age = today.year - @user.birthday.year
   end
@@ -54,6 +56,13 @@ before_action :ensure_guest_user, only: [:follow_list,:unsubscribe,:edit]
     params.require(:user).permit(:name, :introduction, :gender, :birthday, :post_code, :hope, :phone, :address, :email, :image)
   end
   
+  def current_my_page
+    @user = User.find(params[:id])
+    if @user == current_user
+      redirect_to mypage_path
+    end  
+  end
+  
   def set_user
     @user = User.find(params[:id])
   end
@@ -67,7 +76,7 @@ before_action :ensure_guest_user, only: [:follow_list,:unsubscribe,:edit]
   
   def ensure_guest_user
     @user = User.find(params[:id])
-    if @user.guest_user?
+    if current_user&.guest_user?
       redirect_to user_path(current_user) , notice: "ゲストユーザーはプロフィール編集画面へ遷移できません。"
     end
   end  

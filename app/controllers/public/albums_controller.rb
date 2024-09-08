@@ -51,9 +51,8 @@ before_action :ensure_guest_user, only: [:new,:destroy,:edit]
   end
     
   def ensure_guest_user
-    @user = User.find(params[:id])
-    if @user.guest_user?
-      redirect_to user_path(current_user) , notice: "ゲストユーザーはこの画面へ遷移できません。"
+    if current_user&.guest_user?
+      redirect_back(fallback_location: root_path, notice: "ゲストユーザーは投稿できません。")
     end
   end  
     

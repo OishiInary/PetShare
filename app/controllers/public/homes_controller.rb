@@ -1,6 +1,6 @@
 class Public::HomesController < ApplicationController
 before_action :authenticate_user!, except: [:top, :about, :entrance, :save]
- before_action :ensure_guest_user, only: [:mypage,:follow_list,:my_album,]
+ before_action :ensure_guest_user, only: [:follow_list,:my_album,:f_albums,:f_pets]
   def top
   end  
   
@@ -25,6 +25,15 @@ before_action :authenticate_user!, except: [:top, :about, :entrance, :save]
     @recentry = Album.order(created_at: :desc).first
   end
   
+  def f_albums
+    @favorites = current_user.favorites.includes(:album).order(created_at: :desc)
+  end
+  
+  def f_pets
+    @favorites = current_user.pet_favorites.includes(:pet).order(created_at: :desc)
+  end
+  
+  
   def save
     # @req_users = User.find(user.hope == 1)
     # @can_users = User.find(user.hope == 2)
@@ -33,9 +42,8 @@ before_action :authenticate_user!, except: [:top, :about, :entrance, :save]
   private
   
   def ensure_guest_user
-    @user = User.find(params[:id])
-    if @user.email == "guest@example.com"
-      redirect_to user_path(current_user) , notice: "ゲストユーザーはプロフィール編集画面へ遷移できません。"
+    if current_user&.guest_user?
+      redirect_back(fallback_location: root_path, notice: "ゲストユーザーはこの機能をご利用いただけません。")
     end
   end  
   

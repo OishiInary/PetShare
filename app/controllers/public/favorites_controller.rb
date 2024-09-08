@@ -18,9 +18,9 @@ before_action :ensure_guest_user, only: [:create,:destroy]
   private
 
   def ensure_guest_user
-    @album = Album.find(params[:id])
-    if @user.guest_user?
-      redirect_to user_path(current_user) , notice: "ゲストユーザーは[いいね！]ができません。"
+    @album = Album.find(params[:album_id])
+    if current_user&.guest_user?
+      redirect_back(fallback_location: root_path, notice: "ゲストユーザーは[いいね！]ができません。")
     end
   end  
  

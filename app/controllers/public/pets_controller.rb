@@ -1,6 +1,7 @@
 class Public::PetsController < ApplicationController
 before_action :authenticate_user!,except: [:show]
 before_action :ensure_correct_user, only: [:edit, :update]
+before_action :ensure_guest_user,expect: [:show]
   def new
     @pet = Pet.new
   end
@@ -60,4 +61,10 @@ before_action :ensure_correct_user, only: [:edit, :update]
         redirect_to mypage_path
       end
     end
+    
+  def ensure_guest_user
+    if current_user&.guest_user?
+      redirect_back(fallback_location: root_path, notice: "ゲストユーザーはご利用いただけません。")
+    end
+  end  
 end

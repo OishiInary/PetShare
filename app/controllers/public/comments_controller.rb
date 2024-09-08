@@ -14,9 +14,9 @@ before_action :ensure_guest_user, only: [:create]
   end
     
   def ensure_guest_user
-    @user = User.find(params[:id])
-    if @user.guest_user?
-      redirect_to user_path(current_user) , notice: 'ゲストユーザーはコメントできません。'
+    @album = Album.find(params[:album_id])
+    if current_user&.guest_user?
+      redirect_back(fallback_location: root_path, notice: "ゲストユーザーはコメントできません。")
     end
   end 
 end

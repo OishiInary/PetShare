@@ -4,7 +4,7 @@
     <h2 class="listings_header">
     </h2>
     <ul class="channel_list">
-      <% unless user.guest_user? %>
+      <% unless current_user.guest_user? %>
       <%= sidebar_link_item('アルバム投稿', new_album_path) %>
       <%= sidebar_link_item('マイアルバム', albums_path) %>
       <%= sidebar_link_item('ペット登録', new_pet_path) %>

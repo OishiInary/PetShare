@@ -29,6 +29,8 @@ Rails.application.routes.draw do
     get "homes/mypage" => "homes#mypage", as: "mypage"
     get "homes/my_album" => "homes#my_album", as: "my_album"
     get "homes/follow_list" => "homes#follow_list", as: "follow_list"
+    get "homes/f_albums" => "homes#f_albums", as: "f_albums"
+    get "homes/f_pets" => "homes#f_pets", as: "f_pets"
     patch "users/withdraw" => "users#withdraw", as: "withdraw"
     get "users/unsubscribe" => "users#unsubscribe", as: "unsubscribe"
     resources :categories, only:[:index, :show]

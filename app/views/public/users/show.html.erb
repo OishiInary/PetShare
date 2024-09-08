@@ -28,36 +28,19 @@
           </table>
         </div>
       </div>
-      <div class="row col-12 m-2">
-        <h3 class="text-center">メニュー</h3>
-      </div>
-      <div class="row m-2">
-        <div class="col m-2 border ">
-          <%= link_to "アルバム管理", albums_path %>
-          <p>投稿したアルバムを<br>管理できます</p>
+    </div>
+    <div class="row">
+      <%= @user.name %>さんのファミリー一覧
+    </div>
+    <div class="row">
+      <% @pets.each do |pet| %>
+      <div class="col-3">
+        <div class="row">
+          <%= image_tag pet.image, size: "50x50" %>
         </div>
-        <div class="col m-2  border ">
-          <%= link_to "マイぺット管理", pets_path %>
-          <p>登録したペットを<br>管理できます</p>
-        </div>
-        <div class="col m-2 border ">
-          <%= link_to "参加グループ", groups_path %>
-          <p>参加済グループの<br>一覧です</p>
-        </div>
-      </div>
-      <div class="row m-2">
-        <div class="col m-2 border">
-          <%= link_to "お気に入り投稿", albums_path %>
-          <p>お気に入り投稿の<br>一覧です</p>
-        </div>
-        <div class="col m-2 border">
-          <%= link_to "お気に入りペット", pets_path %>
-          <p>お気に入りペットの<br>一覧です</p>
-        </div>
-        <div class="col m-2 border">
-          <%= link_to "フォロー＆フォロワー", groups_path %>
-          <p>フォロー関係者の<br>一覧です</p>
-        </div>
+        <div class="row"><%= pet.name %></div>
+        <div class="row"><%= pet.category %></div>
+        <% end %>
       </div>
     </div>
   </div>

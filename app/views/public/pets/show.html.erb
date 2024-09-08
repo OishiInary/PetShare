@@ -41,6 +41,6 @@
     </div>
   </div>
   <% if @pet.user.id == current_user.id %>
-     <%= link_to "編集する", edit_pet_path(@pet), class: "btn btn-successe" %>
+     <%= link_to "編集する", edit_pet_path(@pet), class: "btn btn-primary" %>
    <% end %>
 </div>
