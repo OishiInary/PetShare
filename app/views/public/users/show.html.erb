@@ -8,11 +8,7 @@
         <div class="col-9">
           <h2><%= @user.name %>さんのページ</h2>
           <div class="row m-4">
-            <% if @user.image.attached? %>
-              <%= image_tag @user.image, size: "300x300" %>
-            <% else %>
-              <%= image_tag 'no_image', size: "300x300" %>
-            <% end %>
+            <% image_tag @user.get_profile_image, size: '300x300' %>
           </div>
         </div>
         <div class="col">
@@ -24,24 +20,33 @@
               <tr><td>フォロー数: <%= @user.followings.count %></td></tr>
               <tr><td>フォロワー数: <%= @user.followers.count %></td></tr>
               <tr><td><%= render "public/relationships/btn", user: @user, options: { class: "follow_link"} %></td></tr>
+              <tr><td>
+                <% if current_user != @user && current_user.following?(@user) && @user.following?(current_user) %>
+                <%= link_to 'チャットを始める', chat_path(@user.id), class: "ml-3" %>
+                <% end %>
+              </td></tr>
             </tbody>
           </table>
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="container">
+    <div class="row m-3">
       <%= @user.name %>さんのファミリー一覧
     </div>
     <div class="row">
       <% @pets.each do |pet| %>
-      <div class="col-3">
+      <div class="col">
+        <%= link_to pet_path(pet) do %>
         <div class="row">
           <%= image_tag pet.image, size: "50x50" %>
         </div>
         <div class="row"><%= pet.name %></div>
-        <div class="row"><%= pet.category %></div>
+        <% end %>
+        <div class="row"><%= pet.category.name %></div>
         <% end %>
       </div>
+    </div>
     </div>
   </div>
 </div>

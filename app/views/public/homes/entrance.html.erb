@@ -2,15 +2,16 @@
   <div class="row justify-content-center text-center">
     <div class="col">
       <div class="today"><!--今週いいね数が多かったペットを掲載-->
-      <%= image_tag @recentry.image, size: '500x500' %>
+      <%= image_tag @recentry.image, size: '700x700', style: "object-fit: contain;"  %>
       </div>
     </div>
     <div class="col">
-      <h4 class="">最新の投稿</h4><!--@weekpetでintroductionを持ってくる-->
+      <h4 class="row mt-3 mb-5">最新の投稿</h4><!--@weekpetでintroductionを持ってくる-->
       <%= link_to album_path(@recentry) do %>
       <h3><%= @recentry.title %></h3>
       <% end %>
-      <div class=""><%= @recentry.body %></div>
+      <div class="col">
+      </div>
     </div>
   </div>
 </div>

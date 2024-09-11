@@ -12,6 +12,10 @@ before_action :authenticate_user!, except: [:top, :about, :entrance, :save]
     @age = today.year - current_user.birthday.year
   end  
   
+  def my_pet
+    @pet = Pet.where(user_id: current_user)
+  end
+  
   def follow_list
     @followings = User.find(current_user.followings.ids)
     @followers = User.find(current_user.followers.ids)

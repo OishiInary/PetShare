@@ -1,30 +1,36 @@
 class Public::GroupsController < ApplicationController
-before_action :authenticate_user!, except: [:index]
+before_action :authenticate_user!
 before_action :set_group, only: [:edit, :update]
 before_action :ensure_guest_user, only: [:new,:edit, :destroy]
+
   def index
       @group_lists = Group.all
-      @group_joining = GroupUser.where(user_id: current_user.id)
+      # @group_joining = GroupUser.where(user_id: current_user.id)
+      @user = current_user
+      @group_joining = current_user.group_user.includes(:group)
       @group_lists_none = "グループに参加していません。"
   end
-
+  
   def new
       @group = Group.new
-      @group.users << current_user
   end
 
   def create
-      @group = Group.new(group_params)
-      @group.owner_id = current_user.id
-      if @group.save
-          redirect_to groups_url, notice: 'グループを作成しました。'
-      else
-          render :new
-      end
+    @group = Group.new(group_params)
+    @group.owner_id = current_user.id
+    if @group.save
+      group_user = current_user.group_user.new(group_id: @group.id)
+      group_user.save
+      redirect_to group_path(@group)
+    else
+      render :new
+     end
   end
-
+  
   def show
       @group = Group.find(params[:id])
+      @group_chats = GroupChat.where(group_id: @group.id)
+      @group_chat_new = GroupChat.new
   end
 
   def edit
@@ -47,13 +53,15 @@ before_action :ensure_guest_user, only: [:new,:edit, :destroy]
       end
   end
 
+
   private
+  
   def set_group
       @group = Group.find(params[:id])
   end
 
   def group_params
-      params.require(:group).permit(:name, user_ids:[])
+      params.require(:group).permit(:name,:owner_id,:introduction,:group_image)
   end
   
   def ensure_guest_user

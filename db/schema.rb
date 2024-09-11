@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_09_02_115641) do
+ActiveRecord::Schema.define(version: 2024_09_10_225300) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -41,13 +41,13 @@ ActiveRecord::Schema.define(version: 2024_09_02_115641) do
   end
 
   create_table "admins", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
@@ -76,6 +76,16 @@ ActiveRecord::Schema.define(version: 2024_09_02_115641) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "chats", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "room_id", null: false
+    t.string "message"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["room_id"], name: "index_chats_on_room_id"
+    t.index ["user_id"], name: "index_chats_on_user_id"
+  end
+
   create_table "comments", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "album_id", null: false
@@ -84,15 +94,6 @@ ActiveRecord::Schema.define(version: 2024_09_02_115641) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["album_id"], name: "index_comments_on_album_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
-  end
-
-  create_table "entries", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "room_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["room_id"], name: "index_entries_on_room_id"
-    t.index ["user_id"], name: "index_entries_on_user_id"
   end
 
   create_table "favorites", force: :cascade do |t|
@@ -106,11 +107,11 @@ ActiveRecord::Schema.define(version: 2024_09_02_115641) do
 
   create_table "group_chats", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "group_id_id", null: false
-    t.text "chat", null: false
+    t.integer "group_id", null: false
+    t.text "message", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["group_id_id"], name: "index_group_chats_on_group_id_id"
+    t.index ["group_id"], name: "index_group_chats_on_group_id"
     t.index ["user_id"], name: "index_group_chats_on_user_id"
   end
 
@@ -129,16 +130,6 @@ ActiveRecord::Schema.define(version: 2024_09_02_115641) do
     t.integer "owner_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "messages", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "room_id", null: false
-    t.text "body", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["room_id"], name: "index_messages_on_room_id"
-    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "pet_favorites", force: :cascade do |t|
@@ -170,16 +161,23 @@ ActiveRecord::Schema.define(version: 2024_09_02_115641) do
   end
 
   create_table "rooms", force: :cascade do |t|
-    t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_rooms_on_user_id"
   end
 
   create_table "tags", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "user_rooms", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "room_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["room_id"], name: "index_user_rooms_on_room_id"
+    t.index ["user_id"], name: "index_user_rooms_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -208,20 +206,20 @@ ActiveRecord::Schema.define(version: 2024_09_02_115641) do
   add_foreign_key "albums", "pets"
   add_foreign_key "albums", "tags"
   add_foreign_key "albums", "users"
+  add_foreign_key "chats", "rooms"
+  add_foreign_key "chats", "users"
   add_foreign_key "comments", "albums"
   add_foreign_key "comments", "users"
-  add_foreign_key "entries", "rooms"
-  add_foreign_key "entries", "users"
   add_foreign_key "favorites", "albums"
   add_foreign_key "favorites", "users"
-  add_foreign_key "group_chats", "group_ids"
+  add_foreign_key "group_chats", "groups"
+  add_foreign_key "group_chats", "users"
   add_foreign_key "group_users", "groups"
   add_foreign_key "group_users", "users"
-  add_foreign_key "messages", "rooms"
-  add_foreign_key "messages", "users"
   add_foreign_key "pet_favorites", "pets"
   add_foreign_key "pet_favorites", "users"
   add_foreign_key "pets", "categories"
   add_foreign_key "pets", "users"
-  add_foreign_key "rooms", "users"
+  add_foreign_key "user_rooms", "rooms"
+  add_foreign_key "user_rooms", "users"
 end

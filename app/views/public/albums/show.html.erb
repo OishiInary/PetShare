@@ -1,9 +1,10 @@
 <div class="container">
   <div class="row">
     <div class="col">
+      <!--画像の表示領域、その下に投稿者ほか-->
       <div class="container">
         <div class="row">
-          <%= image_tag @album.image, size: '500x500' %>
+          <%= image_tag @album.image, size: '700x700', style: "object-fit: contain;" %>
         </div>
         <div class="row">
           <div class="col">
@@ -19,16 +20,24 @@
           <%= @album.body %>
         </div>
         <div class="row m-3">
-          <%= link_to user_path(@album.user.id) do %>
-          <%= @album.user.name %>
+          <div class="">
+            <% if @album.user.image.attached? %>
+              <%= image_tag @album.user.image, size: "50x50" %>
+            <% else %>
+              <%= image_tag 'no_image', size: "50x50" %>
+            <% end %>
+            </div>
+          <div class=""><%= link_to user_path(@album.user.id) do %>
+          <%= @album.user.name %></div
           <% end %>
         </div>
       </div>
     </div>
+    <!--画像の隣のスペース、ペットの写真一覧４枚まで-->
     <div class="col">
       <div class="container">
         <div class="row">
-          <%= link_to pet_path(@album.pet.id) do %>
+          <%= link_to pet_path(@album.pet) do %>
           <%= @album.pet.name %>
           <% end %>の写真一覧
         </div>
@@ -43,23 +52,10 @@
         </div>
       </div>
     </div>
-    <div class="container">
+    <!--これより下がコメント欄-->
+    <div class="container" id="">
       <h2>コメント</h2>
-      <table class="table">
-        <tbody>
-      <% @album.comments.each do |comment| %>
-       <tr><td>
-        <div class="row m-3">
-          <%= link_to user_path(comment.user.id) do %>
-          <div class="col"><%= image_tag comment.user.image, size: "50x50" %></div>
-          <% end %>
-          <div class="col-2 mr-3"><strong><%= comment.user.name %></strong></div>
-          <div class="col-9 text-left"><%= comment.body %></div>
-        </div>
-        </td></tr>
-      <% end %>
-      </tbody>
-      </table>
+      <%= render "comment" %>
       <%= form_with model: [ @album, @album.comments.build ] do |form| %>
       <%= form.hidden_field :user_id, :value => current_user.id %>
         <div class="row m-3">

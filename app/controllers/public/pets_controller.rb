@@ -1,7 +1,8 @@
 class Public::PetsController < ApplicationController
-before_action :authenticate_user!,except: [:show]
+before_action :authenticate_user! ,except: [:show]
 before_action :ensure_correct_user, only: [:edit, :update]
-before_action :ensure_guest_user,expect: [:show]
+before_action :ensure_guest_user, only: [:new,:create,:edit,:update,:destroy,:index]
+
   def new
     @pet = Pet.new
   end
@@ -10,20 +11,25 @@ before_action :ensure_guest_user,expect: [:show]
     @pet = Pet.new(pet_params)
     @pet.user_id = current_user.id
     if @pet.save
+      flash[:notice] = "登録しました"
       redirect_to pets_path
     else
       @pet = Pet.new
+      flash[:notice] = "登録に失敗しました"
       redirect_back(fallback_location: root_path)
     end
   end
   
-  def index
-    @pets  = Pet.where(user_id: current_user)
-  end  
-  
   def show
     @pet = Pet.find(params[:id])
+    @favorites = Favorite.where(album_id: @pet.album_ids).count
   end
+  
+  def index
+    @pets  = Pet.all
+  end  
+  
+
   
   def edit
     @pet = Pet.find(params[:id])

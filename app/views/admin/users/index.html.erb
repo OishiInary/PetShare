@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="row">
+    <% @users.each do |user| %>
+    <div class="col">
+      <%= link_to admin_user_path(user) do %>
+      <div class="row">
+        <%= image_tag user.get_profile_image, size:'50x50' %>
+      </div>
+      <div class="row"><%= user.name %></div>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
+</div>

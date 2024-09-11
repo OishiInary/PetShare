@@ -75,9 +75,8 @@ before_action :current_my_page, only: [:show]
   end
   
   def ensure_guest_user
-    @user = User.find(params[:id])
     if current_user&.guest_user?
-      redirect_to user_path(current_user) , notice: "ゲストユーザーはプロフィール編集画面へ遷移できません。"
+      redirect_back(fallback_location: root_path, notice: "ゲストユーザーはご利用いただけません。")
     end
   end  
   

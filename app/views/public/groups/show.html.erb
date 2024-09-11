@@ -1,13 +1,33 @@
-<div class="group-show">
-    <div class="show-group-chat-back">
-        <span class="group-show-group-chat-back">
-            <%= link_to groups_path do %>
-                ＜
-            <% end %>
-        </span>
-    </div>
-
-    <div class="chat-group-show-talk">
-        トーク
-    </div>
+<h3><%= @group.name %></h3>
+<div class="row">
+  <table class="table">
+    <thead>
+      <tr>
+        <th><%= image_tag @group.get_image, size: '100x100' %></th>
+        <th>発言者</th>
+        <th>内容</th>
+        <th>発言日時</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @group_chats.each do |chat| %>
+      <tr>
+        <td><%= image_tag chat.user.get_image, size: '50x50' %></td>
+        <td><%= chat.user.name %></td>
+        <td><%= chat.message %></td>
+        <td><%= chat.created_at.strftime("%Y/%m/%d") %></td>
+      </tr>
+      </tbody>
+    <% end %>
+  </table>
+</div>
+<div class="row">
+  <%= form_with model: [@group, @group.group_chat.build ] do |f| %>
+  <%= f.hidden_field :user_id, :value => current_user.id %>
+  <div class="mt-3 mb-3 form">
+    <%= f.label :発言する %>
+    <%= f.text_area :message, class: "form-control" %>
+    <%= f.submit "送信"%>
+    <% end %>
+  </div>
 </div>

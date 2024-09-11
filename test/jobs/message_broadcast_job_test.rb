@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Public::RoomsControllerTest < ActionDispatch::IntegrationTest
+class MessageBroadcastJobTest < ActiveJob::TestCase
   # test "the truth" do
   #   assert true
   # end

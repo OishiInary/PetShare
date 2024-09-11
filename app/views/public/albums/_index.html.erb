@@ -1,0 +1,15 @@
+      <table class="table">
+        <tbody>
+      <% @album.comments.each do |comment| %>
+       <tr><td>
+        <div class="row m-3">
+          <%= link_to user_path(comment.user.id) do %>
+          <div class="col"><%= image_tag comment.user.image, size: "50x50" %></div>
+          <% end %>
+          <div class="col-2 mr-3"><strong><%= comment.user.name %></strong></div>
+          <div class="col-8 text-left"><%= comment.body %></div>
+        </div>
+        </td></tr>
+      <% end %>
+      </tbody>
+      </table>

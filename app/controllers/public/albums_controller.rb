@@ -10,7 +10,6 @@ before_action :ensure_guest_user, only: [:new,:destroy,:edit]
     
     def index
       @albums = Album.all
-    # @calbum = Album.find
     end
 
     def new

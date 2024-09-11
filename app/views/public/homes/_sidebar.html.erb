@@ -5,14 +5,15 @@
     </h2>
     <ul class="channel_list">
       <% unless current_user.guest_user? %>
+      <%= sidebar_link_item('マイページ', mypage_path) %>
       <%= sidebar_link_item('アルバム投稿', new_album_path) %>
-      <%= sidebar_link_item('マイアルバム', albums_path) %>
+      <%= sidebar_link_item('マイアルバム', my_album_path) %>
       <%= sidebar_link_item('ペット登録', new_pet_path) %>
-      <%= sidebar_link_item('マイペット一覧', pets_path) %>
-      <%= sidebar_link_item('参加グループ一覧', groups_path) %>
-      <%= sidebar_link_item('お気に入り投稿一覧', albums_path) %>
-      <%= sidebar_link_item('お気に入りペット一覧', pets_path) %>
-      <%= sidebar_link_item('フォロー一覧', follow_list_path) %>
+      <%= sidebar_link_item('マイペット', my_pet_path) %>
+      <%= sidebar_link_item('グループ一覧(工事中)', groups_path,) %>
+      <%= sidebar_link_item('お気に入り投稿', f_albums_path) %>
+      <%= sidebar_link_item('お気に入りペット', f_pets_path) %>
+      <%= sidebar_link_item('フォローリスト', follow_list_path) %>
       <%= sidebar_link_item('登録情報の編集', edit_user_path(current_user.id)) %>
       <% end %>
     </ul>

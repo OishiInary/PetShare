@@ -1,13 +1,16 @@
 Rails.application.routes.draw do
-  #管理者用デバイス
-  devise_for :admin, skip: [:registrations, :passwords],contolloers:{
-    registrations: 'admin/sessions'
-  }
+  
+  devise_for :admin, controllers: {
+  sessions: "admin/sessions"
+}
   # 一般ユーザー用デバイス
   devise_for :users,skip: [:password],controllers:{
     registrations: "public/registrations",
     sessions: 'public/sessions'
   }
+  # 新規会員登録でエラーが出たときにusersにURLが変わっていることへの対処
+  get "users" => redirect("/users/sign_up")
+  
   devise_scope :user do
     post "user/guest_sign_in", to: "users/sessions#guest_sign_in"
   end
@@ -16,9 +19,7 @@ Rails.application.routes.draw do
     resources :users, only:[ :show, :index, :edit, :update]
     resources :categories, only:[:new,:show,:index, :create, :edit, :update, :destroy]
     resources :albums, only:[:show,:index, :edit, :update, :destroy]
-    resources :groups, only:[:show,:index, :edit, :update, :destroy]
     resources :rooms, only:[:show,:index, :edit, :update, :destroy]
-    get "/" => "homes#top"
   end
   
   scope module: :public do
@@ -28,11 +29,13 @@ Rails.application.routes.draw do
     get "homes/about" => "homes#about", as: "about"
     get "homes/mypage" => "homes#mypage", as: "mypage"
     get "homes/my_album" => "homes#my_album", as: "my_album"
+    get "homes/my_pet" => "homes#my_pet", as: "my_pet"
     get "homes/follow_list" => "homes#follow_list", as: "follow_list"
     get "homes/f_albums" => "homes#f_albums", as: "f_albums"
     get "homes/f_pets" => "homes#f_pets", as: "f_pets"
     patch "users/withdraw" => "users#withdraw", as: "withdraw"
     get "users/unsubscribe" => "users#unsubscribe", as: "unsubscribe"
+    resources :chats, only: [:show, :create, :destroy]
     resources :categories, only:[:index, :show]
     resources :users, only:[:index, :show, :edit, :update,]do
       resource :relationships, only: [:create,:destroy]
@@ -40,23 +43,18 @@ Rails.application.routes.draw do
         get "followers"  => "relationships#followers",  as: "followers"
         get "users/follow_list" => "users/follow_list", as: "follow_list"
     end
-    resources :pets, only:[:index, :show, :new, :create, :edit, :update, :destroy]do
+    resources :pets, only:[:show, :index, :new, :create, :edit, :update, :destroy]do
       resource :pet_favorites, only:[:create, :destroy]
-    end
-
-    resources :groups, only:[:index, :show, :new, :create, :edit, :update, :destroy]do
-      resources :group_chat, only:[:create, :destroy]
     end
     
     resources :albums, only:[:index, :show, :new, :create, :edit, :update, :destroy]do
       resources :comments, only:[:create, :update, :destroy]
           resource :favorites, only:[:create, :destroy]
-    end  
-    
-    resources :rooms, only:[:create, :show]do
-      resources :messages, only:[:create]
     end
-
+    
+    resources :groups, only: [:new, :index, :show, :create, :edit, :update, :destroy] do
+    resource :group_users, only:[:create, :destroy]
+    resource :group_chats, only:[:create, :destroy]
+    end
   end
-
 end
