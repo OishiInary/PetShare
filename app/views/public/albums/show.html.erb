@@ -53,17 +53,9 @@
       </div>
     </div>
     <!--これより下がコメント欄-->
-    <div class="container" id="">
-      <h2>コメント</h2>
-      <%= render "comment" %>
-      <%= form_with model: [ @album, @album.comments.build ] do |form| %>
-      <%= form.hidden_field :user_id, :value => current_user.id %>
-        <div class="row m-3">
-          <div><%= form.label :コメント %></div>
-          <div><%= form.text_area :body ,size: "100x5" %></div>
-        </div>
-        <div class="row"><%= form.submit "送信する" %></div>
-      <% end %>
+    <div id="comments-index">
+      <%= render "index", album: @album %>
+      <%= render "form", album: @album %>
     </div>
   </div>
 </div>

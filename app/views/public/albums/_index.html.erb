@@ -1,6 +1,6 @@
-      <table class="table">
-        <tbody>
-      <% @album.comments.each do |comment| %>
+  <table class="table">
+    <tbody>
+      <% album.comments.each do |comment| %>
        <tr><td>
         <div class="row m-3">
           <%= link_to user_path(comment.user.id) do %>
@@ -11,5 +11,5 @@
         </div>
         </td></tr>
       <% end %>
-      </tbody>
-      </table>
+    </tbody>
+  </table>

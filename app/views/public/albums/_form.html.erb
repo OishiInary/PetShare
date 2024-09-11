@@ -1,0 +1,11 @@
+<div class="container" id="">
+      <h2>コメント</h2>
+      <%= form_with model: [ album, album.comments.build ],data: { turbo: false  }, local: false do |form| %>
+      <%= form.hidden_field :user_id, :value => current_user.id %>
+        <div class="row m-3">
+          <div><%= form.label :コメント %></div>
+          <div><%= form.text_area :body ,size: "100x5",class: "comment-textarea" %></div>
+        </div>
+        <div class="row"><%= form.submit "送信する", class: "btn btn-lg btn-base-1 mt-20 pull-right btn-secondary" %></div>
+      <% end %>
+    </div>
