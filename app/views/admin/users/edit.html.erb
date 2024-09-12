@@ -1,0 +1,123 @@
+<div class="container col-8">
+  <%= flash[:notice] %>
+  <div class="row m-4">
+    <span style=" background-color: #ECECEC; font-weight: bold; font-size: 23px">　会員情報編集　</span>
+  </div>
+  <%= form_with model: @user, url: user_path(@user), method: :patch  do |f| %>
+  <div class="row mt-3">
+    <%= f.file_field :image, accept: "image/*", class: "form-control border-0" %>
+  </div>
+  <div class="row mt-3">
+    <div class="col-4">ニックネーム</div>
+    <div class="col-4 text-left"><%= f.text_field :name %></div>
+  </div>
+    <div class="row mt-2">
+    <div class="col-4">自己紹介</div>
+    <div class="col-8"><%= f.text_area :introduction, size: "50x5" %></div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-4">郵便番号</div>
+    <div class="col-8"><%= f.text_field :post_code %></div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-4">住所</div>
+    <div class="col-8"><%= f.text_field :address,:size=> 55 %></div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-4">電話番号</div>
+    <div class="col-8"><%= f.text_field :phone %></div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-4">メールアドレス</div>
+    <div class="col-8"><%= f.text_field :email %></div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-4">新しいパスワード</div>
+    <div class="col-8"><%= f.password_field :password, autocomplete: "new-password" %></div>
+  </div>
+  <div class="row mt-3 mb-3">
+    <table class="table">
+      <thead><tr><th><%= f.label :SAVE活動 %></th></tr></thead>
+      <tbody><tr><td>
+        <%= f.label :未設定  %>
+      <%= f.radio_button :hope, :nom %>-----SAVE活動に参加しません</td></tr>
+      <tr><td><%= f.label :里親募集  %>
+      <%= f.radio_button :hope, :req %>-----SAVE活動に里親募集の立場で参加</td></tr>
+      <tr><td><%= f.label :里子募集  %>
+      <%= f.radio_button :hope, :can %>-----SAVE活動に里子募集の立場で参加</td></tr>
+      </tr></tbody>
+    </table>
+  </div>
+    <div class="mb-3">
+    <%= f.label :性別 %><br />
+    <%= f.label :秘密  %>
+    <%= f.radio_button :gender, :other %>
+    <%= f.label :男性  %>
+    <%= f.radio_button :gender, :male %>
+    <%= f.label :女性  %>
+    <%= f.radio_button :gender, :female %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :birthday, "生年月日" %><br>
+    <%= f.date_select :birthday, {start_year: 1950, end_year: 2050,
+    include_blank: true, use_two_digit_numbers: true},
+    {class: "input-tab birthday-select"}%>
+  </div> 
+  <%= f.label :退会状況 %><br>
+  <%= f.label :入会 %>
+  <%= f.radio_button :is_active, :true %>
+  <%= f.label :退会 %>
+  <%= f.radio_button :is_active, :false %>
+  <div class="row mt-2">
+    <div class="col-4"></div>
+    <div class="col-5">
+    <%= f.submit "編集内容を保存", class: "btn btn-success" %></div>
+    <div class="col-2 text-left">
+    <% end %>
+    </div>
+  </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const daySelect = document.querySelector('#user_birthday_3i');
+  const monthSelect = document.querySelector('#user_birthday_2i');
+  const yearSelect = document.querySelector('#user_birthday_1i');
+
+  function updateDayOptions() {
+    const month = parseInt(monthSelect.value, 10);
+    const year = parseInt(yearSelect.value, 10);
+
+    let maxDays;
+
+    if (month === 2) {
+      // 2月の最大日数を計算
+      maxDays = (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)) ? 29 : 28;
+    } else if ([4, 6, 9, 11].includes(month)) {
+      // 30日の月
+      maxDays = 30;
+    } else {
+      // 31日の月
+      maxDays = 31;
+    }
+
+    // 現在の日の選択肢を制限
+    for (let day = 1; day <= 31; day++) {
+      const option = daySelect.querySelector(`option[value="${day}"]`);
+      if (option) {
+        if (day > maxDays) {
+          option.style.display = 'none';
+        } else {
+          option.style.display = 'block';
+        }
+      }
+    }
+  }
+
+  // 月または年が変更されたときに日の選択肢を更新
+  monthSelect.addEventListener('change', updateDayOptions);
+  yearSelect.addEventListener('change', updateDayOptions);
+
+  // ページ読み込み時に選択肢を初期化
+  updateDayOptions();
+});
+</script>

@@ -1,0 +1,28 @@
+<div class="row col-12 m-5">
+  <div class="col-12">
+    <%= link_to "新規追加", new_admin_category_path, class: "btn btn-info" %>
+  </div>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>名前</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @categories.each do |category| %>
+    <tr>
+      <%= link_to category_path(category.id) do %>
+        <td><%= image_tag category.get_category_image, size: "60x60" %></td>
+        <% end %>
+        <td><%= category.name %></td>
+      
+      <td><%= link_to "編集", edit_admin_category_path(category.id),class: "btn btn-success" %></td>
+      <td><%= link_to "削除", admin_category_path(category.id),method: :delete, class: "btn btn-danger" %> </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

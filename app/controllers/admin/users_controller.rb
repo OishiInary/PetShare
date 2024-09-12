@@ -11,7 +11,7 @@ before_action :authenticate_admin!
     end
     
     def show
-        @user = User.find(params[:id])
+    @user = User.find(params[:id])
     @pets = @user.pets
     today = Date.today
     @age = today.year - @user.birthday.year
@@ -25,19 +25,20 @@ before_action :authenticate_admin!
         @user = User.find(params[:id])
         if @user.update(user_params)
           flash[:notice] = "更新に成功しました"
-          redirect_to mypage_path
+          redirect_to admin_users_path
         else
           flash[:notice] = "更新に失敗しました"
           @user = current_user
-          redirect_back(fallback_location: root_path)
+            redirect_to admin_users_path
         end
     end 
+
 
     private
     
     
   def user_params
-    params.require(:user).permit(:name, :introduction, :gender, :birthday, :post_code, :hope, :phone, :address, :email, :image)
+    params.require(:user).permit(:name, :introduction, :gender, :birthday, :post_code, :hope, :phone, :address, :email, :image, :is_active,:password)
   end
 
 

@@ -6,6 +6,7 @@ before_action :ensure_guest_user, only: [:new,:destroy,:edit]
       @album = Album.find(params[:id])
       @albums = @album.pet.album.all.limit(4)
       @comment = current_user.comments.new
+      @favorites = Favorite.where(album_id: @pet.album_ids).count
     end 
     
     def index
@@ -40,6 +41,9 @@ before_action :ensure_guest_user, only: [:new,:destroy,:edit]
     end 
     
     def destroy
+      @album = album.find(params[:id])
+      @album.destroy
+      redirect_to admin__path
     end
     
     

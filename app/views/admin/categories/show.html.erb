@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="row col-7">
+    <%= image_tag @category.get_category_image, size: "600x600" %>
+  </div>
+  <div class="row col-5">
+    <dic class="col">
+      <%= @category.name %>
+      <%= @category.introduction %>
+      <%= @category.difficulty %>
+    </dic>
+  </div>
+</div>

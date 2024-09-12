@@ -10,6 +10,19 @@ ja:
         req: '里親募集'
         can: '里子募集'
   activerecord:
+    attributes:
+        user:
+          email: "メール"
+          password: "パスワード"
+          name: "名前"
+          introduction: "自己紹介"
+          post_code: "郵便番号"
+          address: "住所"
+          phone: "電話番号"
+        address:
+          name: "宛名"
+          post_code: "郵便番号"
+          address: "住所"
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'
