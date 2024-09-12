@@ -5,14 +5,13 @@ random_date = Time.now - random_days_ago.days
 
 Admin.create(email: '1@1', password: '111111')
 Tag.create(name: 'デブ猫')
-Category.create(name:'猫')
-Category.create(name:'犬')
-Category.create(name:'鳥')
-Category.create(name:'馬')
-Category.create(name:'兎')
-Category.create(name:'蛇')
-Category.create(name:'熊')
-Category.create(name:'魚')
+
+Category.find_or_create_by!(name: '猫') do |category|
+  category.introduction = "みんな大好き猫ちゃん！様々な種類がおり性格も様々。"
+  category.difficulty = 1
+  category.image = ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/cat_image.jpg"), filename:"cat_image.jpg")
+end  
+
 
 User.create(
   name:"サンプル太郎",
@@ -41,3 +40,4 @@ Album.find_or_create_by!(title: 'サンプル') do |album|
   album.body = 'サンプルです。'
   album.image = ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/no_image.jpg"), filename:"no_image.jpg")
 end
+

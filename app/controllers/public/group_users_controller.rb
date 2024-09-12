@@ -3,13 +3,17 @@ before_action :authenticate_user!
 before_action :ensure_guest_user, only: [:create,:destroy]
 
   def create
-    group_user = current_user.group_users.new(group_id: params[:group_id])
-    group_user.save
-    redirect_to request.referer
+    # group_user = current_user.group_users.new(group_id: params[:group_id])
+    # group_user.save
+    @group = Group.find(params[:group_id])
+    @group_user = GroupUser.new
+    @group_user.user_id = current_user.id
+    @group_user.group_id = @group.id
+    @group_user.save
+     redirect_to request.referer
   end
 
   def destroy
-    # 参考に省略形を書いたがうまくいかない
       group_user = current_user.group_user.find_by(group_id: params[:group_id])
       group_user.destroy
     redirect_to request.referer

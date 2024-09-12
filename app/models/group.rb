@@ -5,8 +5,8 @@ class Group < ApplicationRecord
   belongs_to :owner, class_name: "User"
   has_one_attached :group_image
   
-  validates :name, presence: true
-  validates :introduction, presence: true
+  validates :name, presence: true,length: { minimum: 2, maximum: 20 }
+  validates :introduction, presence: true , length: { minimum: 2, maximum: 150 }
   
   
   def include_user?(user)

@@ -72,6 +72,8 @@ ActiveRecord::Schema.define(version: 2024_09_10_225300) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
+    t.text "introduction", null: false
+    t.integer "difficulty", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

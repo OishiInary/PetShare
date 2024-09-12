@@ -1,7 +1,7 @@
 class Public::PetsController < ApplicationController
 before_action :authenticate_user! ,except: [:show]
 before_action :ensure_correct_user, only: [:edit, :update]
-before_action :ensure_guest_user, only: [:new,:create,:edit,:update,:destroy,:index]
+before_action :ensure_guest_user, only: [:new,:create,:edit,:update,:destroy]
 
   def new
     @pet = Pet.new
@@ -12,7 +12,7 @@ before_action :ensure_guest_user, only: [:new,:create,:edit,:update,:destroy,:in
     @pet.user_id = current_user.id
     if @pet.save
       flash[:notice] = "登録しました"
-      redirect_to pets_path
+      redirect_to pet_path(@pet)
     else
       @pet = Pet.new
       flash[:notice] = "登録に失敗しました"
@@ -50,7 +50,7 @@ before_action :ensure_guest_user, only: [:new,:create,:edit,:update,:destroy,:in
   def destroy
     @pet = Pet.find(params[:id])
     @pet.destroy
-    render :index
+    redirect_to my_pet_path
   end
   
   private

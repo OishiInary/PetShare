@@ -12,8 +12,8 @@ class User < ApplicationRecord
   validates :name,presence: { message: "の入力は必須です", full_message:false},length: { minimum: 2, maximum: 20 }
   validates :address, presence: true
   validates :gender, presence: true
-  validates :post_code, presence: true
-  validates :phone, presence: true
+  validates :post_code, presence: true,length: {is: 7 }
+  validates :phone, presence: true,length: { minimum: 10, maximum: 11 }
   validates :birthday, presence: true
   validates :hope, presence: true
   validates :is_active, presence: true
@@ -76,6 +76,18 @@ class User < ApplicationRecord
   
   def get_profile_image
     (image.attached?) ? image : 'no_image.jpg'
+  end
+  
+  def self.search_for(content, method)
+    if method == 'perfect'
+      User.where(name: content)
+    elsif method == 'forward'
+      User.where('name LIKE ?', content + '%')
+    elsif method == 'backward'
+      User.where('name LIKE ?', '%' + content)
+    else
+      User.where('name LIKE ?', '%' + content + '%')
+    end
   end
   
 end

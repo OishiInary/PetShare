@@ -12,7 +12,6 @@ import "jquery"
 import "popper.js"
 import "bootstrap"
 
-
 import "../stylesheets/application"
 import "packs/cat.js"
 import "packs/preview.js"

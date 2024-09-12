@@ -1,6 +1,6 @@
 class Public::HomesController < ApplicationController
 before_action :authenticate_user!, except: [:top, :about, :entrance, :save]
- before_action :ensure_guest_user, only: [:follow_list,:my_album,:f_albums,:f_pets]
+ before_action :ensure_guest_user, only: [:follow_list,:my_album,:my_pet,:f_albums,:f_pets]
   def top
   end  
   
@@ -13,7 +13,7 @@ before_action :authenticate_user!, except: [:top, :about, :entrance, :save]
   end  
   
   def my_pet
-    @pet = Pet.where(user_id: current_user)
+    @pets = Pet.where(user_id: current_user)
   end
   
   def follow_list

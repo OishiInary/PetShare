@@ -30,7 +30,7 @@
            <%= link_to "みんなのペット", pets_path %>
           </div>
           <div class="col border border-4">
-           <%= link_to "グループ(工事中)", groups_path %>
+           <%= link_to "グループ", groups_path %>
           </div>
           <div class="col border border-4">
            <%= link_to "カテゴリー検索", categories_path %>
@@ -51,7 +51,8 @@
       </div>
     </div>
   </div>
+  <div class="row"><%= render "public/searches/form" %></div>
   <div class=" row">
-    <h2 id="notice mt-5 mb-5 text-center"><%= notice %></h2>
+    <h4 id="notice mt-5 mb-5 text-center"><%= notice %></h4>
   </div>
 </div>

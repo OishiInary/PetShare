@@ -11,7 +11,7 @@
       <%= render "public/chats/chat", chat: chat %>
     <% else %>
       <div class="left-container d-flex">
-        <%= image_tag @user.image, size: '30x30', style: 'border-radius: 50%' %>
+        <%= image_tag @user.image, size: '30x30', style: 'border-radius: 10%' %>
         <p class=ml-1 style="text-align: left;"><span style="background-color: #F5F5DC; padding: 5px; border-radius: 10px;"><%= chat.message %></span></p>
       </div>
     <% end %>
@@ -20,7 +20,7 @@
 
 
 
-<%= form_with model: @chat, data: { turbo: false  } ,local: false  do |f| %>
+<%= form_with model: @chat, data: { turbo: false } ,local: false  do |f| %>
   <%= f.text_field :message %>
   <%= f.submit "送信", class: "btn btn-dark btn-sm" %>
   <%= f.hidden_field :room_id %>

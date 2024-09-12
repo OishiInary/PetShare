@@ -1,22 +1,14 @@
-<div class="listings">
-  <div class="row justify-content-center text-center">
-   <div class="listings_channels">
-    <h2 class="listings_header">
-    </h2>
-    <ul class="channel_list">
-      <% unless current_user.guest_user? %>
-      <%= sidebar_link_item('マイページ', mypage_path) %>
-      <%= sidebar_link_item('アルバム投稿', new_album_path) %>
-      <%= sidebar_link_item('マイアルバム', my_album_path) %>
-      <%= sidebar_link_item('ペット登録', new_pet_path) %>
-      <%= sidebar_link_item('マイペット', my_pet_path) %>
-      <%= sidebar_link_item('グループ一覧(工事中)', groups_path,) %>
-      <%= sidebar_link_item('お気に入り投稿', f_albums_path) %>
-      <%= sidebar_link_item('お気に入りペット', f_pets_path) %>
-      <%= sidebar_link_item('フォローリスト', follow_list_path) %>
-      <%= sidebar_link_item('登録情報の編集', edit_user_path(current_user.id)) %>
-      <% end %>
-    </ul>
-   </div>
-  </div>
-</div>
+
+<div class="container justify-content-center text-center">
+  </h2>
+    <div class="row mb-5"><%= link_to 'マイページ', mypage_path %></div>
+    <div class="row mb-5"><%= link_to'アルバム投稿', new_album_path %></div>
+    <div class="row mb-5"><%= link_to'マイアルバム', my_album_path %></div>
+    <div class="row mb-5"><%= link_to'ペット登録', new_pet_path %></div>
+    <div class="row mb-5"><%= link_to'マイペット', my_pet_path %></div>
+    <div class="row mb-5"><%= link_to'グループ一覧', groups_path %></div>
+    <div class="row mb-5"><%= link_to'お気に入り投稿', f_albums_path %></div>
+    <div class="row mb-5"><%= link_to'お気に入りペット', f_pets_path %></div>
+    <div class="row mb-5"><%= link_to'フォローリスト', follow_list_path %></div>
+ </div>
+

@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   
   scope module: :public do
     root to: "homes#top"
+    get "/search" => "searches#search"
     get "homes/entrance" => "homes#entrance", as: "entrance"
     get "homes/save"  => "homes#save", as: "save"
     get "homes/about" => "homes#about", as: "about"
@@ -53,8 +54,8 @@ Rails.application.routes.draw do
     end
     
     resources :groups, only: [:new, :index, :show, :create, :edit, :update, :destroy] do
-    resource :group_users, only:[:create, :destroy]
-    resource :group_chats, only:[:create, :destroy]
+      resources :group_users, only:[:create, :destroy]
+         resources :group_chats, only:[:create, :destroy]
     end
   end
 end

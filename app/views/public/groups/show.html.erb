@@ -1,4 +1,32 @@
 <h3><%= @group.name %></h3>
+<h4>グループ参加者</h4>
+<div class="row m-4">
+  <% if @group.owner_id == current_user.id %>
+    <div class="col-2"><%= link_to "編集", edit_group_path(@group), class: "btn btn-success" %></div>
+    <div class="col-2"><%= link_to "削除", group_path(@group),method: :delete,data: { confirm: "本当に削除しますか？" },  class: "btn btn-danger" %></div>
+  <% else %>
+    <% if @group.include_user?(current_user) %>
+      <%= link_to "脱退する", group_group_user_path(@group), method: :delete,data: { confirm: "本当に脱退しますか？" },  class: "btn btn-danger" %>
+    <% else %>
+      <%= link_to "参加する", group_group_users_path(@group), method: :post, class: "btn btn-success" %>
+    <% end %>
+  <% end %>
+  </div>
+<div class="row col-12">
+  <% @group_users.each do |user| %>
+    <div class="col-3">
+      <%= link_to user_path(user.user.id) do %>
+        <div class="card" style="size: 100x100, back-ground-color: blue">
+          <img class="card-img-top">
+          <%= image_tag user.user.get_profile_image, size: "100x100" %>
+        </div>
+        <div class="card-body">
+          <p class="card-title"><%= user.user.name %></p>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div> 
 <div class="row">
   <table class="table">
     <thead>
@@ -12,17 +40,22 @@
     <tbody>
     <% @group_chats.each do |chat| %>
       <tr>
-        <td><%= image_tag chat.user.get_image, size: '50x50' %></td>
+        <td><%= image_tag chat.user.get_profile_image, size: '50x50' %></td>
         <td><%= chat.user.name %></td>
         <td><%= chat.message %></td>
         <td><%= chat.created_at.strftime("%Y/%m/%d") %></td>
+        <td>
+          <% if chat.user == current_user %>
+           <%= link_to "削除", group_group_chat_path(@group,chat), method: :delete,remote: true, class: "btn btn-sm btn-danger" %>
+          <% end %>
+        </td>
       </tr>
       </tbody>
     <% end %>
   </table>
 </div>
 <div class="row">
-  <%= form_with model: [@group, @group.group_chat.build ] do |f| %>
+  <%= form_with model: @group_chat,url: group_group_chats_path(@group) do |f| %>
   <%= f.hidden_field :user_id, :value => current_user.id %>
   <div class="mt-3 mb-3 form">
     <%= f.label :発言する %>

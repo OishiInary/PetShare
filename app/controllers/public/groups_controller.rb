@@ -24,13 +24,14 @@ before_action :ensure_guest_user, only: [:new,:edit, :destroy]
       redirect_to group_path(@group)
     else
       render :new
-     end
+    end
   end
   
   def show
       @group = Group.find(params[:id])
+      @group_users = GroupUser.where(group_id: @group.id)
       @group_chats = GroupChat.where(group_id: @group.id)
-      @group_chat_new = GroupChat.new
+      @group_chat = GroupChat.new
   end
 
   def edit
@@ -40,7 +41,7 @@ before_action :ensure_guest_user, only: [:new,:edit, :destroy]
   def update
       @group = Group.find(params[:id])
       if @group.update(group_params)
-          redirect_to groups_path, notice: 'グループを更新しました。'
+          redirect_to group_path(@group), notice: 'グループを更新しました。'
       else
           render :edit
       end

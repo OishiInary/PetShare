@@ -19,7 +19,7 @@ class Pet < ApplicationRecord
     elsif method == 'backward'
       Pet.where('name LIKE ?', '%' + content)
     else
-      PEt.where('name LIKE ?', '%' + content + '%')
+      Pet.where('name LIKE ?', '%' + content + '%')
     end
   end  
 
