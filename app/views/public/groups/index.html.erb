@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <%= render "public/homes/sidebar" %>
+    </div>
+    <div class="col-9">
+      <div class="row mt-5 mb-5">
+        <div class="row col-12">
+        <h3>参加しているグループ</h3>
+        </div>
+        <% if current_user.group_user.exists? %>
+        <table class="table">
+          <thead>
+            <tr>
+              <th> </th>
+              <th>グループ名</th>
+              <th>オーナー</th>
+              <th>グループ概要</th>
+              <th>参加人数</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @group_joining.each do |group| %>
+              <tr>
+                <td><%= image_tag group.group.get_image, size: '50x50' %></td>
+                <td><%= link_to group_path(group.group.id) do %><%= group.group.name %><% end %></td>
+              <td>
+                <%= link_to user_path(group.group.owner.id) do %>
+                <%= group.group.owner.name  %></td>
+                <% end %>
+              <td><%= group.group.introduction %></td>
+              <td><%= group.group.group_user.count %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <% else %>
+        <div class="row col-12"><%= @group_lists_none %></div>
+        <% end %>
+        <div class="row col-12 mt-5">
+          <div class="col-9"><h4>すべてのグループ</h4></div>
+          <div class="col-3"><%= link_to "+-<作成>-+", new_group_path, class: "btn btn-primary btn-sm" %></div>
+        </div>
+        <div class="row col-12">
+              <table class="table">
+          <thead>
+            <tr>
+              <th> </th>
+              <th>グループ名</th>
+              <th>オーナー</th>
+              <th>グループ概要</th>
+              <th>参加人数</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @group_lists.each do |group| %>
+            <tr>
+              <td><%= image_tag group.get_image, size: '50x50' %></td>
+              <td><%= link_to group_path(group.id) do %><%= group.name %><% end %></td>
+              <td><%= link_to user_path(group.owner.id) do %><%= group.owner.name %><% end %></td>
+              <td><%= group.introduction %></td>
+              <td><%= group.group_user.count %></td>
+
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<h1>アバウト</h1>
+<h3>ここは我が子を自慢し合う素敵な場です。<br>
+投稿された写真を見ることは会員登録無しでできます。<br>
+お客様の我が子を投稿し見てもらうには会員登録が必要です。<br>
+里親を募集する・里親になるには会員登録が必要です。
+</h3>
+<div class="btn-wrapper col-10 mx-auto">
+            <% if user_signed_in? %>
+          <div class="row">
+            ログイン済
+          <% else %>
+            <%= link_to "ゲストとしてログインする", user_guest_sign_in_path, class: "btn btn-secondary btn-sm btn-block mb-3 sign-in", method: :post %>
+            <p>
+              ゲストログインすると出来る事。<br>
+              -ペット写真コンテンツ(閲覧のみ)-<br>
+              -グループコンテンツ(閲覧のみ)-<br>
+              -里親コンテンツ(閲覧のみ)-<br>
+            </p>
+          <%  end %>
+</div>

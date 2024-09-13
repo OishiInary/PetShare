@@ -1,0 +1,53 @@
+<div class="container-fluid">
+  <div class="row my-3 justify-content-center">
+    <div class="col-7 m-4">
+      <span class="pr-3 pl-3" style="font-size: 1.3rem; background-color: #ECECEC; font-weight: bold;">ペット編集</span>
+    </div>
+  </div>
+  <div class="row my-3 justify-content-center">
+    <div class="col">
+      <%= form_with model: @pet do |f| %>
+        <table>
+          <tr>
+            <th>ペットのメイン写真</th>
+            <td class="pt-1 pb-1">
+              <%= f.file_field :image, accept: "image/*", class: "form-control border-0" %> <!-- border-0を追加 -->
+            </td>
+          </tr>
+          <tr>
+            <th>お名前</th>
+            <td class="p-1">
+              <%= f.text_field :name, class: "form-control", style: 'color: #6c757d;', placeholder: 'しまじろう', onfocus: "this.style.color='black';" %>
+            </td>
+          </tr>
+          <tr>
+            <th>種類</th>
+            <td class="p-1">
+              <%= f.select :category_id, options_for_select(Category.all.collect { |c| [c.name, c.id] }), prompt: false, class: "form-control" %>
+            </td>
+          </tr>
+          <tr>
+            <th>年齢</th>
+            <td class="p-1">
+              <%= f.text_field :age, class: "form-control", style: 'color: #6c757d;', placeholder: '1', onfocus: "this.style.color='black';" %><td>歳</td>
+            </td>
+          </tr>
+          <tr>
+            <div class="row mb-3">
+              <td class="p-1">
+                <%= f.label :gender %><br />
+                <%= f.label :male  %>
+                <%= f.radio_button :gender, :male %>
+                <%= f.label :female  %>
+                <%= f.radio_button :gender, :female %>
+              </td>
+            </div>
+          </tr>
+        </table>
+        <div class="row my-3 justify-content-center">
+          <%= f.submit "更新", class: 'btn btn-success' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

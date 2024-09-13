@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="row">
+    <div class="container">
+      <div class="row m-2">
+        <div class="col-9">
+          <h2><%= @user.name %>さんのページ</h2>
+          <div class="row m-4">
+            <%= image_tag @user.get_profile_image, size: '300x300', style: "object-fit: contain;" %>
+          </div>
+        </div>
+        <div class="col">
+        <table class='table'>
+            <tbody>
+              <tr><td><h4>SAVE活動</h4></td></tr>
+              <tr><td><h5><%= @user.hope_i18n %></h5></td></tr>
+              <tr><td><%= @user.gender_i18n %>-<%= @age %>歳</td></tr>
+              <tr><td>フォロー数: <%= @user.followings.count %></td></tr>
+              <tr><td>フォロワー数: <%= @user.followers.count %></td></tr>
+              <tr><td>誕生日: <%= @user.birthday %></td></tr>
+              <tr><td>電話番号: <%= @user.phone %></td></tr>
+              <tr><td>郵便番号: <%= @user.post_code %></td></tr>
+              <tr><td>住所: <%= @user.address %></td></tr>
+              <tr><td><%= @user.is_active %></td></tr>
+              <tr><td><%= link_to "編集する", edit_admin_user_path(@user) %></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row col-12">
+      <%= @user.introduction %>
+    </div>
+    <div class="container">
+    <div class="row m-3">
+      <%= @user.name %>さんのファミリー一覧
+    </div>
+    <div class="row">
+      <% @pets.each do |pet| %>
+      <div class="col">
+        <div class="row">
+          <%= image_tag pet.image, size: "50x50" %>
+        </div>
+        <div class="row"><%= pet.name %></div>
+        <div class="row"><%= pet.category.name %></div>
+        <% end %>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>

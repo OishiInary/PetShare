@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <!--画像の表示領域、その下に投稿者ほか-->
+      <div class="container">
+        <div class="row">
+          <%= image_tag @album.image, size: '700x700', style: "object-fit: contain;" %>
+        </div>
+        <div class="row">
+          <div class="col">
+            <h2><%= @album.title %></h2>
+          </div>
+          <div class="col">
+            <h4 id="favorite_buttons_<%= @album.id %>">
+              <%= render "public/favorites/favorite_btn", album: @album %>
+            </h4>
+          </div>
+        </div>
+        <div class="row m-3">
+          <%= @album.body %>
+        </div>
+        <div class="row m-3">
+          <div class="">
+            <% if @album.user.image.attached? %>
+              <%= image_tag @album.user.image, size: "50x50" %>
+            <% else %>
+              <%= image_tag 'no_image', size: "50x50" %>
+            <% end %>
+            </div>
+          <div class=""><%= link_to user_path(@album.user.id) do %>
+          <%= @album.user.name %></div
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <!--画像の隣のスペース、ペットの写真一覧４枚まで-->
+    <div class="col">
+      <div class="container">
+        <div class="row">
+          <%= link_to pet_path(@album.pet) do %>
+          <%= @album.pet.name %>
+          <% end %>の写真一覧
+        </div>
+        <div class="row col-6 bg bg-color-blue">
+          <% @albums.each do |album| %>
+          <div class="col m-2">
+            <%= link_to album_path(album) do %>
+              <%= image_tag album.image, size: "100x100" %>
+            <% end %>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <!--これより下がコメント欄-->
+    <div class="row col-12" id="comments-index">
+      <%= render "index", album: @album %>
+    </div>
+      <%= render "form", album: @album %>
+  </div>
+</div>

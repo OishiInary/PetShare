@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row">
+    <div class="col-9">
+      <div class="row mt-5 mb-5">
+        <div class="row col-12">
+          <div class="col-9"><h4>すべてのグループ</h4></div>
+        </div>
+        <div class="row col-12">
+              <table class="table">
+          <thead>
+            <tr>
+              <th> </th>
+              <th>グループ名</th>
+              <th>オーナー</th>
+              <th>グループ概要</th>
+              <th>参加人数</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @group_lists.each do |group| %>
+            <tr>
+              <td><%= image_tag group.get_image, size: '50x50' %></td>
+              <td><%= link_to admin_group_path(group.id) do %><%= group.name %><% end %></td>
+              <td><%= link_to admin_user_path(group.owner.id) do %><%= group.owner.name %><% end %></td>
+              <td><%= group.introduction %></td>
+              <td><%= group.group_user.count %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

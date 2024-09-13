@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <%= render "public/homes/sidebar" %>
+    </div>
+    <div class="col-9">
+      <table class="table w-100">
+        <thead>
+          <tr>
+            <th class="table-active" style="padding: 10px;">写真</th>
+            <th class="table-active" style="padding: 10px;">お名前</th>
+            <th class="table-active" style="padding: 10px;">年齢</th>
+            <th class="table-active" style="padding: 10px;">性別</th>
+            <th class="table-active" style="padding: 10px;">種類</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @pets.each do |pet| %>
+            <tr>
+              <td style="padding: 10px;"><%= image_tag(pet.image.present? ? pet.image : 'no_image.jpg', size: '100x100') %></td>
+              <td style="padding: 10px;">
+                <%= link_to pet_path(pet.id), style: 'color: black; text-decoration: underline;' do %>
+                  <%= pet.name %>
+                <% end %>
+              </td>
+              <td style="padding: 10px;"><%= pet.age %>歳</td>
+              <td style="padding: 10px;"><%= pet.gender %></td>
+              <td style="padding: 10px;"><%= pet.category.name %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

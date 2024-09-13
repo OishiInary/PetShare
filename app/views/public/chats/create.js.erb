@@ -1,0 +1,3 @@
+$('.message').append('<%= j(render "public/chats/chat", chat: @chat) %>');
+$('input[type=text]').val("")
+<!--$('input[type=text]').val("")で、メッセージ送信後にテキストボックスを空にできます。-->

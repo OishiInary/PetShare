@@ -1,28 +1,59 @@
-<div class="container">
+<div class="container col-11">
   <div class="row justify-content-center text-center">
-    <div class="col-12 mt-4 mb-4">
+    <div class="col-12 mt-4 mb-1">
       <div class="row bg-primary-subtle text-emphasis-primary justify-content-center">
-        <div class="col border border-4">
-         <%= link_to "Home", homes_entrance_path %>
+        <% if admin_signed_in? %>
+         <div class="col border border-4"><%= link_to '管理者トップ', admin_root_path, class: 'text-decoration-none hover-effect mx-3' %></div>
+         <div class="col border border-4"><%= link_to '会員一覧', admin_users_path, class: 'text-decoration-none hover-effect mx-3' %></div>
+         <div class="col border border-4"><%= link_to '投稿一覧', admin_albums_path, class: 'text-decoration-none hover-effect mx-3' %></div>
+         <div class="col border border-4"><%= link_to 'グループ一覧', admin_groups_path, class: 'text-decoration-none hover-effect mx-3' %></div>
+         <div class="col border border-4"><%= link_to 'タグ一覧未実装', class: 'text-decoration-none hover-effect mx-3' %></div>
+         <div class="col border border-4"><%= link_to 'ログアウト', destroy_admin_session_path, method: :delete, class: 'text-decoration-none hover-effect mx-3' %></div>
+        <% else %>
+          <div class="col border border-4">
+           <%= link_to "トップ", entrance_path %>
+          </div>
+          <div class="col border border-4 text-center">
+             <%= link_to "アバウト", about_path %>
+            <% if user_signed_in? %>
+            <% else %>
+              <div class="row"><%= link_to "ゲストログイン", user_guest_sign_in_path, class: "sign-in", method: :post %></div>
+            <%  end %>
+          </div>
+          <div class="col border border-4 text-center">
+            <%= link_to "マイページ", mypage_path %>
+          </div>
+          
+          <div class="col border border-4">
+           <%= link_to "みんなの写真", albums_path %>
+          </div>
+          <div class="col border border-4">
+           <%= link_to "みんなのペット", pets_path %>
+          </div>
+          <div class="col border border-4">
+           <%= link_to "グループ", groups_path %>
+          </div>
+          <div class="col border border-4">
+           <%= link_to "カテゴリー検索", categories_path %>
+          </div>
+          <div class="col border border-4">
+           <%= link_to "-SAVE-", save_path %>
+          </div>
+          <div class="col border border-4 text-center justify-content-center">
+            <% if user_signed_in? %>
+            <div class="row">
+              <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %></div>
+            <% else %>
+              <div class="row text-center"><%= link_to '新規会員登録', new_user_registration_path %></div>
+              <div class="row text-center"><%= link_to 'ログイン', new_user_session_path %></div>
+            <%  end %>
         </div>
-        <div class="col border border-4 text-center">
-         <%= link_to "MyPage", users_path %>
-        </div>
-        <div class="col border border-4">
-         <%= link_to "Ranking" %>
-        </div>
-        <div class="col border border-4">
-         <%= link_to "Save", homes_save_path %>
-        </div>
-        <div class="col border border-4 text-center justify-content-center">
-          <% if user_signed_in? %>
-          <div class="row"><%= link_to 'ログアウト', destroy_user_session_path %></div>
-          <% else %>
-          <div class="row text-center"><%= link_to '新規会員登録', new_user_registration_path %></div>
-          <div class="row text-center"><%= link_to 'ログイン', new_user_session_path %></div>
-          <%  end %>
-        </div>
+        <% end %>
       </div>
     </div>
+  </div>
+  <div class="row"><%= render "public/searches/form" %></div>
+  <div class=" row">
+    <h4 id="notice mt-5 mb-5 text-center"><%= notice %></h4>
   </div>
 </div>

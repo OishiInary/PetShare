@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <%= form_with model: @group do |f| %>
+      <div class="mb-3 form-group-name">
+        <%= f.label :グループ名 %>
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+      <div class="mb-3 form-group-introduction">
+        <%= f.label :グループ紹介文 %>
+        <%= f.text_area :introduction, class: "form-control" %>
+      </div>
+      <div class="mb-3 form-group-image">
+        <%= f.label :グループ画像　%>
+        <%= f.file_field :group_image, class: "form-control-file", accept: "image/*" %>
+      </div>
+      <div class="mb-3 form-group">
+        <%= f.submit class: "btn btn-info" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

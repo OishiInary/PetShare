@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="row mb-5">
+    お気に入りしたペット一覧
+  </div>
+  <div class="row">
+    <% @favorites.each do |favorite| %>
+    <div class ="col-2 mb-3">
+      <%= link_to pet_path(favorite.pet.id) do %>
+      <div class="row">
+        <%= image_tag favorite.pet.image, size: '100x100' %>
+      </div>
+      <div class="row">
+        <%= favorite.pet.name %>
+      </div>
+      <div class="row">
+        <%= favorite.pet.user.name %>
+      </div>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
+</div>

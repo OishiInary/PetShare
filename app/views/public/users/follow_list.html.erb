@@ -1,0 +1,19 @@
+<h2>Follower Users</h2>
+ <% if @followers.exists? %>
+   <p>フォロワー一覧</p><br/>
+   <% @followers.each do |user| %>
+    <%= user.name %>
+   <% end %>
+ <% else %>
+  <p>フォロワーはいません</p>
+ <% end %>
+ 
+<h2>Follow Users</h2>
+ <% if @followings.exists? %>
+   <p>フォロー一覧</p><br/>
+   <% @followings.each do |user| %>
+    <%= user.name %>
+   <% end %>
+ <% else %>
+  <p>フォローしているユーザーはいません</p>
+ <% end %> 

@@ -1,0 +1,10 @@
+<% if @model == 'user' %>
+    <h3>ユーザー検索結果"<%= @content %>"</h3>
+  <%= render 'public/users/index', users: @records %>
+<% elsif @model == 'album' %>
+    <h3>投稿検索結果"<%= @content %>"</h3>
+  <%= render 'public/albums/search_index', albums: @records %>
+<% elsif @model == 'pet' %>
+    <h3>ペット検索結果"<%= @content %>"</h3>
+    <%= render 'public/pets/index', pets: @records %>
+<% end %>

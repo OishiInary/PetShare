@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row">
+    <div class="container">
+      <div class="row">
+        <div class="col mb-5">
+          <%= image_tag @pet.image, size: '700x700', style: "object-fit: contain;" %>
+        </div>
+        <div class="col">
+          <table class="table">
+            <tr>
+              <th>お名前</th>
+              <th><%= @pet.name %></th>
+            </tr>
+            <tr>
+              <td>年齢</td>
+              <td><%= @pet.age %></td>
+            </tr>
+            <tr>
+              <td>種類</td>
+              <td><%= @pet.category.name %></td>
+            </tr>
+            <tr>
+              <td>投稿数</td>
+              <td><%= @pet.album.count %></td>
+            </tr>
+            <tr>
+              <td>獲得いいね</td>
+              <td><%= @favorites %>個</td>
+            </tr>
+          </table>
+          <div class="row">
+            <div class="col mb-5">
+              <table class="table">
+                <thead><tr><th>飼い主</th></tr></thead><br>
+                <tbody><tr><td><%= link_to user_path(@pet.user) do %><%= @pet.user.name %><% end %></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+          <% if @pet.user.id == current_user.id %>
+            <div class="row m-5"><%= link_to "編集する", edit_pet_path(@pet), class: "btn btn-primary" %></div>
+            <div class="row mt-5">↓-↓-↓取返しが付かないので注意↓-↓-↓</div>
+            <div class="row m-5"><%= link_to "削除する", @pet,method: :delete,data: { confirm: '本当にこの子を削除してしまうんですか？' }, class: "btn btn-danger" %></div>
+           <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
