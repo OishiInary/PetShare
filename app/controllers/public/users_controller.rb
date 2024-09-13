@@ -1,9 +1,9 @@
 class Public::UsersController < ApplicationController
-# before_action :authenticate_user!, except: [:index, :show]
-# before_action :ensure_correct_user, only: [:edit, :update]
-# before_action :set_user, only: [:show,:followings, :followers]
-# before_action :ensure_guest_user, only: [:follow_list,:unsubscribe,:edit]
-# before_action :current_my_page, only: [:show]
+before_action :authenticate_user!, except: [:index, :show]
+before_action :ensure_correct_user, only: [:edit, :update]
+before_action :set_user, only: [:show,:followings, :followers]
+before_action :ensure_guest_user, only: [:follow_list,:unsubscribe,:edit]
+before_action :current_my_page, only: [:show]
 
   def unsubscribe
   end
