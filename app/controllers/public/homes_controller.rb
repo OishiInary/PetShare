@@ -22,7 +22,7 @@ before_action :authenticate_user!, except: [:top, :about, :entrance, :save]
   end
 
   def my_album
-    @albums = Album.where(user_id: current_user)
+    @albums = Album.where(user_id: current_user).page(params[:page])
   end
   
   def entrance

@@ -30,7 +30,7 @@ before_action :ensure_guest_user, only: [:new,:edit, :destroy]
   def show
       @group = Group.find(params[:id])
       @group_users = GroupUser.where(group_id: @group.id)
-      @group_chats = GroupChat.where(group_id: @group.id)
+      @group_chats = GroupChat.where(group_id: @group.id).order(created_at: :desc).page(params[:page])
       @group_chat = GroupChat.new
   end
 

@@ -1,12 +1,10 @@
-<div class="container">
-  <div class="row col-7">
+<div class="container col-12">
+  <div class="col-12">
     <%= image_tag @category.get_category_image, size: "600x600" %>
   </div>
-  <div class="row col-5">
-    <dic class="col">
-      <%= @category.name %>
-      <%= @category.introduction %>
-      <%= @category.difficulty %>
-    </dic>
+  <div class="col-12">
+    <div class="row mt-5 mb-5"><%= @category.name %></div>
+    <div class="row mb-5"><%= @category.introduction %></div>
+    <div class="row mb-5">飼いやすさ-<%= @category.difficulty %></div>
   </div>
 </div>

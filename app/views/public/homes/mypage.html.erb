@@ -9,7 +9,7 @@
           <h2><%= current_user.name %>さんのマイページ</h2>
           <div class="row m-4">
             <% if current_user.image.attached? %>
-              <%= image_tag current_user.image, size: "300x300" %>
+              <%= image_tag current_user.image, size: "300x300", style: "object-fit: contain;" %>
             <% else %>
               <%= image_tag 'no_image', size: "50x50" %>
             <% end %>
@@ -66,6 +66,11 @@
         <div class="col m-2 border">
           <%= link_to "フォロー＆フォロワー", follow_list_path %>
           <p>フォロー関係者の<br>一覧です</p>
+        </div>
+      </div>
+      <div class="row col-12">
+        <div class="col">
+          <%= link_to "ユーザー編集画面へ", edit_user_path(current_user),class: "btn btn-info" %>
         </div>
       </div>
     </div>

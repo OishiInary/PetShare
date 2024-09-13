@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col-3">
+    <h3><%= @group.name %></h3>
+  </div>
+  <div class="col-9">
+    <%= image_tag @group.get_image, size: '500x100', style: "object-fit: contain;" %>
+  </div>
+</div>
+<div class="row m-4">
+    <div class="col-2"><%= link_to "編集", edit_admin_group_path(@group), class: "btn btn-success" %></div>
+    <div class="col-2"><%= link_to "削除", admin_group_path(@group),method: :delete,data: { confirm: "本当に削除しますか？" },  class: "btn btn-danger" %></div>
+  </div>
+  <h4>グループ参加者</h4>
+<div class="row col-12">
+  <% @group_users.each do |user| %>
+    <div class="col-2">
+      <%= link_to admin_user_path(user.user.id) do %>
+        <div class="card border" style="width: 7rem; height: 15rem; back-ground-color: blue;">
+          <img class="card-img-top">
+          <%= image_tag user.user.get_profile_image, size: "100x100" %>
+          <div class="card-body">
+            <p class="card-title"><%= user.user.name %></p>
+            <%= link_to "脱退", admin_group_group_user_path(user.user,group_id: @group.id), method: :delete,data: { confirm: "本当に脱退しますか？" },  class: "btn btn-danger" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div> 
+<div class="row">
+  <table class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>発言者</th>
+        <th>内容</th>
+        <th>発言日時</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @group_chats.each do |chat| %>
+      <tr>
+        <td><%= image_tag chat.user.get_profile_image, size: '50x50' %></td>
+        <td><%= chat.user.name %></td>
+        <td><%= chat.message %></td>
+        <td><%= chat.created_at.strftime("%Y/%m/%d") %></td>
+        <td>
+           <%= link_to "削除", admin_group_group_chat_path(@group,chat), method: :delete,remote: true, class: "btn btn-sm btn-danger" %>
+        </td>
+      </tr>
+      </tbody>
+    <% end %>
+  </table>
+</div>

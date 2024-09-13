@@ -2,7 +2,7 @@ class Category < ApplicationRecord
   
   has_many :pet, dependent: :destroy
   has_one_attached :image
-  validates :name, presence: { message: "の入力は必須です" },length: { minimum: 2, maximum: 20 }
+  validates :name, presence: { message: "の入力は必須です" },length: { minimum: 1, maximum: 20 }
   
   
   

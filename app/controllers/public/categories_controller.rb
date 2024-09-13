@@ -7,6 +7,6 @@ class Public::CategoriesController < ApplicationController
   def show
     @categories = Category.all
     @category = Category.find(params[:id])
+    @category_pets = Pet.where(category_id: @category.id).order(created_at: :desc).page(params[:page])
   end
-  
 end

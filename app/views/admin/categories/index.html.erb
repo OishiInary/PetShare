@@ -15,11 +15,8 @@
   <tbody>
     <% @categories.each do |category| %>
     <tr>
-      <%= link_to category_path(category.id) do %>
-        <td><%= image_tag category.get_category_image, size: "60x60" %></td>
-        <% end %>
-        <td><%= category.name %></td>
-      
+      <td><%= image_tag category.get_category_image, size: "60x60" %></td>
+      <td><%= link_to admin_category_path(category) do %><%= category.name %><% end %></td>
       <td><%= link_to "編集", edit_admin_category_path(category.id),class: "btn btn-success" %></td>
       <td><%= link_to "削除", admin_category_path(category.id),method: :delete, class: "btn btn-danger" %> </td>
     </tr>

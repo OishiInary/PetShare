@@ -10,13 +10,13 @@ before_action :authenticate_admin!
     end  
     
     def new
-        @category_new = Category.new
+        @category = Category.new
     end
     
     def create
-        @category_new = Category.new(params)
-        @category_new.save
-        redirect_back(fallback_location: admin_root_path)
+        @category = Category.new(category_params)
+        @category.save
+        redirect_to admin_categories_path
     end 
     
     def edit
@@ -40,4 +40,11 @@ before_action :authenticate_admin!
         @category.destroy
         redirect_back(fallback_location: admin_root_path)
     end  
+
+   private
+   
+   def category_params
+    params.require(:category).permit(:name,:introduction,:difficulty,:image)
+   end
+
 end

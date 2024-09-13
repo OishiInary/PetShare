@@ -24,7 +24,12 @@ Rails.application.routes.draw do
       resources :comments, only:[:destroy]
     end
     resources :rooms, only:[:show,:index, :edit, :update, :destroy]
-    resources :groups, only:[:show,:index,:edit,:update,:destroy]
+    resources :groups, only:[:show,:index,:edit,:update,:destroy] do
+      resources :group_users, only:[:destroy]
+         resources :group_chats, only:[:destroy]
+    end
+  
+  
   end
   
   scope module: :public do

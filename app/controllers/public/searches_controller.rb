@@ -12,7 +12,7 @@ class Public::SearchesController < ApplicationController
     elsif @model  == "album"
       @records = Album.search_for(@content, @method)
     else
-      @records = Pet.searchfor(@content, @method)
+      @records = Pet.search_for(@content, @method)
     end
   end
 end
