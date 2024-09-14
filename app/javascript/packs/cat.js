@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const cat = document.createElement('img');
-    cat.src = '/assets/chiko-aruku-toumei.gif';
+    cat.src = '/chiko-aruku-toumei.gif';
     cat.style.width = '30px';
     cat.style.height = '30px';
     cat.style.position = 'fixed';

@@ -14,7 +14,7 @@ class Group < ApplicationRecord
   end
   
   def get_image
-    (group_image.attached?) ? group_image : 'no_image.jpg'
+    (group_image.attached?) ? group_image : '/no_image.jpg'
   end
   
 end

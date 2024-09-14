@@ -8,11 +8,7 @@
         <div class="col-9">
           <h2><%= current_user.name %>さんのマイページ</h2>
           <div class="row m-4">
-            <% if current_user.image.attached? %>
-              <%= image_tag current_user.image, size: "300x300", style: "object-fit: contain;" %>
-            <% else %>
-              <%= image_tag 'no_image', size: "50x50" %>
-            <% end %>
+              <%= image_tag current_user.get_profile_image, size: "300x300", style: "object-fit: contain;" %>
           </div>
         </div>
         <div class="col">
