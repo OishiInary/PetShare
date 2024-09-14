@@ -74,7 +74,7 @@ class User < ApplicationRecord
   end
 
   def get_profile_image
-    (image.attached?) ? image : 'no_image.jpg'
+    (image.attached?) ? image : '/no_image.jpg'
   end
 
   def self.search_for(content, method)
