@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  
+
   devise_for :admin, controllers: {
   sessions: "admin/sessions"
 }
@@ -10,11 +10,11 @@ Rails.application.routes.draw do
   }
   # 新規会員登録でエラーが出たときにusersにURLが変わっていることへの対処
   get "users" => redirect("/users/sign_up")
-  
+
   devise_scope :user do
     post "user/guest_sign_in", to: "users/sessions#guest_sign_in"
   end
-    
+
   namespace :admin do
     root to: "homes#top"
     resources :users, only:[ :show, :index, :edit, :update]
@@ -28,10 +28,10 @@ Rails.application.routes.draw do
       resources :group_users, only:[:destroy]
          resources :group_chats, only:[:destroy]
     end
-  
-  
+
+
   end
-  
+
   scope module: :public do
     root to: "homes#top"
     get "/search" => "searches#search"
@@ -57,12 +57,12 @@ Rails.application.routes.draw do
     resources :pets, only:[:show, :index, :new, :create, :edit, :update, :destroy]do
       resource :pet_favorites, only:[:create, :destroy]
     end
-    
+
     resources :albums, only:[:index, :show, :new, :create, :edit, :update, :destroy]do
       resources :comments, only:[:create, :update, :destroy]
           resource :favorites, only:[:create, :destroy]
     end
-    
+
     resources :groups, only: [:new, :index, :show, :create, :edit, :update, :destroy] do
       resources :group_users, only:[:create, :destroy]
          resources :group_chats, only:[:create, :destroy]

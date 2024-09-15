@@ -3,7 +3,9 @@ max_days_ago = 365
 random_days_ago = rand(min_days_ago..max_days_ago)
 random_date = Time.now - random_days_ago.days
 
-Admin.create(email: '1@1', password: '111111')
+Admin.find_or_create_by!(email: ENV['ADMIN_MAIL']) do |admin|
+ admin.password = ENV["ADMIN_PASS"]
+end
 Tag.create(name: 'デブ猫')
 
 Category.find_or_create_by!(name: '猫') do |category|
