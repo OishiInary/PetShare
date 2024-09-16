@@ -19,11 +19,7 @@
         </div>
         <div class="row m-3">
           <div class="">
-            <% if @album.user.image.attached? %>
-              <%= image_tag @album.user.image, size: "50x50" %>
-            <% else %>
-              <%= image_tag 'no_image', size: "50x50" %>
-            <% end %>
+              <%= image_tag @album.user_image, size: "50x50" %>
             </div>
           <div class=""><%= link_to admin_user_path(@album.user.id) do %>
           <%= @album.user.name %></div
@@ -43,7 +39,7 @@
           <% @albums.each do |album| %>
           <div class="col m-2">
             <%= link_to admin_album_path(album) do %>
-              <%= image_tag album.image, size: "100x100" %>
+              <%= image_tag get_album_image, size: "100x100" %>
             <% end %>
           </div>
           <% end %>
@@ -56,3 +52,6 @@
     </div>
   </div>
 </div>
+
+
+

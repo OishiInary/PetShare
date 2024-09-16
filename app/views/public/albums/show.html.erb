@@ -21,11 +21,7 @@
         </div>
         <div class="row m-3">
           <div class="">
-            <% if @album.user.image.attached? %>
-              <%= image_tag @album.user.image, size: "50x50" %>
-            <% else %>
-              <%= image_tag 'no_image', size: "50x50" %>
-            <% end %>
+              <%= image_tag @album.user.get_profile_image, size: "50x50" %>
             </div>
           <div class=""><%= link_to user_path(@album.user.id) do %>
           <%= @album.user.name %></div

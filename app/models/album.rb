@@ -26,6 +26,11 @@ class Album < ApplicationRecord
     favorites.exists?(user_id: user.id)
   end 
   
+  def get_album_image
+    (image.attached?) ? image : '/no_image.jpg'
+  end
+  
+  
   # def self.last_week #週間でいいねが高いランキングを作る
   #   Album.joins(:favorites).where(favorites: { created_at: 0.days.ago.prev_week..0.days.ago.prev_week(:sunday) }).group(:id).order(Arel.sql('COUNT(*) DESC'))
   # end
