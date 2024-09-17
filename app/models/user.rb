@@ -36,8 +36,12 @@ class User < ApplicationRecord
 
   has_many :followings, through: :active_relationships,  source: :followed
   has_many :followers,  through: :passive_relationships, source: :follower
-
+  # ゲスト用のメルアド
   GUEST_USER_EMAIL = "guest@exsample.com"
+# Eメールがゲストようだったらゲストユーザー認定
+  def guest_user?
+    email == GUEST_USER_EMAIL
+  end
 
   def self.guest
     find_or_create_by!(email: GUEST_USER_EMAIL) do |user|
@@ -65,14 +69,12 @@ class User < ApplicationRecord
     followings.include?(user)
   end
 
+# ユーザーに関連付けられたペットの取得
   def mypets
    self.pets
   end
 
-  def guest_user?
-    email == GUEST_USER_EMAIL
-  end
-
+# ユーザー画像取得処理
   def get_profile_image
     (image.attached?) ? image : '/no_image.jpg'
   end

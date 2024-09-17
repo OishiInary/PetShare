@@ -1,4 +1,5 @@
 class Public::CategoriesController < ApplicationController
+before_action :authenticate_user!
   def index
     @categories = Category.all
     # @category = Category.offset( rand(Category.count) ).limit(1)
