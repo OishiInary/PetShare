@@ -6,7 +6,8 @@ random_date = Time.now - random_days_ago.days
 tmp_admin = Admin.find_or_create_by!(email: ENV['ADMIN_MAIL']) do |admin|
  admin.password = ENV["ADMIN_PASS"]
 end
-Tag.find_or_create_by!(name: 'デブ猫')
+
+tmp_tag = Tag.find_or_create_by!(name: 'デブ猫')
 
 tmp_category = Category.find_or_create_by!(name: '猫') do |category|
   category.introduction = "みんな大好き猫ちゃん！様々な種類がおり性格も様々。"

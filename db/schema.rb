@@ -53,8 +53,12 @@ ActiveRecord::Schema.define(version: 2024_09_10_225300) do
   end
 
   create_table "album_tags", force: :cascade do |t|
+    t.integer "album_id"
+    t.integer "tag_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["album_id"], name: "index_album_tags_on_album_id"
+    t.index ["tag_id"], name: "index_album_tags_on_tag_id"
   end
 
   create_table "albums", force: :cascade do |t|

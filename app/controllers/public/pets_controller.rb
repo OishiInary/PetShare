@@ -39,7 +39,7 @@ before_action :ensure_guest_user, only: [:new,:create,:edit,:update,:destroy]
     @pet = Pet.find(params[:id])
     if @pet.update(pet_params)
       flash[:notice] = "更新に成功しました"
-      redirect_to pets_path(@pet.id)
+      redirect_to pet_path(@pet.id)
     else
       flash[:notice] = "更新に失敗しました"
       @pet = Pet.find(params[:id])

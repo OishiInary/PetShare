@@ -24,7 +24,7 @@
               <td><%= @pet.album.count %></td>
             </tr>
             <tr>
-              <td>獲得いいね</td>
+              <td>主演アルバムの獲得いいね総数</td>
               <td><%= @favorites %>個</td>
             </tr>
           </table>
@@ -34,6 +34,13 @@
                 <thead><tr><th>飼い主</th></tr></thead><br>
                 <tbody><tr><td><%= link_to user_path(@pet.user) do %><%= @pet.user.name %><% end %></td></tr></tbody>
               </table>
+               <div class="row mb-1">
+                 <div class="col">
+                  <h4 id="favorite_buttons_<%= @pet.id %>">
+                    <%= render "public/pet_favorites/favorite_btn", pet: @pet %>
+                  </h4>
+                </div>
+               </div>
             </div>
           </div>
           <% if @pet.user.id == current_user.id %>

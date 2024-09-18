@@ -10,6 +10,9 @@ class Pet < ApplicationRecord
   validates :gender, presence: { message: "の入力は必須です" }
   validates :age, presence: { message: "の入力は必須です" }
 
+  def favorited_by?(user)
+    pet_favorites.exists?(user_id: user.id)
+  end 
 
   def self.search_for(content,method)
     if method == 'perfect'

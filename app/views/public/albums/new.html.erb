@@ -34,6 +34,10 @@
               <%= f.select :pet_id, options_for_select(current_user.mypets.map { |pet| [pet.name, pet.id] }), prompt: false, class: "form-control" %>
             </td>
           </tr>
+          <tr>
+            <th><%= f.label"タグ (スペースで区切ると複数タグ登録できます)" %></th>
+            <td><%= f.text_field :name, placeholder: "お昼寝 ご飯 ジャンプ" %></td>
+          </tr>
         </table>
         <div class="row my-3 justify-content-center">
           <%= f.submit "新規投稿", class: 'btn btn-success' %>

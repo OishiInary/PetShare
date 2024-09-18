@@ -4,28 +4,42 @@
       <!--画像の表示領域、その下に投稿者ほか-->
       <div class="container">
         <div class="row">
-          <%= image_tag @album.image, size: '700x700', style: "object-fit: contain;" %>
+          <%= image_tag @album.get_album_image, size: '700x700', style: "object-fit: contain;" %>
         </div>
         <div class="row">
           <div class="col">
             <h2><%= @album.title %></h2>
           </div>
+          <!--いいね（お気に入り）-->
           <div class="col">
             <h4 id="favorite_buttons_<%= @album.id %>">
               <%= render "public/favorites/favorite_btn", album: @album %>
             </h4>
           </div>
         </div>
+        <div class="row">
+          <% @album_tags.each do |tag| %>
+          <div class="m-3 badge badge-pill badge-info">
+            <%= tag.name %>
+          </div>
+          <% end %>
+        </div>
         <div class="row m-3">
           <%= @album.body %>
         </div>
         <div class="row m-3">
-          <div class="">
+          <div class="col-2">
               <%= image_tag @album.user.get_profile_image, size: "50x50" %>
             </div>
-          <div class=""><%= link_to user_path(@album.user.id) do %>
-          <%= @album.user.name %></div
+          <div class="col-2"><%= link_to user_path(@album.user.id) do %>
+          <%= @album.user.name %></div>
           <% end %>
+          <div class="col-8">
+            <% if @album.user == current_user %>
+              <%= link_to "この投稿を編集する",edit_album_path(@album), class: "btn btn-warning" %>
+              <%= link_to "この投稿を削除する", album_path(@album), method: :delete,data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
@@ -41,7 +55,7 @@
           <% @albums.each do |album| %>
           <div class="col m-2">
             <%= link_to album_path(album) do %>
-              <%= image_tag album.image, size: "100x100" %>
+              <%= image_tag album.get_album_image, size: "100x100" %>
             <% end %>
           </div>
           <% end %>
