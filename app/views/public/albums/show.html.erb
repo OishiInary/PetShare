@@ -19,8 +19,9 @@
         </div>
         <div class="row">
           <% @album_tags.each do |tag| %>
-          <div class="m-3 badge badge-pill badge-info">
-            <%= tag.name %>
+          <div class="m-3 badge badge-pill badge-secondary">
+            <%= link_to tag_path(tag) do %>
+            <%= tag.name %><% end %>
           </div>
           <% end %>
         </div>

@@ -60,11 +60,7 @@ before_action :ensure_guest_user, only: [:new,:destroy,:edit]
       redirect_to my_album_path
     end
     
-    def search
-    @tag_list = Tag.all               # こっちの投稿一覧表示ページでも全てのタグを表示するために、タグを全取得
-    @tag = Tag.find(params[:tag_id])  # クリックしたタグを取得
-    @album = @tag.albums.all           # クリックしたタグに紐付けられた投稿を全て表示
-    end
+
     
     private
     

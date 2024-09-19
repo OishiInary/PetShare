@@ -1,0 +1,25 @@
+<div class="container">
+  <% @tag_list.each do |tag| %>
+  
+  <% end %>
+  <div class="row text-center">
+    <h3><%= @tag.name %></h3>の投稿一覧
+  </div>
+  <div class="row">
+    <% @albums.each do |album| %>
+    <div class ="col-2 mb-3">
+      <%= link_to album_path(album.id) do %>
+      <div class="row">
+        <%= image_tag album.get_album_image, size: '100x100' %>
+      </div>
+      <div class="row">
+        <%= album.title %>
+      </div>
+      <div class="row">
+        <%= album.created_at.strftime("%Y/%m/%d") %>
+      </div>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
+</div>
