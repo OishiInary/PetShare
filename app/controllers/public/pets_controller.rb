@@ -26,7 +26,7 @@ before_action :ensure_guest_user, only: [:new,:create,:edit,:update,:destroy]
   end
   
   def index
-    @pets  = Pet.all
+    @pets  = Pet.page(params[:page]).order(created_at: :desc)
   end  
   
 

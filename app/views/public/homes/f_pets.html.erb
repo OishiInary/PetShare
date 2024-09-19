@@ -4,17 +4,14 @@
   </div>
   <div class="row">
     <% @favorites.each do |favorite| %>
-    <div class ="col-2 mb-3">
+    <div class ="card col-2 mb-3 mr-3">
       <%= link_to pet_path(favorite.pet.id) do %>
-      <div class="row">
-        <%= image_tag favorite.pet.image, size: '100x100' %>
+      <div class="card-img-top">
+        <%= image_tag favorite.pet.image, size: "100x100", style: "object-fit: contain;" %>
       </div>
-      <div class="row">
-        <%= favorite.pet.name %>
-      </div>
-      <div class="row">
-        <%= favorite.pet.user.name %>
-      </div>
+        <div class="card-title">
+          <%= favorite.pet.name %>
+        </div>
       <% end %>
     </div>
     <% end %>

@@ -17,7 +17,7 @@ end
 
 
 tmp_user = User.find_or_create_by!(email: "12345@com") do |user|
-  user.name = "サンプル太郎"
+  user.name = "サンプル"
   user.email = '12345@com'
   user.password = '123456'
   user.birthday =  random_date
@@ -34,13 +34,13 @@ tmp_pet = Pet.find_or_create_by!(name: 'サンプルペット') do |pet|
   pet.category_id = tmp_category.id
   pet.age = 1000
   pet.gender = 1
-  pet.image = ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/no_image.jpg"), filename:"no_image.jpg")
+  pet.image = ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/shimaenaga.jpg"), filename:"shimaenaga.jpg")
 end
 
 Album.find_or_create_by!(title: 'サンプル') do |album|
   album.pet_id = tmp_pet.id
   album.user_id = tmp_user.id
   album.body = 'サンプルです。'
-  album.image = ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/no_image.jpg"), filename:"no_image.jpg")
+  album.image = ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/shimaenaga.jpg"), filename:"shimaenaga.jpg")
 end
 

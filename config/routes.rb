@@ -67,5 +67,8 @@ Rails.application.routes.draw do
       resources :group_users, only:[:create, :destroy]
          resources :group_chats, only:[:create, :destroy]
     end
+      resources :tags do
+    get 'tag_search', to: 'albums#search'
+    end
   end
 end

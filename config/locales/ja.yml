@@ -1,5 +1,9 @@
 ja:
   enums:
+    pet:
+      gender:
+        :male: 'オス'
+        female: 'メス'
     user:
       gender:
         other: 'その他'
