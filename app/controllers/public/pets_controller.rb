@@ -26,7 +26,8 @@ before_action :ensure_guest_user, only: [:new,:create,:edit,:update,:destroy]
   end
   
   def index
-    @pets  = Pet.page(params[:page].per(10)).order(created_at: :desc)
+    page_number = params[:page].present? ? params[:page] : 1
+    @pets = Pet.page(page_number).per(10).order(created_at: :desc)
   end  
   
 
