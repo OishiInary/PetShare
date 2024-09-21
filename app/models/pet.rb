@@ -16,11 +16,7 @@ class Pet < ApplicationRecord
 
   def self.search_for(content,method)
     if method == 'perfect'
-      Pet.where(title: content)
-    elsif method == 'forward'
-      Pet.where('name LIKE ?', content + '%')
-    elsif method == 'backward'
-      Pet.where('name LIKE ?', '%' + content)
+      Pet.where(name: content)
     else
       Pet.where('name LIKE ?', '%' + content + '%')
     end

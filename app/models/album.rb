@@ -38,15 +38,32 @@ class Album < ApplicationRecord
   # 検索機能用
   def self.search_for(content, method)
     if method == 'perfect'
-      Album.where(name: content)
-    elsif method == 'forward'
-      Album.where('name LIKE ?', content + '%')
-    elsif method == 'backward'
-      Album.where('name LIKE ?', '%' + content)
+      Album.where(title: content)
     else
-      Album.where('name LIKE ?', '%' + content + '%')
+      Album.where('title LIKE ?', '%' + content + '%')
     end
   end
+  
+  def self.tag_search_for(content, method)
+    
+    if method == 'perfect'
+      # tag = Tag.find(name: content)
+      tag = Tag.find_by(name: content)
+      if tag
+        tag.albums
+      else
+      []
+      end
+    else
+      tag = Tag.find_by('name LIKE ?','%' + content + '%')
+      if tag
+        tag.albums
+      else
+      []
+      end
+    end
+  end
+  
   # お気に入りの重複確認
   def favorited_by?(user)
     favorites.exists?(user_id: user.id)

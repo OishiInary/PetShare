@@ -56,7 +56,8 @@ class User < ApplicationRecord
       user.introduction = "サンプルユーザーです。"
     end
   end
-
+   
+  
   def follow(user)
     active_relationships.create(followed_id: user.id)
   end
@@ -82,10 +83,6 @@ class User < ApplicationRecord
   def self.search_for(content, method)
     if method == 'perfect'
       User.where(name: content)
-    elsif method == 'forward'
-      User.where('name LIKE ?', content + '%')
-    elsif method == 'backward'
-      User.where('name LIKE ?', '%' + content)
     else
       User.where('name LIKE ?', '%' + content + '%')
     end

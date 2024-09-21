@@ -4,15 +4,11 @@
       <%= render "public/homes/sidebar" %>
     </div>
     <div class="container col-9">
-        <h3>カテゴリーから検索する</h3>
-      <div class="row col-12">
-        <div class="col" id="tags">
+      <h3>カテゴリーから検索する</h3>
+      <div class="row col-12 justify-content-center">
+        <ul class="nav nav-tabs" id="tags">
           <%= render "tags", categories: @categories %>
-        </div>
-      </div>
-      <div class="row col-12">
-        <div class="col" id="show">
-        </div>
+        </ul>
       </div>
     </div>
   </div>

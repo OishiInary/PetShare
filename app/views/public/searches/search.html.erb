@@ -7,4 +7,7 @@
 <% elsif @model == 'pet' %>
     <h3>ペット検索結果"<%= @content %>"</h3>
     <%= render 'public/pets/index', pets: @records %>
+<% else %>
+    <h3>タグ検索結果"<%= @content %>"</h3>
+    <%= render 'public/albums/search_index', albums: @records %>
 <% end %>

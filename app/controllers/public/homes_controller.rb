@@ -39,8 +39,8 @@ before_action :authenticate_user!, except: [:top, :about, :entrance, :save]
   
   
   def save
-    # @req_users = User.find(user.hope == 1)
-    # @can_users = User.find(user.hope == 2)
+    @can_users = User.where(hope: 2)
+    @need_pets = Pet.where(need_help: true)
   end  
   
   private

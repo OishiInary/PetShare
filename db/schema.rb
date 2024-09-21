@@ -153,6 +153,7 @@ ActiveRecord::Schema.define(version: 2024_09_10_225300) do
     t.string "name", null: false
     t.integer "gender", null: false
     t.integer "age", null: false
+    t.boolean "need_help", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_pets_on_category_id"
@@ -175,6 +176,7 @@ ActiveRecord::Schema.define(version: 2024_09_10_225300) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
   create_table "user_rooms", force: :cascade do |t|

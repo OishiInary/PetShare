@@ -11,8 +11,10 @@ class Public::SearchesController < ApplicationController
       @records = User.search_for(@content, @method)
     elsif @model  == "album"
       @records = Album.search_for(@content, @method)
-    else
+    elsif @model == "pet"
       @records = Pet.search_for(@content, @method)
+    else 
+      @records = Album.tag_search_for(@content, @method)
     end
   end
 end

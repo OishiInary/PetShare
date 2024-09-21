@@ -1,9 +1,45 @@
-<h1>工事中です</h1>
-<h4>ここでは最寄りの保護施設の情報や<br>ユーザー様同士のペットの譲渡を支援する<br>ページになる予定です。</h4>
-<h5>以下は動物愛護系のサイトです</h5>
-<div class="row m-4">
-<%= link_to "AWGsのサイト", "https://www.animaldonation.org/awgs/" %>
+<div class="row bg-light" style="">
+<h3>SAVE活動</h3><br></div>
+<div class="row">
+  <p>里親を探しているひとは里子募集の欄から気になったユーザーに連絡をしてみよう。</p>
+<p>里子を募集している人は里親募集中のペット一覧から気になる子を探しその飼い主に連絡をしてみよう。</p>
 </div>
-<div class="row m-4">
-  <%= link_to "【豊田】動物愛護センター", "https://www.city.toyota.aichi.jp/shisetsu/shisetsusonota/aigocenter/index.html" %>
+<div class="container text-center">
+  <div class="row">
+    <div class="col-6">
+      <h4>里子募集しているユーザー</h4>
+      <table class="table border">
+        <thead>
+          <tr>
+            <th>名前</th><th>年齢</th><th>ファミリー数</th>
+          </tr>
+        </thead>
+        <tdoby>
+          <% @can_users.each do |user| %>
+          <td><%= link_to user_path(user) do %><%= user.name %><% end %></td>
+          <td><%= user.gender_i18n %></td>
+          <td><%= user.pets.count %>匹</td>
+          <% end %>
+        </tdoby>
+      </table>
+    </div>
+    <div class="col-6">
+      <h4>里親募集しているペット</h4>
+      <table class="table border">
+        <thead>
+          <tr>
+            <th>写真</th><th>名前</th><th>年齢</th><th>性別</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @need_pets.each do |pet| %>
+              <td><%= link_to pet_path(pet) do %><%= image_tag pet.image, size: "100x100" %><% end %></td>
+              <td><%= pet.name %></td>
+            <td><%= pet.age %></td>
+            <td><%= pet.gender_i18n %></td>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
