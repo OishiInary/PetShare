@@ -115,3 +115,10 @@
   background: #4c9689;
 }
 
+a {color: green;}
+a:hover{ color: #117554; }
+
+.shadow-image {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 影の設定 */
+    display: inline-block; /* 画像をインラインブロックに */
+}

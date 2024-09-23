@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   #Deviseコントローラー使うときにその前にparam許可して情報を受け取る処理
   before_action :configure_permitted_parameters, if: :devise_controller?
+  @year = Time.current.year
   
   def after_sign_in_path_for(resource)
     case resource

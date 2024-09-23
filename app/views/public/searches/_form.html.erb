@@ -3,6 +3,6 @@
     <%= f.text_field :content %>
     <%= f.select :model, options_for_select({"ユーザー" => "user", "投稿" => "album", "ペット" => "pet", "タグ" => "tag"}) %>
     <%= f.select :method, options_for_select({"完全一致" => "perfect","部分一致" => "partial"}) %>
-    <%= f.submit "検索" ,class: "btn btn-outline-dark btn-sm " %>
+    <%= f.submit "検索"   %>
   <% end %>
 <% end %>

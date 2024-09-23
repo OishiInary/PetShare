@@ -1,14 +1,13 @@
 
-<div class="container justify-content-center text-center">
+<div class="container justify-content-center text-center vertical-align: middle">
   </h2>
-    <div class="row mb-5"><%= link_to 'マイページ', mypage_path %></div>
-    <div class="row mb-5"><%= link_to'アルバム投稿', new_album_path %></div>
-    <div class="row mb-5"><%= link_to'マイアルバム', my_album_path %></div>
-    <div class="row mb-5"><%= link_to'ペット登録', new_pet_path %></div>
-    <div class="row mb-5"><%= link_to'マイペット', my_pet_path %></div>
-    <div class="row mb-5"><%= link_to'グループ一覧', groups_path %></div>
-    <div class="row mb-5"><%= link_to'お気に入り投稿', f_albums_path %></div>
-    <div class="row mb-5"><%= link_to'お気に入りペット', f_pets_path %></div>
-    <div class="row mb-5"><%= link_to'フォローリスト', follow_list_path %></div>
+    <div class="row col-12 mb-3 px-4 pt-2 border justify-content-center text-center shadow-image" style="border-radius: 60px; background-color: #FFEBD8;"><%= link_to mypage_path do %><i class="fa-solid fa-house-chimney-user" style="font-size: 50px;  color: #A8CD9F;"></i><p>マイページ</p><% end %></div>
+    <div class="row col-12 mb-3 px-4 pt-2 border justify-content-center text-center shadow-image" style="border-radius: 60px; background-color: #FFEBD8;"><%= link_to new_album_path do %><i class="fa-regular fa-image"  style="font-size: 50px; color: #A8CD9F;"></i><p>アルバム投稿</p><% end %></div>
+    <div class="row col-12 mb-3 px-4 pt-2 border justify-content-center text-center shadow-image" style="border-radius: 60px; background-color: #FFEBD8;"><%= link_to my_album_path do %><i class="fa-solid fa-book" style="font-size: 50px;  color: #A8CD9F;"></i><p>マイアルバム</p><% end %></div>
+    <div class="row col-12 mb-3 px-4 pt-2 border justify-content-center text-center shadow-image" style="border-radius: 60px; background-color: #FFEBD8;"><%= link_to new_pet_path do %><i class="fa-solid fa-dragon" style="font-size: 50px;  color: #A8CD9F;"></i><p>ペット登録</p><% end %></div>
+    <div class="row col-12 mb-3 px-4 pt-2 border justify-content-center text-center shadow-image" style="border-radius: 60px; background-color: #FFEBD8;"><%= link_to my_pet_path do %><i class="fa-solid fa-cat" style="font-size: 50px;  color: #A8CD9F;"></i><p>マイペット</p><% end %></div>
+    <div class="row col-12 mb-3 px-4 pt-2 border justify-content-center text-center shadow-image" style="border-radius: 60px; background-color: #FFEBD8;"><%= link_to groups_path do %><i class="fa-solid fa-people-group" style="font-size: 50px;  color: #A8CD9F;"></i><p>グループ</p><% end %></div>
+    <div class="row col-12 mb-3 px-4 pt-2 border justify-content-center text-center shadow-image" style="border-radius: 60px; background-color: #FFEBD8;"><%= link_to f_albums_path do %><i class="fa-regular fa-thumbs-up" style="font-size: 50px;  color: #A8CD9F;"></i><p>お気に入り<br>アルバム</p><% end %></div>
+    <div class="row col-12 mb-3 px-4 pt-2 border justify-content-center text-center shadow-image" style="border-radius: 60px; background-color: #FFEBD8;"><%= link_to f_pets_path do %><i class="fa-solid fa-heart" style="font-size: 50px;  color: #A8CD9F;"></i><p>お気に入り<br>ペット</p><% end %></div>
+    <div class="row col-12 mb-3 px-4 pt-2 border justify-content-center text-center shadow-image" style="border-radius: 60px; background-color: #FFEBD8;"><%= link_to follow_list_path do %><i class="fa-solid fa-people-arrows" style="font-size: 50px;  color: #A8CD9F;"></i><p>フォロー＆<br>フォロワー</p><% end %></div>
  </div>
-

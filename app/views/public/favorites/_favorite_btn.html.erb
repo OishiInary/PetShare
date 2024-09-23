@@ -1,11 +1,11 @@
 <% if album.favorited_by?(current_user) %>
   <%= link_to album_favorites_path(album),remote: true, method: :delete do %>
-    <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
-    <%= album.favorites.count %> いいね
+    <i class="fa-regular fa-thumbs-up" aria-hidden="true" style="color: red;"></i>
+    <%= album.favorites.count %> いいねを取り消す
   <% end %>
 <% else %>
   <%= link_to album_favorites_path(album),remote: true, method: :post  do %>
-    <i class="fas fa-heart" aria-hidden="true"></i>
-    <%= album.favorites.count %> いいね
+    <i class="fa-regular fa-thumbs-up" aria-hidden="true"></i>
+    <%= album.favorites.count %> いいねする！
   <% end %>
 <% end %>

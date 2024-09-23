@@ -7,15 +7,14 @@
   </div>
  
   <div class="mb-3">
-    <%= f.label :introduction %><span>省略可</span><br />
+    <%= f.label :introduction %><span>※省略可<span><br />
     <%= f.text_area :introduction, size: "100x5" %>
   </div>
  
   <div class="mb-3">
     <%= f.label :birthday, "生年月日" %><br>
-    <%= f.date_select :birthday, {start_year: 1950, end_year: 2050,
-    include_blank: true, use_two_digit_numbers: true},
-    {class: "input-tab birthday-select"}%>
+    <%= f.date_select :birthday, { start_year: Time.current.year - 100, end_year: Time.current.year }, { class: "input-tab birthday-select", order: [:year, :month, :day] } %>
+    <p style="color: red;">後で変更することはできません。ご注意ください。</p>
   </div> 
   <div class="mb-3">
     <%= f.label :性別 %><br />
@@ -27,8 +26,8 @@
     <%= f.radio_button :gender, :female %>
   </div>
   <div class="mb-3">
-    <table class="table">
-      <thead><tr><th><%= f.label :SAVE %></th></tr></thead>
+    <table class="table border">
+      <thead><tr><th><%= f.label :SAVE %>　　　　　　　　　　　　ペットの譲渡活動の事。ご利用の予定がないうちは未設定をお選びください。</th></tr></thead>
       <tbody><tr><td>
         <%= f.label :未設定  %>
       <%= f.radio_button :hope, :nom %>SAVE活動に参加しません</td></tr>
@@ -64,7 +63,7 @@
   <div class="mb-3">
     <%= f.label :password %>
     <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <em>(<%= @minimum_password_length %>文字以上で登録できます。)</em>
     <% end %><br />
     <%= f.password_field :password, autocomplete: "new-password" %>
   </div>

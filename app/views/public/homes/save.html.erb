@@ -11,14 +11,14 @@
       <table class="table border">
         <thead>
           <tr>
-            <th>名前</th><th>年齢</th><th>ファミリー数</th>
+            <th>名前</th><th>性別</th><th>ファミリー数</th>
           </tr>
         </thead>
         <tdoby>
           <% @can_users.each do |user| %>
-          <td><%= link_to user_path(user) do %><%= user.name %><% end %></td>
+          <tr><td><%= link_to user_path(user) do %><%= user.name %><% end %></td>
           <td><%= user.gender_i18n %></td>
-          <td><%= user.pets.count %>匹</td>
+          <td><%= user.pets.count %>匹</td></tr>
           <% end %>
         </tdoby>
       </table>

@@ -10,10 +10,10 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'cat', 'data-turbolinks-track': 'reload' %>
   </head>
-  <body class="d-flex flex-colum vh-100">
+  <body class="d-flex flex-colum vh-100" style="background-color: #f9fffb;">
     <div class="container">
       <div class="row">
-        <div class="col-11">
+        <div class="col-12" id="">
           <%= render 'layouts/header' %>
           <main class="mb-auto">
           <%= yield %>
