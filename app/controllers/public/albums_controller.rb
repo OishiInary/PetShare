@@ -4,6 +4,9 @@ before_action :ensure_guest_user, only: [:new,:destroy,:edit]
     
     def show
       @album = Album.find(params[:id])
+      unless ViewCount.find_by(user_id: current_user.id, album_id: @album.id)
+       current_user.view_counts.create(album_id: @album.id)
+      end
       @albums = @album.pet.album.all.limit(4)
       @album_tags = @album.tags
       @comment = current_user.comments.new

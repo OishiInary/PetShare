@@ -1,5 +1,5 @@
 @use '~bootstrap/scss/bootstrap';
-
+@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
 .new-img{
   width: 400px;
   object-fit: cover;
@@ -121,4 +121,10 @@ a:hover{ color: #117554; }
 .shadow-image {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 影の設定 */
     display: inline-block; /* 画像をインラインブロックに */
+}
+#photo {
+  
+  border-width: 10px;
+  border-color: #006DD9;
+  border-style: inset;
 }

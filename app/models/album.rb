@@ -5,6 +5,7 @@ class Album < ApplicationRecord
   
   has_many :album_tags, dependent: :destroy
   has_many :tags, through: :album_tags
+  has_many :view_counts, dependent: :destroy
   
   has_many :favorites, dependent: :destroy
   has_many :comments, dependent: :destroy

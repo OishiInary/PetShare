@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_09_10_225300) do
+ActiveRecord::Schema.define(version: 2024_09_24_085700) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -209,6 +209,15 @@ ActiveRecord::Schema.define(version: 2024_09_10_225300) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "view_counts", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "album_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["album_id"], name: "index_view_counts_on_album_id"
+    t.index ["user_id"], name: "index_view_counts_on_user_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "albums", "pets"
@@ -230,4 +239,6 @@ ActiveRecord::Schema.define(version: 2024_09_10_225300) do
   add_foreign_key "pets", "users"
   add_foreign_key "user_rooms", "rooms"
   add_foreign_key "user_rooms", "users"
+  add_foreign_key "view_counts", "albums"
+  add_foreign_key "view_counts", "users"
 end

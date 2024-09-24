@@ -3,76 +3,77 @@
     <div class="container col-3">
       <%= render "sidebar" %>
     </div>
-    <div class="container col-9">
+    <div class="container col-9 border shadow-image"style= "background-color: #C8CFA0; border-radius: 20px;">
       <div class="row m-2">
-        <div class="col-9">
+        <div class="col-9 text-center border shadow-image"style="font-family: 'Righteous', cursive; border-radius: 80px; background-color: #FFEDD8;">
           <h2><%= current_user.name %>さんのマイページ</h2>
-          <div class="row m-4">
+          <div class="row m-4 shadow-image" style="background-color: #B3C8CF;">
               <%= image_tag current_user.get_profile_image, size: "300x300", style: "object-fit: contain;" %>
           </div>
         </div>
-        <div class="col">
-        <table class='table'>
+        <div class="col text-center mt-5 pr-1 justify-content-center">
+        <table class='table border shadow-image pl-3 ' style= "border-radius: 20px; background-color: #FFE4CF; color: #D862BC;">
             <tbody>
               <tr><td><h4>SAVE活動</h4></td></tr>
               <tr><td><h5><%= current_user.hope_i18n %></h5></td></tr>
-              <tr><td><%= current_user.gender_i18n %>-<%= @age %>歳</td></tr>
+              <tr><td>性別(<%= current_user.gender_i18n %>)-<%= @age %>歳</td></tr>
               <tr><td>フォロー数: <%= current_user.followings.count %></td></tr>
               <tr><td>フォロワー数: <%= current_user.followers.count %></td></tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="row col-12 m-2">
-        <h3 class="text-center">マイメニュー</h3>
+      <div class="row col-12 m-2　justify-content-center text-center">
+        <h3 class="mx-auto text-center justify-content-center" >マイメニュー</h3>
+      </div>
+      <div class="col mt-5 ml-5">
+        <%= link_to "ユーザー編集画面へ", edit_user_path(current_user),class: "btn btn-info" %>
       </div>
       <div class="row m-2">
-        <div class="col m-2 border ">
+        <div class="col m-2 border shadow-image justify-content-center text-center" style= "border-radius: 20px; background-color: #FFE4CF;">
           <%= link_to "アルバム投稿", new_album_path %>
           <p>ペットの写真を<br>投稿できます</p>
         </div>
-        <div class="col m-2  border ">
+        <div class="col m-2 border shadow-image justify-content-center text-center" style= "border-radius: 20px; background-color: #FFE4CF;">
           <%= link_to "マイぺット登録", new_pet_path %>
           <p>新しいペットを<br>登録できます</p>
         </div>
       </div>
       <div class="row m-2">
-        <div class="col m-2 border ">
+        <div class="col m-2 border shadow-image justify-content-center text-center" style= "border-radius: 20px; background-color: #FFE4CF;">
           <%= link_to "アルバム管理", my_album_path %>
           <p>投稿したアルバムを<br>管理できます</p>
         </div>
-        <div class="col m-2  border ">
+        <div class="col m-2 border shadow-image justify-content-center text-center" style= "border-radius: 20px; background-color: #FFE4CF;">
           <%= link_to "マイぺット管理", my_pet_path %>
           <p>登録したペットを<br>管理できます</p>
         </div>
-        <div class="col m-2 border ">
+        <div class="col m-2 border shadow-image justify-content-center text-center" style= "border-radius: 20px; background-color: #FFE4CF;">
           <%= link_to "グループ", groups_path %>
           <p>グループの<br>一覧です</p>
         </div>
       </div>
       <div class="row m-2">
-        <div class="col m-2 border">
+        <div class="col m-2 border shadow-image justify-content-center text-center" style= "border-radius: 20px; background-color: #FFE4CF;">
           <%= link_to "お気に入り投稿", f_albums_path %>
           <p>お気に入り投稿の<br>一覧です</p>
         </div>
-        <div class="col m-2 border">
+        <div class="col m-2 border shadow-image justify-content-center text-center" style= "border-radius: 20px; background-color: #FFE4CF;">
           <%= link_to "お気に入りペット", f_pets_path %>
           <p>お気に入りペットの<br>一覧です</p>
         </div>
-        <div class="col m-2 border">
+        <div class="col m-2 border shadow-image justify-content-center text-center" style= "border-radius: 20px; background-color: #FFE4CF;">
           <%= link_to "フォロー＆フォロワー", follow_list_path %>
           <p>フォロー関係者の<br>一覧です</p>
         </div>
       </div>
       <div class="row col-12">
-        <div class="col">
-          <%= link_to "ユーザー編集画面へ", edit_user_path(current_user),class: "btn btn-info" %>
-        </div>
+
       </div>
     </div>
   </div>
-  <div class="row mt-5"></div>
-  <div class="row mt-5 mb-5">
+  <div class="row col-12 justify-content-center text-center"></div>
+  <div class="col-3 mt-5 mb-5">
      <%= link_to "退会する", unsubscribe_path, class: "btn btn-danger" %>
   </div>
 </div>

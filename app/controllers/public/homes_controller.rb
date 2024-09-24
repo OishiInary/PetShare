@@ -1,5 +1,5 @@
 class Public::HomesController < ApplicationController
-before_action :authenticate_user!, except: [:top, :about, :entrance, :save]
+before_action :authenticate_user!, except: [:top, :about, :entrance]
  before_action :ensure_guest_user, only: [:follow_list,:my_album,:my_pet,:f_albums,:f_pets]
   def top
   end  
@@ -27,6 +27,7 @@ before_action :authenticate_user!, except: [:top, :about, :entrance, :save]
   
   def entrance
     @recentry = Album.order(created_at: :desc).first
+    
   end
   
   def f_albums

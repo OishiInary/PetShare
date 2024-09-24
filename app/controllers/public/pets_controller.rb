@@ -22,6 +22,7 @@ before_action :ensure_guest_user, only: [:new,:create,:edit,:update,:destroy]
   
   def show
     @pet = Pet.find(params[:id])
+    @pet_albums = Album.where(pet_id: @pet.id)
     @favorites = Favorite.where(album_id: @pet.album_ids).count
   end
   

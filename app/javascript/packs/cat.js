@@ -27,5 +27,5 @@ document.addEventListener('turbolinks:load', function() {
         // スムーズに追従
         cat.style.left = (catX + distX * 0.1) + 'px';
         cat.style.top = (catY + distY * 0.1 + 5) + 'px';
-    }, 10); // 100ミリ秒ごとに実行
+    }, 20); // 100ミリ秒ごとに実行
 });

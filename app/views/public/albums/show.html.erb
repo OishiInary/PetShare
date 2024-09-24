@@ -2,30 +2,31 @@
   <div class="row">
     <div class="col">
       <!--画像の表示領域、その下に投稿者ほか-->
-      <div class="container">
-        <div class="row">
+      <div class="container border text-center" style="background-color: white;">
+        <div class="row border">
           <%= image_tag @album.get_album_image, size: '700x700', style: "object-fit: contain;" %>
         </div>
         <div class="row">
-          <div class="col">
+          <div class="col border">
             <h2><%= @album.title %></h2>
           </div>
           <!--いいね（お気に入り）-->
-          <div class="col">
+          <div class="col border">
+            <div class="corder"style="background-color: #;"><%= @album.view_counts.count.zero? ? 0 : @album.view_counts.count %>人が閲覧済</div>
             <h4 id="favorite_buttons_<%= @album.id %>">
               <%= render "public/favorites/favorite_btn", album: @album %>
             </h4>
           </div>
         </div>
-        <div class="row">
+        <div class="row border">
           <% @album_tags.each do |tag| %>
-          <div class="m-3 badge badge-pill badge-secondary">
+          <div class="m-3 badge badge-pill border" style="background-color: #FF7EE2;">
             <%= link_to tag_path(tag) do %>
             <%= tag.name %><% end %>
           </div>
           <% end %>
         </div>
-        <div class="row m-3">
+        <div class="row border">
           <%= @album.body %>
         </div>
         <div class="row m-3">
@@ -45,16 +46,16 @@
       </div>
     </div>
     <!--画像の隣のスペース、ペットの写真一覧４枚まで-->
-    <div class="col">
+    <div class="col border">
       <div class="container">
-        <div class="row">
-          <%= link_to pet_path(@album.pet) do %>
+        <div class="row text-center justify-content-center">
+          <h4><%= link_to pet_path(@album.pet) do %>
           <%= @album.pet.name %>
-          <% end %>の写真一覧
+          <% end %>の写真一覧</h4>
         </div>
         <div class="row col-6 bg bg-color-blue">
           <% @albums.each do |album| %>
-          <div class="col m-2">
+          <div class="col p-2 m-2 border" id="photo">
             <%= link_to album_path(album) do %>
               <%= image_tag album.get_album_image, size: "100x100" %>
             <% end %>
