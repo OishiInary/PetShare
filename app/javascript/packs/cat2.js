@@ -7,25 +7,26 @@ document.addEventListener('turbolinks:load', function() {
     cat.style.zIndex = '9999';
     cat.style.pointerEvents = 'none';
     document.body.appendChild(cat);
-    
+
     let mouseX = 0;
     let mouseY = 0;
 
     document.addEventListener('mousemove', function(e) {
-        mouseX = e.pageX - window.scrollX;
-        mouseY = e.pageY - window.scrollY;
+        mouseX = e.pageX;
+        mouseY = e.pageY;
     });
 
-    setInterval(() => {
+    const followCat = () => {
         const catRect = cat.getBoundingClientRect();
-        const catX = catRect.left;
-        const catY = catRect.top;
 
-        const distX = mouseX - catX;
-        const distY = mouseY - catY;
+        const distX = mouseX - catRect.left;
+        const distY = mouseY - catRect.top;
 
-        // スムーズに追従
-        cat.style.left = (catX + distX * 0.1) + 'px';
-        cat.style.top = (catY + distY * 0.1 + 5) + 'px';
-    }, 10); // 100ミリ秒ごとに実行
+        cat.style.left = (catRect.left +  distX) + 30 + 'px';
+        cat.style.top = (catRect.top + distY) + 30 + 'px';
+
+        requestAnimationFrame(followCat);
+    };
+
+    followCat();
 });
