@@ -27,7 +27,11 @@ before_action :authenticate_user!, except: [:top, :about, :entrance]
   
   def entrance
     @recentry = Album.order(created_at: :desc).first
-    
+    # @new_comment_albums = Album.joins(:comments).order('comments.created_at DESC').limit(5)
+    # @new_comments = Comment.order(created_at: :desc).limit(5)
+    comments = Comment.order(album_id: :asc, created_at: :desc).to_a.uniq(&:album_id)
+    @new_comments = Comment.where(id: comments.map(&:id))
+    @album_all = Album.all
   end
   
   def f_albums
@@ -40,8 +44,9 @@ before_action :authenticate_user!, except: [:top, :about, :entrance]
   
   
   def save
-    @can_users = User.where(hope: 2)
-    @need_pets = Pet.where(need_help: true)
+    page_number = params[:page].present? ? params[:page] : 1
+    @can_users = User.where(hope: 2).page(page_number).per(10).order(created_at: :desc)
+    @need_pets = Pet.where(need_help: true).page(page_number).per(10).order(created_at: :desc)
   end  
   
   private

@@ -1,5 +1,3 @@
-<%= javascript_pack_tag 'preview', 'data-turbolinks-track': 'reload' %>
-我が子を登録ッ
 <div class="container-fluid">
   <div class="row my-3 justify-content-center">
     <div class="col-7 m-4">
@@ -9,11 +7,14 @@
   <div class="row my-3 justify-content-center">
     <div class="col">
       <%= form_with model: @pet, url: pets_path, method: :post do |f| %>
-        <table>
+        <table class="table border">
           <tr>
             <th>ペットのメイン写真</th>
             <td class="pt-1 pb-1">
-              <%= f.file_field :image, accept: "image/*", class: "form-control border-0" %> <!-- border-0を追加 -->
+              <%= f.file_field :image, accept: "image/*", class: "form-control border-0", onchange: "previewImage(event)" %>
+              <div id="image-preview" class="mt-2" style="display:none;">
+                <img id="preview" src="#" alt="Image Preview" style="max-width: 100%; height: auto;" />
+              </div>
             </td>
           </tr>
           <tr>
@@ -36,11 +37,13 @@
           </tr>
           <tr>
             <div class="row mb-3">
+              <th><%= f.label :"性別" %></th>
               <td class="p-1">
-                <%= f.label :gender %><br/>
-                <%= f.label :male  %>
+                <%= f.label :"オス♂"  %>
                 <%= f.radio_button :gender, :male %>
-                <%= f.label :female  %>
+              </td>
+              <td class="p-1">
+                <%= f.label :"メス♀"  %>
                 <%= f.radio_button :gender, :female %>
               </td>
             </div>
@@ -53,3 +56,20 @@
     </div>
   </div>
 </div>
+
+<script>
+  function previewImage(event) {
+    const imagePreview = document.getElementById('image-preview');
+    const previewImage = document.getElementById('preview');
+    
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        previewImage.src = e.target.result;
+        imagePreview.style.display = 'block'; // 画像プレビューを表示
+      }
+      reader.readAsDataURL(file);
+    }
+  }
+</script>

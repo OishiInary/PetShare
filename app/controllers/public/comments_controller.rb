@@ -6,18 +6,18 @@ before_action :ensure_guest_user, only: [:create]
     @album = Album.find(params[:album_id])
     @comment = @album.comments.create(comment_params)
     @comment.save
+    page_number = params[:page].present? ? params[:page] : 1
+    @comments = @album.comments.page(page_number).order(created_at: :desc).per(5)
     # redirect_to album_path(@album)
   end
 
   def destroy
-     @comment = Comment.find_by(id: params[:id], album_id: params[:album_id])
+     @comment = Comment.find(id: params[:id], album_id: params[:album_id])
      @comment.destroy
      @album = Album.find(params[:album_id])
+     page_number = params[:page].present? ? params[:page] : 1
+     @comments = @album.comments.page(page_number).order(created_at: :desc).per(5)
   end
-  
-  def update
-  end
-  
   
   private
   def comment_params

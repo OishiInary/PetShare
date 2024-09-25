@@ -31,9 +31,10 @@ class User < ApplicationRecord
   has_many :user_rooms, dependent: :destroy
   has_many :chats, dependent: :destroy
   has_many :rooms, through: :user_rooms
-
-  has_many :group_user, dependent: :destroy
-  has_many :group_chat, dependent: :destroy
+  
+  has_many :groups, through: :group_users
+  has_many :group_users, dependent: :destroy
+  has_many :group_chats, dependent: :destroy
 
   has_many :followings, through: :active_relationships,  source: :followed
   has_many :followers,  through: :passive_relationships, source: :follower

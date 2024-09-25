@@ -2,12 +2,12 @@
 <div class="container-fluid">
   <div class="row my-3 justify-content-center">
     <div class="col-7 m-4">
-      <span class="pr-3 pl-3" style="font-size: 1.3rem; background-color: #ECECEC; font-weight: bold;">新規投稿</span>
+      <span class="pr-3 pl-3" style="font-size: 1.3rem; background-color: #ECECEC; font-weight: bold;">編集</span>
     </div>
   </div>
   <div class="row my-3 justify-content-center">
     <div class="col-5">
-      <%= form_with model: @album, url: albums_path, method: :post do |f| %>
+      <%= form_with model: @album do |f| %>
         <table>
           <tr>
             <th>投稿写真</th>

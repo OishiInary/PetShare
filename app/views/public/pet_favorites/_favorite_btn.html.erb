@@ -1,10 +1,12 @@
 <% if pet.favorited_by?(current_user) %>
   <%= link_to pet_pet_favorites_path(pet),remote: true, method: :delete do %>
+  <%= image_tag "/kubi.png", size: "100x100" %>
     <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
-    <%= pet.pet_favorites.count %> 推し登録！
+    <%= pet.pet_favorites.count %> 推し登録済！
   <% end %>
 <% else %>
   <%= link_to pet_pet_favorites_path(pet),remote: true, method: :post  do %>
+   <%= image_tag "/shimaenaga-heart.png", size: "100x100" %>
     <i class="fas fa-heart" aria-hidden="true"></i>
     <%= pet.pet_favorites.count %> 推し登録！
   <% end %>

@@ -6,6 +6,16 @@
         <div class="row border">
           <%= image_tag @album.get_album_image, size: '700x700', style: "object-fit: contain;" %>
         </div>
+          <div class="row">
+          <div class="col-12 text-center">
+            <% if @previous_album %>
+              <%= link_to '前の写真', album_path(@previous_album), class: 'btn btn-secondary float-start' %>
+            <% end %>
+            <% if @next_album %>
+              <%= link_to '次の写真', album_path(@next_album), class: 'btn btn-secondary float-end' %>
+            <% end %>
+          </div>
+        </div>
         <div class="row">
           <div class="col border">
             <h2><%= @album.title %></h2>
@@ -66,8 +76,9 @@
     </div>
     <!--これより下がコメント欄-->
     <div class="row col-12" id="comments-index">
-      <%= render "index", album: @album %>
-    </div>
       <%= render "form", album: @album %>
+      <%= render "index", comments: @comments %>
+    </div>
+     
   </div>
 </div>

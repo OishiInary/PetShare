@@ -4,28 +4,35 @@
       <%= render "public/homes/sidebar" %>
     </div>
     <div class="col-9">
-        <div class="row　col-12 mb-5 text-center">
-    <h3>全ての投稿</h3>
-  </div>
-      <div class="row">
-      <% @albums.each do |album| %>
-      <div class ="card mb-3 ml-3 "  style="width: 14rem;">
-        <%= link_to album_path(album.id) do %>
-        <div class="card-img-top" style="background-color: #E5D9F2;">
-          <%= image_tag album.get_album_image, size: '200x100', style: "object-fit: contain;" %>
-        </div>
-        <div class="card-body text-center" style="background-color: #CDC1FF; font-color: #A594F9;">
-          <div class="card-title border" style="background-color: #F5EFFF;">
-            <%= album.title %>
-          </div>
-          <div class="card-text border" style="background-color: #F5EFFF;">
-            <%= album.created_at.strftime("%Y/%m/%d") %>
-          </div>
-        </div>
-        <% end %>
-        </div>
-      <% end %>
+      <div class="text-center mb-3">
+        <%= link_to "古い順", albums_path(sort: 'created_at', direction: 'asc'), class: "btn btn-primary" %>
+        <%= link_to "新しい順", albums_path(sort: 'created_at', direction: 'desc'), class: "btn btn-secondary" %>
+        <%= link_to "お気に入り数順", albums_path(sort: 'favorites_count', direction: 'desc'), class: "btn btn-success" %>
       </div>
+      <div class="row albums-container justify-content-center ">
+        <% @albums.each do |album| %>
+          <div class="card mb-3 mx-auto" style="width: 14rem;">
+            <%= link_to album_path(album.id) do %>
+              <div class="card-img-top" style="background-color: #E5D9F2;">
+                <%= image_tag album.get_album_image, size: '200x100', style: "object-fit: contain;" %>
+              </div>
+              <div class="card-body text-center" style="background-color: #CDC1FF; font-color: #A594F9;">
+                <div class="card-title border" style="background-color: #F5EFFF;">
+                  <%= album.title %>
+                </div>
+                <div class="card-text border" style="background-color: #F5EFFF;">
+                  <%= album.created_at.strftime("%Y/%m/%d") %>
+                </div>
+                <div class="card-text border" style="background-color: #F5EFFF;">
+                  お気に入り数: <%= album.favorites.count %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <%= paginate @albums, theme: 'bootstrap-5' %>
     </div>
   </div>
 </div>
+

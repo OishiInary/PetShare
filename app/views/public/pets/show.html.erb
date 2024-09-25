@@ -5,8 +5,8 @@
         <div class="col mb-5">
           <%= image_tag @pet.image, size: '700x700', style: "object-fit: contain;" %>
         </div>
-        <div class="col">
-          <table class="table">
+        <div class="col border">
+          <table class="table border">
             <tr>
               <th>お名前</th>
               <th><%= @pet.name %></th>
@@ -30,7 +30,7 @@
           </table>
           <div class="row">
             <div class="col mb-5">
-              <table class="table">
+              <table class="table border">
                 <thead><tr><th>飼い主</th></tr></thead><br>
                 <tbody><tr><td><%= link_to user_path(@pet.user) do %><%= @pet.user.name %><% end %></td></tr></tbody>
               </table>
@@ -41,6 +41,14 @@
                   </h4>
                 </div>
                </div>
+               <% if @pet.need_help == true %>
+               <div class="row justify-content-center mt-4">
+                 <%= image_tag "/need_help.png", size: "60x60" %>
+               </div>
+               <div class="row justify-content-center">
+                 <h4>里親募集中です</h4>
+               </div>
+               <% end %>
             </div>
           </div>
           <% if @pet.user.id == current_user.id %>
@@ -53,12 +61,13 @@
       </div>
     </div>
   </div>
- <div class="row col-12 border">
-   <h4>この子の写真一覧</h4>
-   <% @prt_albums.each do |album| %>
-   <div class="col-2">
+  <h4>この子の写真一覧</h4>
+ <div class="row p-2 mb-5 col-12 border">
+   
+   <% @pet_albums.each do |album| %>
+   <div class="col-2 border mx-2 shadow-image" style="background-color: #D8D2C2;">
      <%= link_to album_path(album) do %>
-     <%= imag_tag album.get_album_image %>
+     <%= image_tag album.get_album_image, size: "150x150", style: "object-fit: contain;" %>
      <% end %>
    </div>
    <% end %>

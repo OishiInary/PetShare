@@ -1,9 +1,9 @@
 <div class="row justify-content-center">
-  <div class="col-5">
-    <table class="table border text-center">
+  <div class="col-5 m-auto"style="border-radius: 20px;">
+    <table class="table border text-center" >
       <thead>
         <tr>
-          <th>名前</th><th>飼いやすさ</th>
+          <th>名前</th><th>飼いやすさ(易 1~5 難)</th>
         </tr>
       </thead>
       <tbody>
@@ -29,9 +29,10 @@
     </tbody>
   </table>
 </div>
-<div class="row col-12">
+<div class="row col-12 justify-content-center">
+  <h3><%= @category.name %>のペット一覧</h3>
     <div class="col-12">
-      <table class="table w-100">
+      <table class="table w-100 border">
         <thead>
           <tr>
             <th class="table-active" style="padding: 10px;">写真</th>
@@ -55,6 +56,7 @@
               <td style="padding: 10px;"><%= pet.user.name %></td>
             </tr>
           <% end %>
+          <%= paginate  @category_pets %>
         </tbody>
       </table>
     </div>

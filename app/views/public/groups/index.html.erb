@@ -5,11 +5,11 @@
     </div>
     <div class="col-9">
       <div class="row mt-5 mb-5">
-        <div class="row col-12">
-        <h3>参加しているグループ</h3>
+        <div class="row col-12 text-center justify-content-center">
+        <h3 class="m-auto p-auto">参加しているグループ</h3>
         </div>
-        <% if current_user.group_user.exists? %>
-        <table class="table">
+        <% if current_user.group_users.exists? %>
+        <table class="table border">
           <thead>
             <tr>
               <th> </th>
@@ -30,43 +30,62 @@
                 <%= group.group.owner.name  %></td>
                 <% end %>
               <td><%= group.group.introduction %></td>
-              <td><%= group.group.group_user.count %></td>
+              <td><%= group.group.group_users.count %></td>
             </tr>
             <% end %>
           </tbody>
         </table>
         <% else %>
-        <div class="row col-12"><%= @group_lists_none %></div>
+        <div class="row py-3 m-auto"><%= @group_lists_none %></div>
         <% end %>
-        <div class="row col-12 mt-5">
-          <div class="col-9"><h4>すべてのグループ</h4></div>
-          <div class="col-3"><%= link_to "+-<作成>-+", new_group_path, class: "btn btn-primary btn-sm" %></div>
+       <div class="row col-12 mt-5 text-center justify-content-center">
+          <div class=""><h4>すべてのグループ</h4></div>
+          <div class="col-3">
+            
+          </div>
         </div>
+        
+        <div class="row text-center mx-auto col-12 mb-3">
+          <%= link_to "新しい順", groups_path(sort: 'created_at', direction: 'desc'), class: "m-2 btn btn-secondary" %>
+          <%= link_to "古い順", groups_path(sort: 'created_at', direction: 'asc'), class: "m-2 btn btn-secondary" %>
+          <%= link_to "参加人数が多い順", groups_path(sort: 'user_count', direction: 'desc'), class: "m-2 btn btn-secondary" %>
+          <%= link_to "参加人数が少ない順", groups_path(sort: 'user_count', direction: 'asc'), class: "m-2 btn btn-secondary" %>
+          <%= link_to "+-<新規作成>-+", new_group_path, class: "m-auto btn btn-primary btn-sm" %>
+        </div>
+        
+        <div class="row mx-auto mb-3 justfy-content-center text-center">
+          <%= form_with(url: groups_path, method: :get, local: true) do |form| %>
+            <div class="input-group">
+              <%= form.text_field :search, placeholder: "グループ名で検索", class: "form-control" %>
+              <%= form.submit "検索", class: "btn btn-primary" %>
+            </div>
+          <% end %>
+        </div>
+        
         <div class="row col-12">
-              <table class="table">
-          <thead>
-            <tr>
-              <th> </th>
-              <th>グループ名</th>
-              <th>オーナー</th>
-              <th>グループ概要</th>
-              <th>参加人数</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @group_lists.each do |group| %>
-            <tr>
-              <td><%= image_tag group.get_image, size: '50x50' %></td>
-              <td><%= link_to group_path(group.id) do %><%= group.name %><% end %></td>
-              <td><%= link_to user_path(group.owner.id) do %><%= group.owner.name %><% end %></td>
-              <td><%= group.introduction %></td>
-              <td><%= group.group_user.count %></td>
-
-            </tr>
-            <% end %>
-          </tbody>
-        </table>
+          <table class="table border table-hover">
+            <thead>
+              <tr>
+                <th> </th>
+                <th>グループ名</th>
+                <th>オーナー</th>
+                <th>グループ概要</th>
+                <th>参加人数</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @group_lists.each do |group| %>
+                <tr>
+                  <td><%= image_tag group.get_image, size: '50x50' %></td>
+                  <td><%= link_to group_path(group.id) do %><%= group.name %><% end %></td>
+                  <td><%= link_to user_path(group.owner.id) do %><%= group.owner.name %><% end %></td>
+                  <td><%= group.introduction %></td>
+                  <td><%= group.group_users.count %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

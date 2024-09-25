@@ -27,9 +27,20 @@ before_action :ensure_guest_user, only: [:new,:create,:edit,:update,:destroy]
   end
   
   def index
-    page_number = params[:page].present? ? params[:page] : 1
-    @pets = Pet.page(page_number).per(10).order(created_at: :desc)
-  end  
+    @pets = Pet.all
+
+    # 並び替えの処理
+    case params[:sort]
+    when 'newest'
+      @pets = @pets.order(created_at: :desc)
+    when 'oldest'
+      @pets = @pets.order(created_at: :asc)
+    when 'favorites'
+      @pets = @pets.left_joins(:pet_favorites).group(:id).order('COUNT(pet_favorites.id) DESC')
+    end
+
+    @pets = @pets.page(params[:page])
+  end
   
 
   

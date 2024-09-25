@@ -1,24 +1,24 @@
 <%= image_tag("/about.jpg", size: '1152x768', class: 'justify-content-center text-center', style: 'border-radius: 100px; object-fit: contain; position: absolute;') %>
-<h3 class="p-5 mt-5" style="position: relative">ここは我が子を自慢し合う素敵な場です。<br>
-投稿された写真を見ることは会員登録無しでできます。<br>
-お客様の我が子を投稿するには会員登録が必要です。<br>
-里親を募集する・里親になるには会員登録が必要です。
+<h3 class="p-5 mt-5" style="position: relative">
+  <div class="my-3"><%= image_tag "/kubi.png", size: "100x100" %>
+  PetShareで出来る事ってなに？  </div>
+  <div class="my-3">あなたの大好きなペットを自慢できる！
+  <%= image_tag "/daihuku.png", size: "100x100" %></div>
+   <div class="my-3"><%= image_tag "/shimaenaga2.png", size: "100x100" %>
+   ペット大好きな人たちと交流が出来る！！
+  </div>
+    <div class="my-3">里親・里子を募集出来る！
+  <%= image_tag "/tree.png", size: "100x100" %></div>
 </h3>
 
 <div class="btn-wrapper  mx-auto ">
   
   <% if user_signed_in? %>
-    <div class="row co-5" style="position: relative;">
-      ログイン済
   <% else %>
-  <div class="col-5 p-5" style="position: relative;">
-    <%= link_to "ゲストとしてログインする", user_guest_sign_in_path, class: "btn btn-secondary btn-lg btn-block mb-3 sign-in", method: :post, style: "position: relative;" %>
+  <div class="col-5 py-auto" style="position: relative;">
+    <%= link_to new_user_registration_path, class: "btn btn-secondary btn-block mb-3 sign-in", style: "position: relative;" do %>
+    <p class="my-auto" style="">今すぐ会員登録</p>
+    <% end %>
     </div>
-    <p class="p-5" style="position: relative;">
-      ゲストログインすると出来る事。<br>
-      -ペット写真コンテンツ(閲覧のみ)-<br>
-      -グループコンテンツ(閲覧のみ)-<br>
-      -里親コンテンツ(閲覧のみ)-<br>
-    </p>
   <%  end %>
 </div>

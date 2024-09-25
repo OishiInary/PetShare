@@ -59,7 +59,7 @@ Rails.application.routes.draw do
     end
 
     resources :albums, only:[:index, :show, :new, :create, :edit, :update, :destroy]do
-      resources :comments, only:[:create, :update, :destroy]
+      resources :comments, only:[:create,:destroy]
           resource :favorites, only:[:create, :destroy]
     end
 

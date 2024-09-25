@@ -4,11 +4,34 @@ before_action :set_group, only: [:edit, :update]
 before_action :ensure_guest_user, only: [:new,:edit, :destroy]
 
   def index
-      @group_lists = Group.all
-      # @group_joining = GroupUser.where(user_id: current_user.id)
-      @user = current_user
-      @group_joining = current_user.group_user.includes(:group)
-      @group_lists_none = "グループに参加していません。"
+    @user = current_user
+    @group_joining = @user.group_users.includes(:group)
+    @group_lists_none = "グループに参加していません。"
+
+    sort_column = params[:sort] || 'created_at'
+    sort_direction = params[:direction] || 'asc'
+    
+    @group_lists = Group
+      .left_outer_joins(:group_users)
+      .select('groups.*, COUNT(group_users.id) AS user_count')
+      .group('groups.id')
+
+    # 検索機能の追加
+    if params[:search].present?
+      @group_lists = @group_lists.where("groups.name LIKE ?", "%#{params[:search]}%")
+    end
+
+    case sort_column
+    when 'created_at'
+      @group_lists = @group_lists.order("groups.created_at #{sort_direction}")
+    when 'user_count'
+      @group_lists = @group_lists.order("user_count #{sort_direction}")
+    else
+      @group_lists = @group_lists.order("groups.created_at #{sort_direction}")
+    end
+    @user = current_user
+    @group_joining = current_user.group_users.includes(:group)
+    @group_lists_none = "グループに参加していません。"
   end
   
   def new
@@ -30,7 +53,8 @@ before_action :ensure_guest_user, only: [:new,:edit, :destroy]
   def show
       @group = Group.find(params[:id])
       @group_users = GroupUser.where(group_id: @group.id)
-      @group_chats = GroupChat.where(group_id: @group.id).order(created_at: :desc).page(params[:page])
+      page_number = params[:page].present? ? params[:page] : 1
+      @group_chats = GroupChat.where(group_id: @group.id).page(page_number).order(created_at: :desc).per(5)
       @group_chat = GroupChat.new
   end
 
