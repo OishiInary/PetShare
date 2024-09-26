@@ -1,7 +1,7 @@
 class Public::GroupsController < ApplicationController
-before_action :authenticate_user!
-before_action :set_group, only: [:edit, :update]
-before_action :ensure_guest_user, only: [:new,:edit, :destroy]
+  before_action :authenticate_user!
+  before_action :set_group, only: [:edit, :update]
+  before_action :ensure_guest_user, only: [:new, :edit, :destroy]
 
   def index
     @user = current_user
@@ -29,64 +29,55 @@ before_action :ensure_guest_user, only: [:new,:edit, :destroy]
     else
       @group_lists = @group_lists.order("groups.created_at #{sort_direction}")
     end
-    @user = current_user
-    @group_joining = current_user.group_users.includes(:group)
-    @group_lists_none = "グループに参加していません。"
   end
   
   def new
-      @group = Group.new
+    @group = Group.new
   end
 
   def create
     @group = Group.new(group_params)
-    @group.owner_id = current_user.id
+    @group.owner = current_user # owner_idではなくownerオブジェクトを設定
     if @group.save
-      group_user = current_user.group_users.new(group_id: @group.id)
-      group_user.save
-      redirect_to group_path(@group)
+      current_user.group_users.create(group: @group) # グループユーザーの作成
+      redirect_to group_path(@group), notice: 'グループが作成されました。'
     else
       render :new
     end
   end
   
   def show
-      @group = Group.find(params[:id])
-      @group_users = GroupUser.where(group_id: @group.id)
-      page_number = params[:page].present? ? params[:page] : 1
-      @group_chats = GroupChat.where(group_id: @group.id).page(page_number).order(created_at: :desc).per(5)
-      @group_chat = GroupChat.new
+    @group = Group.find(params[:id])
+    @group_users = @group.group_users.includes(:user) # ユーザー情報もロード
+    page_number = params[:page].present? ? params[:page] : 1
+    @group_chats = @group.group_chats.page(page_number).order(created_at: :desc).per(5)
+    @group_chat = GroupChat.new
   end
 
-  def edit
-      @group = Group.find(params[:id])
-  end
+  def edit; end
 
   def update
-      @group = Group.find(params[:id])
-      if @group.update(group_params)
-          redirect_to group_path(@group), notice: 'グループを更新しました。'
-      else
-          render :edit
-      end
+    if @group.update(group_params)
+      redirect_to group_path(@group), notice: 'グループを更新しました。'
+    else
+      render :edit
+    end
   end
 
   def destroy
-      delete_group = Group.find(params[:id])
-      if delete_group.destroy
-          redirect_to groups_path, notice: 'グループを削除しました。'
-      end
+    if Group.find(params[:id]).destroy
+      redirect_to groups_path, notice: 'グループを削除しました。'
+    end
   end
-
 
   private
   
   def set_group
-      @group = Group.find(params[:id])
+    @group = Group.find(params[:id])
   end
 
   def group_params
-      params.require(:group).permit(:name,:owner_id,:introduction,:group_image)
+    params.require(:group).permit(:name, :introduction, :group_image) # owner_idは不要
   end
   
   def ensure_guest_user
