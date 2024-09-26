@@ -12,8 +12,9 @@ class Public::GroupsController < ApplicationController
     sort_direction = params[:direction] || 'asc'
     
     @group_lists = Group.left_joins(:group_users)
-                        .select('groups.id, groups.name, COUNT(group_users.id) AS user_count')
-                        .group('groups.id, groups.name')
+                        .includes(:owner)  # owner（User）も関連付けて取得
+                        .select('`groups`.id, `groups`.name, `groups`.owner_id, `groups`.introduction, COUNT(group_users.id) AS user_count')
+                        .group('`groups`.id, `groups`.name, `groups`.owner_id, `groups`.introduction')
 
 
 
