@@ -80,7 +80,14 @@ before_action :ensure_guest_user, only: [:new,:destroy,:edit]
       redirect_to my_album_path
     end
     
+  def load_more_albums
+    pet = Pet.find(params[:id])
+    albums = pet.albums.where.not(id: params[:exclude_ids]).offset(params[:offset]).limit(3) # 3件ずつ取得
 
+    render json: {
+      albums: albums.map { |album| { id: album.id, image_url: album.get_album_image } }
+    }
+  end
     
     private
     

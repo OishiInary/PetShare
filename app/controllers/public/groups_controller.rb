@@ -11,7 +11,10 @@ class Public::GroupsController < ApplicationController
     sort_column = params[:sort] || 'created_at'
     sort_direction = params[:direction] || 'asc'
     
-    @group_lists = Group.left_outer_joins(:group_users).select('groups.*, COUNT(group_users.id) AS user_count').group('groups.id')
+    @group_lists = Group.left_joins(:group_users)
+                    .select('groups.*, COUNT(group_users.id) AS user_count')
+                    .group('groups.id')
+
 
     # 検索機能の追加
     if params[:search].present?

@@ -56,18 +56,24 @@
       </div>
     </div>
     <!--画像の隣のスペース、ペットの写真一覧４枚まで-->
-    <div class="col border">
+      <div class="col border">
       <div class="container text-center">
         <h4><%= link_to pet_path(@album.pet) do %>
           <%= @album.pet.name %>
         <% end %>の他の写真</h4>
         
-        <% random_album = @albums.sample %> <!-- ランダムにアルバムを選択 -->
         <div id="pet-photo-slideshow" class="mb-3">
-          <%= link_to image_tag(random_album.get_album_image, id: "slideshow-image", size: "300x300", style: "object-fit: contain; opacity: 1; transition: opacity 1s;"), album_path(random_album) %>
+          <% @album.pet.album.where.not(id: @album.id).limit(3).each do |pet_album| %>
+            <%= link_to image_tag(pet_album.get_album_image, class: "slideshow-image", size: "300x300", style: "object-fit: contain;"), album_path(pet_album) %>
+          <% end %>
+        </div>
+    
+        <div id="load-more" class="text-center">
+          <button id="load-more-button" class="btn btn-primary">もっと見る</button>
         </div>
       </div>
     </div>
+
 
     <!--これより下がコメント欄-->
     <div class="row col-12" id="comments-index">
@@ -80,21 +86,39 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    const images = <%= raw @albums.map { |album| album.get_album_image.to_json }.to_json %>;
-    const albumLinks = <%= raw @albums.map { |album| album_path(album).to_json }.to_json %>; // アルバムへのリンクを取得
-    let currentIndex = <%= @albums.index(random_album) %>; // ランダムに選ばれたアルバムのインデックスを取得
+    let offset = 3; // 最初に表示するアルバムの数
+    const petId = <%= @album.pet.id %>;
+    const slideshow = document.getElementById("pet-photo-slideshow");
+    
+    function loadMoreAlbums() {
+      fetch(`/pets/${petId}/albums?offset=${offset}`)
+        .then(response => response.json())
+        .then(data => {
+          // 新しいアルバムを追加
+          data.albums.forEach(album => {
+            const newImage = document.createElement("a");
+            newImage.href = `/albums/${album.id}`;
+            newImage.innerHTML = `<img src="${album.image_url}" class="slideshow-image" style="width: 300px; height: 300px; object-fit: contain;">`;
+            slideshow.appendChild(newImage);
+          });
 
-    const imageElement = document.getElementById("slideshow-image");
+          // アルバムの数を更新
+          offset += data.albums.length;
 
-    setInterval(() => {
-      imageElement.style.opacity = 0; // フェードアウト
+          // 追加のアルバムがない場合はボタンを非表示にする
+          if (data.albums.length === 0) {
+            document.getElementById("load-more").style.display = "none";
+          }
+        })
+        .catch(error => console.error('Error:', error));
+    }
 
-      setTimeout(() => {
-        currentIndex = (currentIndex + 1) % images.length; // 画像を循環
-        imageElement.src = images[currentIndex];
-        imageElement.parentNode.href = albumLinks[currentIndex]; // リンクを更新
-        imageElement.style.opacity = 1; // フェードイン
-      }, 1000); // フェードアウトの時間と同じ1秒待つ
-    }, 10000); // 10秒ごとに切り替え
+    // スクロールイベントをリッスン
+    window.addEventListener("scroll", function() {
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        loadMoreAlbums();
+      }
+    });
   });
 </script>
+
