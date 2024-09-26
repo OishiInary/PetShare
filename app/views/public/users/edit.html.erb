@@ -1,17 +1,27 @@
 <div class="container col-8">
   <%= flash[:notice] %>
   <div class="row m-4">
-    <span style=" background-color: #ECECEC; font-weight: bold; font-size: 23px">　会員情報編集　</span>
+    <span style="background-color: #ECECEC; font-weight: bold; font-size: 23px">　会員情報編集　</span>
   </div>
-  <%= form_with model: @user, url: user_path(@user), method: :patch  do |f| %>
+  
+  <%= form_with model: @user, url: user_path(@user), method: :patch, html: { multipart: true } do |f| %>
+  
   <div class="row mt-3">
-    <%= f.file_field :image, accept: "image/*", class: "form-control border-0" %>
+    <%= f.file_field :image, accept: "image/*", class: "form-control border-0", id: "user_image" %>
   </div>
+  
+  <!-- 画像プレビュー表示エリア -->
+  <div class="row mt-2">
+    <div class="col-12">
+      <img id="image_preview" src="<%= @user.get_profile_image %>" style="max-width: 300px; max-height: 300px; display: block;" />
+    </div>
+  </div>
+  
   <div class="row mt-3">
     <div class="col-4">ニックネーム</div>
     <div class="col-4 text-left"><%= f.text_field :name %></div>
   </div>
-    <div class="row mt-2">
+  <div class="row mt-2">
     <div class="col-4">自己紹介</div>
     <div class="col-8"><%= f.text_area :introduction, size: "50x5" %></div>
   </div>
@@ -21,7 +31,7 @@
   </div>
   <div class="row mt-2">
     <div class="col-4">住所</div>
-    <div class="col-8"><%= f.text_field :address,:size=> 55 %></div>
+    <div class="col-8"><%= f.text_field :address, size: 55 %></div>
   </div>
   <div class="row mt-2">
     <div class="col-4">電話番号</div>
@@ -37,26 +47,64 @@
   </div>
   <div class="row mt-3 mb-3">
     <table class="table">
-      <thead><tr><th><%= f.label :SAVE活動 %></th></tr></thead>
-      <tbody><tr><td>
-        <%= f.label :未設定  %>
-      <%= f.radio_button :hope, :nom %>-----SAVE活動に参加しません</td></tr>
-      <tr><td><%= f.label :里親募集  %>
-      <%= f.radio_button :hope, :req %>-----SAVE活動に里親募集の立場で参加</td></tr>
-      <tr><td><%= f.label :里子募集  %>
-      <%= f.radio_button :hope, :can %>-----SAVE活動に里子募集の立場で参加</td></tr>
-      </tr></tbody>
+      <thead>
+        <tr><th><%= f.label :SAVE活動 %></th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <%= f.label :未設定 %>
+            <%= f.radio_button :hope, :nom %>-----SAVE活動に参加しません
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= f.label :里親募集 %>
+            <%= f.radio_button :hope, :req %>-----SAVE活動に里親募集の立場で参加
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= f.label :里子募集 %>
+            <%= f.radio_button :hope, :can %>-----SAVE活動に里子募集の立場で参加
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
-  <%= f.hidden_field :gender, :value => @user.gender %>
-  <%= f.hidden_field :birthday, :value => @user.birthday %>
-  <%= f.hidden_field :is_active, :value => @user.is_active %>
+  
+  <%= f.hidden_field :gender, value: @user.gender %>
+  <%= f.hidden_field :birthday, value: @user.birthday %>
+  <%= f.hidden_field :is_active, value: @user.is_active %>
+  
   <div class="row mt-2">
     <div class="col-4"></div>
     <div class="col-5">
-    <%= f.submit "編集内容を保存", class: "btn btn-success" %></div>
-    <div class="col-2 text-left">
-    <% end %>
+      <%= f.submit "編集内容を保存", class: "btn btn-success" %>
     </div>
+    <div class="col-2 text-left"></div>
   </div>
+  
+  <% end %>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const imageInput = document.getElementById("user_image");
+    const imagePreview = document.getElementById("image_preview");
+
+    imageInput.addEventListener("change", function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          imagePreview.src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+      } else {
+        imagePreview.src = "<%= @user.get_profile_image %>"; // 既存の画像を表示
+      }
+    });
+  });
+</script>
+

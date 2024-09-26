@@ -1,22 +1,45 @@
 <div class="container">
-  <div class="row mb-5">
-    お気に入りした投稿
-  </div>
   <div class="row">
-    <% @favorites.each do |favorite| %>
-    <div class ="col-2 mb-3">
-      <%= link_to album_path(favorite.album.id) do %>
-      <div class="row">
-        <%= image_tag favorite.album.image, size: '100x100' %>
-      </div>
-      <div class="row">
-        <%= favorite.album.title %>
-      </div>
-      <div class="row">
-        <%= favorite.album.created_at.strftime("%Y/%m/%d") %>
-      </div>
-      <% end %>
+    <div class="container col-3">
+      <%= render "sidebar" %>
     </div>
-    <% end %>
+    <div class="container col-9">
+      <div class="row mb-5">
+        <div class="col-12 text-center">
+          お気に入りした投稿
+        </div>
+      </div>
+      
+      <div class="row mb-3">
+        <div class="col-12 text-center">
+          <%= link_to '登録が新しい順', f_albums_path(sort: 'newest'), class: 'btn btn-primary' %>
+          <%= link_to '登録が古い順', f_albums_path(sort: 'oldest'), class: 'btn btn-primary' %>
+        </div>
+      </div>
+    
+      <div class="row">
+        <% @favorites.each do |favorite| %>
+          <div class="col-2 mb-3">
+            <%= link_to album_path(favorite.album.id) do %>
+              <div class="row">
+                <%= image_tag favorite.album.image, size: '100x100' %>
+              </div>
+              <div class="row">
+                <%= favorite.album.title %>
+              </div>
+              <div class="row">
+                <%= favorite.album.created_at.strftime("%Y/%m/%d") %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    
+      <div class="row">
+        <div class="col-12 text-center">
+          <%= paginate @favorites, theme: 'bootstrap-5' %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

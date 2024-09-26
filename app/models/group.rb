@@ -10,7 +10,7 @@ class Group < ApplicationRecord
   
   
   def include_user?(user)
-    group_user.exists?(user_id: user.id)
+    group_users.exists?(user_id: user.id)
   end
   
   def get_image

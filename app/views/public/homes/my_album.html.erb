@@ -1,29 +1,37 @@
 <div class="container">
   <div class="row">
     <div class="col-3">
-      <%= render "sidebar" %>
+      <%= render "public/homes/sidebar" %>
     </div>
     <div class="col-9">
-      <div class="row">
-       <h2><%= current_user.name %>さんの投稿</h2>
+      <div class="text-center mb-3">
+        <%= link_to '最新順', my_album_path(sort: 'latest'), class: 'btn btn-primary' %>
+        <%= link_to '古い順', my_album_path(sort: 'oldest'), class: 'btn btn-primary' %>
+        <%= link_to 'お気に入りが多い順', my_album_path(sort: 'favorites'), class: 'btn btn-primary' %>
       </div>
-      <div class="row">
+      <div class="row albums-container justify-content-center ">
         <% @albums.each do |album| %>
-        <div class ="col-3 mb-">
-          <%= link_to album_path(album.id) do %>
-          <div class="row">
-            <%= image_tag album.get_album_image, size: '100x100' %>
+          <div class="card mb-3 mx-auto" style="width: 14rem;">
+            <%= link_to album_path(album.id) do %>
+              <div class="card-img-top" style="background-color: #E5D9F2;">
+                <%= image_tag album.get_album_image, size: '200x100', style: "object-fit: contain;" %>
+              </div>
+              <div class="card-body text-center" style="background-color: #CDC1FF; font-color: #A594F9;">
+                <div class="card-title border" style="background-color: #F5EFFF;">
+                  <%= album.title %>
+                </div>
+                <div class="card-text border" style="background-color: #F5EFFF;">
+                  <%= album.created_at.strftime("%Y/%m/%d") %>
+                </div>
+                <div class="card-text border" style="background-color: #F5EFFF;">
+                  お気に入り数: <%= album.favorites.count %>
+                </div>
+              </div>
+            <% end %>
           </div>
-          <div class="row">
-            <%= album.title %>
-          </div>
-          <div class="row">
-            <%= album.created_at.strftime("%Y/%m/%d") %>
-          </div>
-          <% end %>
-        </div>
         <% end %>
       </div>
+      <%= paginate @albums, theme: 'bootstrap-5' %>
     </div>
   </div>
 </div>

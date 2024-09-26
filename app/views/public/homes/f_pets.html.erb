@@ -1,19 +1,35 @@
 <div class="container">
   <div class="row mb-5">
-    お気に入りしたペット一覧
+    <div class="col-12 text-center">
+      お気に入りしたペット一覧
+    </div>
   </div>
+
+  <div class="row mb-3">
+    <div class="col-12 text-center">
+      <%= link_to '新しい順', f_pets_path(sort: 'newest'), class: 'btn btn-primary' %>
+      <%= link_to '古い順', f_pets_path(sort: 'oldest'), class: 'btn btn-primary' %>
+    </div>
+  </div>
+
   <div class="row">
     <% @favorites.each do |favorite| %>
-    <div class ="card col-2 mb-3 mr-3">
-      <%= link_to pet_path(favorite.pet.id) do %>
-      <div class="card-img-top">
-        <%= image_tag favorite.pet.image, size: "100x100", style: "object-fit: contain;" %>
+      <div class="card col-2 mb-3 mr-3">
+        <%= link_to pet_path(favorite.pet.id) do %>
+          <div class="card-img-top">
+            <%= image_tag favorite.pet.image, size: "100x100", style: "object-fit: contain;" %>
+          </div>
+          <div class="card-title">
+            <%= favorite.pet.name %>
+          </div>
+        <% end %>
       </div>
-        <div class="card-title">
-          <%= favorite.pet.name %>
-        </div>
-      <% end %>
-    </div>
     <% end %>
+  </div>
+
+  <div class="row">
+    <div class="col-12 text-center">
+      <%= paginate @favorites, theme: 'bootstrap-5' if defined?(Kaminari) %>
+    </div>
   </div>
 </div>

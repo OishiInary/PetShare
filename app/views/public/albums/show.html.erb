@@ -57,23 +57,18 @@
     </div>
     <!--画像の隣のスペース、ペットの写真一覧４枚まで-->
     <div class="col border">
-      <div class="container">
-        <div class="row text-center justify-content-center">
-          <h4><%= link_to pet_path(@album.pet) do %>
+      <div class="container text-center">
+        <h4><%= link_to pet_path(@album.pet) do %>
           <%= @album.pet.name %>
-          <% end %>の写真一覧</h4>
-        </div>
-        <div class="row col-6 bg bg-color-blue">
-          <% @albums.each do |album| %>
-          <div class="col p-2 m-2 border" id="photo">
-            <%= link_to album_path(album) do %>
-              <%= image_tag album.get_album_image, size: "100x100" %>
-            <% end %>
-          </div>
-          <% end %>
+        <% end %>の他の写真</h4>
+        
+        <% random_album = @albums.sample %> <!-- ランダムにアルバムを選択 -->
+        <div id="pet-photo-slideshow" class="mb-3">
+          <%= link_to image_tag(random_album.get_album_image, id: "slideshow-image", size: "300x300", style: "object-fit: contain; opacity: 1; transition: opacity 1s;"), album_path(random_album) %>
         </div>
       </div>
     </div>
+
     <!--これより下がコメント欄-->
     <div class="row col-12" id="comments-index">
       <%= render "form", album: @album %>
@@ -82,3 +77,24 @@
      
   </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const images = <%= raw @albums.map { |album| album.get_album_image.to_json }.to_json %>;
+    const albumLinks = <%= raw @albums.map { |album| album_path(album).to_json }.to_json %>; // アルバムへのリンクを取得
+    let currentIndex = <%= @albums.index(random_album) %>; // ランダムに選ばれたアルバムのインデックスを取得
+
+    const imageElement = document.getElementById("slideshow-image");
+
+    setInterval(() => {
+      imageElement.style.opacity = 0; // フェードアウト
+
+      setTimeout(() => {
+        currentIndex = (currentIndex + 1) % images.length; // 画像を循環
+        imageElement.src = images[currentIndex];
+        imageElement.parentNode.href = albumLinks[currentIndex]; // リンクを更新
+        imageElement.style.opacity = 1; // フェードイン
+      }, 1000); // フェードアウトの時間と同じ1秒待つ
+    }, 10000); // 10秒ごとに切り替え
+  });
+</script>

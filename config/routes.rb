@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :albums, only:[:show,:index, :edit, :update, :destroy]do
       resources :comments, only:[:destroy]
     end
+    resources :tags, only:[:index, :destroy]
     resources :rooms, only:[:show,:index, :edit, :update, :destroy]
     resources :groups, only:[:show,:index,:edit,:update,:destroy] do
       resources :group_users, only:[:destroy]
@@ -37,6 +38,7 @@ Rails.application.routes.draw do
     get "/search" => "searches#search"
     get "homes/entrance" => "homes#entrance", as: "entrance"
     get "homes/save"  => "homes#save", as: "save"
+    get "homes/guide" => "homes#guide", as: "guide"
     get "homes/about" => "homes#about", as: "about"
     get "homes/mypage" => "homes#mypage", as: "mypage"
     get "homes/my_album" => "homes#my_album", as: "my_album"

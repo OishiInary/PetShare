@@ -34,19 +34,24 @@
                 <thead><tr><th>飼い主</th></tr></thead><br>
                 <tbody><tr><td><%= link_to user_path(@pet.user) do %><%= @pet.user.name %><% end %></td></tr></tbody>
               </table>
-               <div class="row mb-1">
-                 <div class="col">
+              <div class="row mb-1">
+                <div class="col">
                   <h4 id="favorite_buttons_<%= @pet.id %>">
                     <%= render "public/pet_favorites/favorite_btn", pet: @pet %>
                   </h4>
+                   <strong>このペットのランキング:</strong> 
+                    <span class="rank-number"><%= @rank_position.present? ? @rank_position : 'ランク外' %>位</span>
+                  <p><strong>登録されているペット:</strong> <%= @total_pets %>_匹中</p>
                 </div>
-               </div>
+              </div>
                <% if @pet.need_help == true %>
-               <div class="row justify-content-center mt-4">
-                 <%= image_tag "/need_help.png", size: "60x60" %>
-               </div>
-               <div class="row justify-content-center">
-                 <h4>里親募集中です</h4>
+               <div class="container border" style="border-radius: 100px; background-color: #ee82ee;">
+                 <div class="row justify-content-center mt-4">
+                   <%= image_tag "/need_help.png", size: "60x60" %>
+                 </div> 
+                 <div class="row justify-content-center">
+                   <h4>里親募集中です</h4>
+                 </div>
                </div>
                <% end %>
             </div>
@@ -61,15 +66,41 @@
       </div>
     </div>
   </div>
-  <h4>この子の写真一覧</h4>
- <div class="row p-2 mb-5 col-12 border">
-   
-   <% @pet_albums.each do |album| %>
-   <div class="col-2 border mx-2 shadow-image" style="background-color: #D8D2C2;">
-     <%= link_to album_path(album) do %>
-     <%= image_tag album.get_album_image, size: "150x150", style: "object-fit: contain;" %>
-     <% end %>
-   </div>
-   <% end %>
- </div>
+    
+<h4>この子の写真一覧</h4>
+<div class="row p-2 mb-5 col-12 border" id="albumContainer">
+  <% @pet_albums.each_with_index do |album, index| %>
+    <div class="col-2 border mx-2 shadow-image album-item" style="background-color: #D8D2C2; <%= index >= 5 ? 'display: none;' : '' %>;">
+      <%= link_to image_tag(album.get_album_image, size: "150x150", style: "object-fit: contain;"), album_path(album) %>
+      <div class="text-center mt-2">
+        <small>登録日時: <%= album.created_at.strftime("%Y年%m月%d日 %H:%M") %></small>
+      </div>
+    </div>
+  <% end %>
 </div>
+
+<div class="text-center mb-5">
+  <button id="loadMoreButton" class="btn btn-primary">さらに5枚表示</button>
+</div>
+</div>
+<script>
+  let currentIndex = 5; // 現在のインデックス
+
+  document.getElementById('loadMoreButton').addEventListener('click', function() {
+    const items = document.querySelectorAll('.album-item');
+    let visibleCount = 0;
+
+    // 最大5枚まで表示
+    for (let i = currentIndex; i < currentIndex + 5 && i < items.length; i++) {
+      items[i].style.display = 'block';
+      visibleCount++;
+    }
+
+    currentIndex += visibleCount; // 現在のインデックスを更新
+
+    // すべて表示されたらボタンを隠す
+    if (currentIndex >= items.length) {
+      this.style.display = 'none';
+    }
+  });
+</script>

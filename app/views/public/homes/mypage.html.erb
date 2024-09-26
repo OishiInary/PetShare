@@ -3,11 +3,11 @@
     <div class="container col-3">
       <%= render "sidebar" %>
     </div>
-    <div class="container col-9 border shadow-image"style= "background-color: #C8CFA0; border-radius: 20px;">
+    <div class="container col-9 border"style= "background-color: #C8CFA0; border-radius: 20px;">
       <div class="row m-2">
-        <div class="col-9 text-center border shadow-image"style="font-family: 'Righteous', cursive; border-radius: 80px; background-color: #FFEDD8;">
+        <div class="col-9 text-center border"style="font-family: 'Righteous', cursive; border-radius: 80px; background-color: #FFEDD8;">
           <h2><%= current_user.name %>さんのマイページ</h2>
-          <div class="row m-4 shadow-image" style="background-color: #B3C8CF;">
+          <div class="row m-4" style="background-color: #B3C8CF;">
               <%= image_tag current_user.get_profile_image, size: "300x300", style: "object-fit: contain;" %>
           </div>
         </div>

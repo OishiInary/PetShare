@@ -4,19 +4,15 @@
       <%= render "sidebar" %>
     </div>
     <div class="container col-9">
-      <div class="row mb-4">
+      <div class="row mb-4 ">
         <h2>フォロワーさん</h2>
       </div>
-       <div class="row mb-4">
+       <div class="row mb-4 border">
          <% @followers.each do |user| %>
          <div class="col">
           <%= link_to user_path(user) do %>
-            <% if user.image.attached? %>
-              <%= image_tag user.image, size: "50x50" %>
-            <% else %>
-              <%= image_tag 'no_image', size: "50x50" %>
-            <% end %>
-          <%= user.name %>
+            <%= image_tag user.get_profile_image, size: "50x50" %>
+            <%= user.name %>
           <% end %>
           </div>
          <% end %>
@@ -26,16 +22,12 @@
      <div class="row mb-4">
       <h2>フォローリスト</h2>
       </div>
-       <div class="row mb-4">
+       <div class="row mb-4 border">
          <% @followings.each do |user| %>
            <div class="col">
            <%= link_to user_path(user) do %>
-            <% if user.image.attached? %>
-              <%= image_tag user.image, size: "50x50" %>
-            <% else %>
-              <%= image_tag 'no_image', size: "50x50" %>
-            <% end %>
-          <%= user.name %>
+            <%= image_tag user.get_profile_image, size: "50x50" %>
+            <%= user.name %>
           <% end %>
           </div>
          <% end %>

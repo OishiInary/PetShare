@@ -42,7 +42,7 @@ before_action :ensure_guest_user, only: [:new,:edit, :destroy]
     @group = Group.new(group_params)
     @group.owner_id = current_user.id
     if @group.save
-      group_user = current_user.group_user.new(group_id: @group.id)
+      group_user = current_user.group_users.new(group_id: @group.id)
       group_user.save
       redirect_to group_path(@group)
     else

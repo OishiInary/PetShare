@@ -1,28 +1,72 @@
 <div class="container">
-  <div class="errors">
-  <%= render "layouts/errors", obj: @chat %>
-  </div>
-  <div class="row mb-5">
-    <h2 id="room" data-room="<%= @room.id %>" data-user="<%= current_user.id %>"><%= @user.name %> さんとのチャット</h2>
-  </div>
-<div class="message" style="width: 400px;">
-  <% @chats.each do |chat| %>
-    <% if chat.user_id == current_user.id %>
-      <%= render "public/chats/chat", chat: chat %>
-    <% else %>
-      <div class="left-container d-flex">
-        <%= image_tag @user.image, size: '30x30', style: 'border-radius: 10%' %>
-        <p class=ml-1 style="text-align: left;"><span style="background-color: #F5F5DC; padding: 5px; border-radius: 10px;"><%= chat.message %></span></p>
-      </div>
+  <div class="message" style="width: 800px; overflow-y: auto; max-height: 400px;" id="chat-history">
+    <% @chats.each do |chat| %>
+      <% if chat.user_id == current_user.id %>
+        <%= render "public/chats/chat", chat: chat %>
+      <% else %>
+        <div class="left-container d-flex">
+          <%= image_tag @user.image, size: '30x30', style: 'border-radius: 10%' %>
+          <p class="ml-1" style="text-align: left;">
+            <span style="background-color: #F5F5DC; padding: 5px; border-radius: 10px;">
+              <%= chat.message %>
+            </span>
+            <% if chat.image.attached? %>
+              <%= image_tag chat.image, size: '100x100', style: 'border-radius: 10%; margin-top: 5px;' %>
+            <% end %>
+          </p>
+        </div>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
+  <div class="row">
+    <%= form_with model: @chat, data: { turbo: false }, local: false, html: { multipart: true, id: "chat_form" } do |f| %>
+      <%= f.text_field :message, placeholder: "メッセージを入力", class: "form-control" %>
+      <%= f.file_field :image, accept: 'image/*', class: "form-control", id: "chat_image" %>
+      <div id="image_preview" style="margin-top: 10px;"></div>
+      <%= f.submit "送信", class: "btn btn-dark btn-sm" %>
+      <%= f.hidden_field :room_id %>
+    <% end %>
+  </div>
 </div>
 
+<script>
+  $(document).on('turbo:load', function() {
+    // 最初にスクロールを最下部に
+    const chatHistory = $("#chat-history");
+    chatHistory.scrollTop(chatHistory[0].scrollHeight);
+  
+    // スクロール時の処理
+    chatHistory.on('scroll', function() {
+      if (chatHistory.scrollTop() === 0) {
+        // スクロールが最上部に達したら古いチャットを読み込む
+        $.get('/chats/load_more', { room_id: <%= @chat.room_id %> }, function(data) {
+          chatHistory.prepend(data); // 古いチャットを最上部に追加
+        });
+      }
+    });
 
+    // 画像プレビュー機能
+    $("#chat_image").on("change", function(event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        $("#image_preview").html(`<img src="${e.target.result}" style="max-width: 100px; border-radius: 10%; margin-top: 5px;">`);
+      }
+      if (file) {
+        reader.readAsDataURL(file);
+      } else {
+        $("#image_preview").html(""); // 画像が選択されていない場合はプレビューを消去
+      }
+    });
+  });
 
-<%= form_with model: @chat, data: { turbo: false } ,local: false  do |f| %>
-  <%= f.text_field :message %>
-  <%= f.submit "送信", class: "btn btn-dark btn-sm" %>
-  <%= f.hidden_field :room_id %>
-<% end %>
-</div>
+  // チャット送信時の処理
+  $("#chat_form").on('ajax:success', function(event, data) {
+    // チャットを最新の位置に追加
+    $(".message").append(data); // ここはサーバーから返ってきたチャットのHTMLを適用
+    const chatHistory = $("#chat-history");
+    chatHistory.scrollTop(chatHistory[0].scrollHeight); // 送信後にスクロールを最下部に
+    $("#chat_form")[0].reset(); // フォームのリセット
+    $("#image_preview").html(""); // 送信後にプレビューを消去
+  });
+</script>

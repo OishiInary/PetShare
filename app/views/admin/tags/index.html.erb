@@ -1,0 +1,10 @@
+<div class="container" >
+  クリックすると速攻削除なので注意。
+  <div class="row border">
+    <% @tags.each do |tag| %>
+      <%= link_to admin_tag_path(tag), method: :delete do %>
+        <% tag.name %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

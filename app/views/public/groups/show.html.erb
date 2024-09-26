@@ -1,78 +1,104 @@
-<div class="row">
-  <div class="col-3">
-    <div class="btn btn-light btn-sm"><p><%= link_to "戻る",groups_path %></p></div>
-    <h1><%= @group.name %></h1>
-    <h4>グループ参加者</h4>
+<div class="container">
+  <div class="row">
+    <div class="col-12 text-center">
+      <div class="btn btn-light btn-sm"><p><%= link_to "戻る", groups_path %></p></div>
+      <h1><%= @group.name %></h1>
+    </div>
+    <div class="col-12 border mx-auto justify-content-center text-center" style="border-radius: 60px; background-color: #F5EDED;">
+      <%= image_tag @group.get_image, size: '500x100', style: "object-fit: contain;" %>
+    </div>
+    <div class="col-12 border"><%= @group.introduction %></div>
   </div>
-  <div class="col-9 border mx-auto justify-content-center text-center" style="border-radius: 60px; background-color: #F5EDED;">
-    <%= image_tag @group.get_image, size: '500x100', style: "object-fit: contain;" %>
-  </div>
-</div>
-<div class="row m-4 justify-content-center">
-  <% if @group.owner_id == current_user.id %>
-    <div class="col-2"><%= link_to "編集", edit_group_path(@group), class: "btn btn-success" %></div>
-    <div class="col-2"><%= link_to "削除", group_path(@group),method: :delete,data: { confirm: "本当に削除しますか？" },  class: "btn btn-danger" %></div>
-  <% else %>
-    <% if @group.include_user?(current_user) %>
-      <%= link_to "脱退する", group_group_user_path(@group), method: :delete,data: { confirm: "本当に脱退しますか？" },  class: "btn btn-danger" %>
+  
+  <div class="row m-4 justify-content-center">
+    <% if @group.owner_id == current_user.id %>
+      <div class="col-2"><%= link_to "編集", edit_group_path(@group), class: "btn btn-success" %></div>
+      <div class="col-2"><%= link_to "削除", group_path(@group), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %></div>
     <% else %>
-      <%= link_to "参加する", group_group_users_path(@group), method: :post, class: "btn btn-success" %>
-    <% end %>
-  <% end %>
-  </div>
-<div class="row col-12">
-  <% @group_users.each do |user| %>
-    <div class="col-2 mx-auto justify-content-center">
-      <% if user.user.id == @group.owner.id %>
-        <p class="card-text">↓オーナー</p>
+      <% if @group.include_user?(current_user) %>
+        <%= link_to "脱退する", group_group_user_path(@group), method: :delete, data: { confirm: "本当に脱退しますか？" }, class: "btn btn-danger" %>
+      <% else %>
+        <%= link_to "参加する", group_group_users_path(@group), method: :post, class: "btn btn-success" %>
       <% end %>
-      <%= link_to user_path(user.user.id) do %>
-        <div class="card" style="width: 7rem; height: 10rem; back-ground-color: blue; object-fit: contain;">
-          <img class="card-img-top">
-          <%= image_tag user.user.get_profile_image, size: "100x100" %>
-          <div class="card-body">
-          <p class="card-title"><%= user.user.name %></p>
+    <% end %>
+  </div>
+
+  <div class="row col-12">
+    <div class="col-12">グループ参加者</div>
+    <div class="col-12">
+      <div class="participants-scroll">
+        <% @group_users.each do |user| %>
+          <div class="participant-card">
+            <% if user.user.id == @group.owner.id %>
+              <p class="card-text">↓オーナー</p>
+            <% end %>
+            <%= link_to user_path(user.user.id) do %>
+              <div class="card" style="width: 7rem; height: 10rem; object-fit: contain;">
+                <%= image_tag user.user.get_profile_image, size: "100x100", class: "card-img-top" %>
+                <div class="card-body">
+                  <p class="card-title"><%= user.user.name %></p>
+                </div>
+              </div>
+            <% end %>
           </div>
-        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <%= form_with model: @group_chat, url: group_group_chats_path(@group) do |f| %>
+      <%= f.hidden_field :user_id, value: current_user.id %>
+      <div class="mt-3 mb-3 ">
+        <%= f.label :発言する %>
+        <%= f.text_area :message, size: "100x1", class: "form-control" %>
+        <%= f.submit "送信" %>
       <% end %>
     </div>
-  <% end %>
-</div>
-  <div class="row">
-  <%= form_with model: @group_chat,url: group_group_chats_path(@group) do |f| %>
-  <%= f.hidden_field :user_id, :value => current_user.id %>
-  <div class="mt-3 mb-3 ">
-    <%= f.label :発言する %>
-    <%= f.text_area :message,size: "100x1", class: "form-control" %>
-    <%= f.submit "送信"%>
-    <% end %>
+  </div>
+
+  <div class="row mt-3">
+    <table class="table border" style="background-color: #EEEEEE;">
+      <thead>
+        <tr>
+          <th></th>
+          <th>発言者</th>
+          <th>内容</th>
+          <th>発言日時</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @group_chats.each do |chat| %>
+          <tr>
+            <td style="padding: auto; vertical-align: middle"><%= image_tag chat.user.get_profile_image, size: '50x50', style: "object-fit: contain;" %></td>
+            <td style="padding: auto; vertical-align: middle"><%= chat.user.name %></td>
+            <td style="padding: auto; vertical-align: middle"><%= chat.message %></td>
+            <td style="padding: auto; vertical-align: middle"><%= chat.created_at.strftime("%Y/%m/%d") %></td>
+            <td style="padding: auto; vertical-align: middle">
+              <% if chat.user == current_user %>
+                <%= link_to "削除", group_group_chat_path(@group, chat), method: :delete, remote: true, class: "btn btn-sm btn-danger" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @group_chats, theme: 'bootstrap-5' %>
   </div>
 </div>
-<div class="row mt-3">
-  <table class="table border" style="background-color: #EEEEEE;">
-    <thead>
-      <tr>
-        <th></th>
-        <th>発言者</th>
-        <th>内容</th>
-        <th>発言日時</th>
-      </tr>
-    </thead>
-    <tbody>
-    <% @group_chats.each do |chat| %>
-      <tr>
-        <td style="padding: auto; vertical-align:middle"><%= image_tag chat.user.get_profile_image, size: '50x50', style: "object-fit: contain;" %></td>
-        <td style="padding: auto; vertical-align:middle"><%= chat.user.name %></td>
-        <td style="padding: auto; vertical-align:middle"><%= chat.message %></td>
-        <td style="padding: auto; vertical-align:middle"><%= chat.created_at.strftime("%Y/%m/%d") %></td>
-        <td style="padding: auto; vertical-align:middle">
-          <% if chat.user == current_user %>
-           <%= link_to "削除", group_group_chat_path(@group,chat), method: :delete,remote: true, class: "btn btn-sm btn-danger" %>
-          <% end %>
-        </td>
-      </tr>
-      </tbody>
-    <% end %>
-    <%= paginate @group_chats,theme: 'bootstrap-5' %>
-  </table>
-</div>
+
+<style>
+  .participants-scroll {
+    display: flex;
+    overflow-x: auto; /* 横にスクロールできるようにする */
+    padding: 10px 0; /* 上下のパディング */
+  }
+
+  .participant-card {
+    margin-right: 15px; /* 各参加者のカードの間隔 */
+  }
+
+  .participant-card:last-child {
+    margin-right: 0; /* 最後のカードのマージンをゼロに */
+  }
+</style>

@@ -122,6 +122,16 @@ a:hover{ color: #117554; }
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 影の設定 */
     display: inline-block; /* 画像をインラインブロックに */
 }
+
+.shadow-image:hover {
+  transform: scale(1.05);
+}
+
+.rank-number {
+  font-size: 1.5em; /* サイズを調整 */
+  font-weight: bold; /* 太字にする場合 */
+}
+
 #photo {
   
   border-width: 10px;
