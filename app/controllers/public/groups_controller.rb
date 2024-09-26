@@ -12,8 +12,9 @@ class Public::GroupsController < ApplicationController
     sort_direction = params[:direction] || 'asc'
     
     @group_lists = Group.left_joins(:group_users)
-                    .select('groups.*, COUNT(group_users.id) AS user_count')
-                    .group('groups.id')
+                        .select('groups.id, groups.name, COUNT(group_users.id) AS user_count')
+                        .group('groups.id, groups.name')
+
 
 
     # 検索機能の追加
