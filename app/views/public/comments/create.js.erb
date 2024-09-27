@@ -1,3 +1,2 @@
-$('#comments-index').html("<%= j(render "form", album: @album) %>
-                           <%= j(render "public/albums/index", comments: @comments) %>")
+$('#comments-list').html("<%= j(render "public/albums/index", comments: @comments) %>")
 $('.comment-textarea').val("");

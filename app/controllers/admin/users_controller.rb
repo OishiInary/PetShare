@@ -38,7 +38,7 @@ before_action :authenticate_admin!
     
     
   def user_params
-    params.require(:user).permit(:name, :introduction, :gender, :birthday, :post_code, :hope, :phone, :address, :email, :image, :is_active,:password)
+    params.require(:user).permit(:name, :introduction, :gender, :birthday, :post_code, :hope, :phone, :address, :email, :image, :is_active,:password )
   end
 
 
