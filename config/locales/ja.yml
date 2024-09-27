@@ -12,7 +12,7 @@ ja:
         :male: 'オス'
         female: 'メス'
     user:
-      is_actiive:
+      is_active:
         true: '有効会員'
         false: '退会済'
       gender:
