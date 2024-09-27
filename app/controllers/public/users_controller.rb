@@ -31,12 +31,14 @@ before_action :current_my_page, only: [:show]
 
   def update
     @user = User.find(params[:id])
-    password_changed = user_params[:password].present? # パスワードが変更されたかを確認
+    
+    # パスワードが変更されたかを確認
+    password_changed = user_params[:password].present? 
   
-    if @user.update(user_params.except(:password)) # パスワードを除外して更新
+    if @user.update(user_params)
       if password_changed
         flash[:notice] = "パスワードが更新されました"
-        sign_in(@user, bypass: true) # 必要な場合のみ
+        bypass_sign_in(@user) # 必要な場合のみ
       else
         flash[:notice] = "更新に成功しました"
       end
@@ -60,7 +62,7 @@ before_action :current_my_page, only: [:show]
 private
 
   def user_params
-    params.require(:user).permit(:image,:name, :email, :password, :password_confirmation, :introduction, :post_code, :address, :phone, :hope, :gender, :birthday, :is_active) # 必要な属性を追加
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :image, :introduction, :post_code, :address, :phone, :hope, :gender, :birthday, :is_active) # 必要な属性を追加
   end
 
   def current_my_page
