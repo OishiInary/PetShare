@@ -30,19 +30,17 @@ before_action :current_my_page, only: [:show]
   end
 
   def update
-    @user = User.find(params[:id])
-    
-    # パスワードが変更されたかを確認
-    password_changed = user_params[:password].present? 
+     @user = User.find(params[:id])
   
+    # パスワードが空の場合はパスワード関連のフィールドを削除
+    if user_params[:password].blank?
+      params[:user].delete(:password)
+      params[:user].delete(:password_confirmation)
+    end
+    
     if @user.update(user_params)
-      if password_changed
-        flash[:notice] = "パスワードが更新されました"
-        bypass_sign_in(@user) # 必要な場合のみ
-      else
-        flash[:notice] = "更新に成功しました"
-      end
-      redirect_to mypage_path
+      flash[:notice] = user_params[:password].present? ? "パスワードが更新されました" : "更新に成功しました"
+      redirect_to mypage_path(@user)
     else
       flash[:alert] = "更新に失敗しました"
       redirect_back(fallback_location: root_path)
