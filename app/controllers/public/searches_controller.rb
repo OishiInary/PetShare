@@ -14,7 +14,7 @@ class Public::SearchesController < ApplicationController
     elsif @model == "pet"
       @records = Pet.search_for(@content, @method).page(page_number).per(10).order(created_at: :desc)
     else 
-      @records = Album.tag_search_for(@content, @method)
+      @records = Album.tag_search_for(@content, @method).page(page_number).per(10).order(created_at: :desc)
     end
   end
 end
