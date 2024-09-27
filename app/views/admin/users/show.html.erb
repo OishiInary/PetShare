@@ -12,7 +12,13 @@
         <table class='table'>
             <tbody>
               <tr><td><h4>SAVE活動</h4></td></tr>
-              <tr><td><h5><%= @user.hope_i18n %></h5></td></tr>
+              <tr><td><h5><% if @user.hope == 0%>
+                          未選択
+                          <% elsif @user.hope == 1 %>
+                          里親募集中
+                          <% else %>
+                          里子募集中
+                          <% end %></h5></td></tr>
               <tr><td><%= @user.gender_i18n %>-<%= @age %>歳</td></tr>
               <tr><td>フォロー数: <%= @user.followings.count %></td></tr>
               <tr><td>フォロワー数: <%= @user.followers.count %></td></tr>
