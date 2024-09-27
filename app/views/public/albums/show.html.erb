@@ -78,11 +78,12 @@
 
 
 
-    <!--これより下がコメント欄-->
-    <div class="row col-12" id="comments-index">
-      <%= render "form", album: @album %>
-      <%= render "index", comments: @comments %>
-    </div>
+<div class="row col-12" id="comments-index">
+  <%= render "form", album: @album %>
+  <div id="comments-list">
+    <%= render "index", comments: @comments %>
+  </div>
+</div>
      
   </div>
 </div>

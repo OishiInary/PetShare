@@ -3,7 +3,7 @@
     投稿検索結果
   </div>
   <div class="row">
-    <% albums.each do |album| %>
+    <%  @records.each do |album| %>
     <div class ="col-2 mb-3">
       <%= link_to album_path(album.id) do %>
       <div class="row">
@@ -18,6 +18,6 @@
       <% end %>
     </div>
     <% end %>
-    <%= paginate albums,theme: 'bootstrap-5' %>
+ <%= paginate @records, theme: 'bootstrap-5' %> <!-- @recordsを使う -->
   </div>
 </div> 
