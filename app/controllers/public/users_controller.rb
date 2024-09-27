@@ -31,12 +31,18 @@ before_action :current_my_page, only: [:show]
 
   def update
     @user = User.find(params[:id])
-    if @user.update(user_params)
-      flash[:notice] = "更新に成功しました"
+    password_changed = user_params[:password].present? # パスワードが変更されたかを確認
+  
+    if @user.update(user_params.except(:password)) # パスワードを除外して更新
+      if password_changed
+        flash[:notice] = "パスワードが更新されました"
+        sign_in(@user, bypass: true) # 必要な場合のみ
+      else
+        flash[:notice] = "更新に成功しました"
+      end
       redirect_to mypage_path
     else
-      flash[:notice] = "更新に失敗しました"
-      @user = current_user
+      flash[:alert] = "更新に失敗しました"
       redirect_back(fallback_location: root_path)
     end
   end
@@ -51,10 +57,10 @@ before_action :current_my_page, only: [:show]
     redirect_to new_user_registration_path
   end
 
-  private
+private
 
   def user_params
-    params.require(:user).permit(:name, :introduction, :gender, :birthday, :post_code, :hope, :phone, :address, :email, :image, :is_active, :password)
+    params.require(:user).permit(:image,:name, :email, :password, :password_confirmation, :introduction, :post_code, :address, :phone, :hope, :gender, :birthday, :is_active) # 必要な属性を追加
   end
 
   def current_my_page
