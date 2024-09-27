@@ -75,18 +75,12 @@
         </div>
       </div>
     </div>
-
-
-
-<div class="row col-12" id="comments-index">
-  <%= render "form", album: @album %>
-  
-  <div id="comments-list">
-    <%= render "index", comments: @comments %>
-  </div>
-</div>
-
-     
+    <div class="row col-12" id="comments-index">
+      <%= render "form", album: @album %>
+    </div>
+    <div class="col-12" id="comments-list">
+      <%= render "index", comments: @comments %>
+    </div>
   </div>
 </div>
 
