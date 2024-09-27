@@ -22,24 +22,26 @@ before_action :authenticate_admin!
     end
 
     def update
-        @user = User.find(params[:id])
-        if @user.update(user_params)
-          flash[:notice] = "更新に成功しました"
-          redirect_to admin_users_path
-        else
-          flash[:notice] = "更新に失敗しました"
-          @user = current_user
-            redirect_to admin_users_path
-        end
-    end 
+      @user = User.find(params[:id])
+
+      if @user.update(user_params)
+        flash[:notice] = user_params[:password].present? ? "パスワードが更新されました" : "更新に成功しました"
+        redirect_to edit_admin_user_path(@user)
+      else
+        flash[:alert] = "更新に失敗しました"
+        redirect_back(fallback_location: root_path)
+      end
+    end
+
+   
 
 
     private
     
     
-  def user_params
-    params.require(:user).permit(:name, :introduction, :gender, :birthday, :post_code, :hope, :phone, :address, :email, :image, :is_active,:password )
-  end
 
+  def user_params
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :image, :introduction, :post_code, :address, :phone, :hope, :gender, :birthday, :is_active) # 必要な属性を追加
+  end
 
 end

@@ -1,8 +1,8 @@
 <div class="container col-12">
  <div class="row my-auto mb-1 border text-center justify-content-center " style="background-color: #C1CFA1; border-radius: 20px;">
   
-     <p class="my-auto mr-5"><%= link_to root_path do %><%= image_tag "/petshare.png" ,size: "250x100",style: "object-fit: contain;" %><% end %><% if user_signed_in? %>ようこそ<strong><%= current_user.name %></strong>さん</p>
-     <p class="m-auto ">こちらから検索できます。→<%= render "public/searches/form" %><% end %></p></div>
+     <p class="my-auto mr-5"><% if admin_signed_in? %> <% else %><%= link_to root_path do %><%= image_tag "/petshare.png" ,size: "250x100",style: "object-fit: contain;" %><% end %><% if user_signed_in? %>ようこそ<strong><%= current_user.name %></strong>さん</p>
+     <p class="m-auto ">こちらから検索できます。→<%= render "public/searches/form" %><% end %></p><% end %></div>
    
   <div class=" mb-3 row justify-content-center text-center">
     <div class="col-12 mt-4 mb-1">

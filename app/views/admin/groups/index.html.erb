@@ -24,7 +24,7 @@
               <td><%= link_to admin_group_path(group.id) do %><%= group.name %><% end %></td>
               <td><%= link_to admin_user_path(group.owner.id) do %><%= group.owner.name %><% end %></td>
               <td><%= group.introduction %></td>
-              <td><%= group.group_user.count %></td>
+              <td><%= group.group_users.count %></td>
             </tr>
             <% end %>
           </tbody>

@@ -13,11 +13,10 @@ class Public::SearchesController < ApplicationController
       @records = Album.search_for(@content, @method).page(page_number).per(10).order(created_at: :desc)
     elsif @model == "pet"
       @records = Pet.search_for(@content, @method).page(page_number).per(10).order(created_at: :desc)
-    else 
-      @records = Album.tag_search_for(@content, @method) # tag_search_forの結果を取得
-
-      # 結果が存在する場合のみページネーションを適用
-      @records = @records.page(page_number).per(10).order(created_at: :desc) if @records.present?
+    else
+      @records = Album.tag_search_for(@content, @method)
+      # 配列であれば、sort_byでソートし、paginate_arrayでページネーションを適用
+      @records = Kaminari.paginate_array(@records.sort_by { |record| record.created_at }.reverse).page(page_number).per(10) if @records.is_a?(Array)
     end
   end
 end
