@@ -29,14 +29,14 @@
             </td>
           </tr>
           <tr>
-            <th>主役ペット</th>
+            <th>主役ペット-マイペット登録した子がいないと投稿-</th>
             <td class="p-1">
               <%= f.select :pet_id, options_for_select(current_user.mypets.map { |pet| [pet.name, pet.id] }), prompt: false, class: "form-control" %>
             </td>
           </tr>
           <tr>
-            <th><%= f.label"タグ (スペースで区切ると複数タグ登録できます)" %></th>
-            <td><%= f.text_field :name, placeholder: "お昼寝 ご飯 ジャンプ" %></td>
+            <th><%= f.label"タグ ([半角]スペースで区切ると複数タグ登録できます)" %></th>
+            <td><%= f.text_field :name, placeholder: "タグ１ タグ２" %></td>
           </tr>
         </table>
         <div class="row my-3 justify-content-center">

@@ -3,20 +3,29 @@
   <div class="row m-4">
     <span style="background-color: #ECECEC; font-weight: bold; font-size: 23px">　会員情報編集　</span>
   </div>
-  
+
   <%= form_with model: @user, url: user_path(@user), method: :patch, html: { multipart: true } do |f| %>
   
   <div class="row mt-3">
     <%= f.file_field :image, accept: "image/*", class: "form-control border-0", id: "user_image" %>
   </div>
-  
-  <!-- 画像プレビュー表示エリア -->
+
+  <!-- 現在の画像 -->
   <div class="row mt-2">
     <div class="col-12">
-      <img id="image_preview" src="<%= @user.get_profile_image %>" style="max-width: 300px; max-height: 300px; display: block;" />
+      <p>現在の画像:</p>
+      <%= image_tag @user.get_profile_image , size: "300x300" %>
     </div>
   </div>
-  
+
+  <!-- 新しい画像プレビュー -->
+  <div class="row mt-2">
+    <div class="col-12">
+      <p>新しい画像:</p>
+      <img id="new_image_preview" src="" style="max-width: 300px; max-height: 300px; display: none;" />
+    </div>
+  </div>
+
   <div class="row mt-3">
     <div class="col-4">ニックネーム</div>
     <div class="col-4 text-left"><%= f.text_field :name %></div>
@@ -77,11 +86,10 @@
     </table>
   </div>
 
-  
   <%= f.hidden_field :gender, value: @user.gender %>
   <%= f.hidden_field :birthday, value: @user.birthday %>
   <%= f.hidden_field :is_active, value: @user.is_active %>
-  
+
   <div class="row mt-2">
     <div class="col-4"></div>
     <div class="col-5">
@@ -89,27 +97,27 @@
     </div>
     <div class="col-2 text-left"></div>
   </div>
-  
   <% end %>
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const imageInput = document.getElementById("user_image");
-    const imagePreview = document.getElementById("image_preview");
+document.addEventListener("DOMContentLoaded", function() {
+  const imageInput = document.getElementById("user_image");
+  const newImagePreview = document.getElementById("new_image_preview");
 
-    imageInput.addEventListener("change", function(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          imagePreview.src = e.target.result;
-        }
-        reader.readAsDataURL(file);
-      } else {
-        imagePreview.src = "<%= @user.get_profile_image %>"; // 既存の画像を表示
+  imageInput.addEventListener("change", function(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        newImagePreview.src = e.target.result;
+        newImagePreview.style.display = 'inline'; // 新しい画像を表示
       }
-    });
+      reader.readAsDataURL(file);
+    } else {
+      newImagePreview.style.display = 'none'; // ファイルが選択されていない場合は非表示
+    }
   });
-</script>
+});
 
+</script>
