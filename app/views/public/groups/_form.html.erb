@@ -4,11 +4,11 @@
       <%= form_with model: @group do |f| %>
       <div class="mb-3 form-group-name">
         <%= f.label :グループ名 %>
-        <%= f.text_field :name, class: "form-control" %>
+        <%= f.text_field :name, class: "form-control",required: true,placeholder: "2~20文字でグループ名" %>
       </div>
       <div class="mb-3 form-group-introduction">
         <%= f.label :グループ紹介文 %>
-        <%= f.text_area :introduction, class: "form-control" %>
+        <%= f.text_area :introduction, class: "form-control",required: true,placeholder: "2~150文字で紹介文"%>
       </div>
       <div class="mb-3 form-group-image">
         <%= f.label :グループ画像　%>

@@ -8,7 +8,7 @@ class Pet < ApplicationRecord
 
   validates :name, presence: { message: "の入力は必須です" }, length: {minimum: 1, maximum: 15}
   validates :gender, presence: { message: "の入力は必須です" }
-  validates :age, presence: { message: "の入力は必須です" }
+  validates :age, presence: { message: "の入力は必須です" },numericality: {only_integer: true}
   validates :image, presence: { message: "の挿入は必須です" }
   def favorited_by?(user)
     pet_favorites.exists?(user_id: user.id)

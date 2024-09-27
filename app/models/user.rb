@@ -12,8 +12,8 @@ class User < ApplicationRecord
   validates :name,presence: { message: "の入力は必須です", full_message:false},length: { minimum: 2, maximum: 20 }
   validates :address, presence: true
   validates :gender, presence: true
-  validates :post_code, presence: true,length: {is: 7 }
-  validates :phone, presence: true,length: { minimum: 10, maximum: 11 }
+  validates :post_code, presence: true,length: {is: 7 },numericality: {only_integer: true}
+  validates :phone, presence: true,length: { minimum: 10, maximum: 11 },numericality: {only_integer: true}
   validates :birthday, presence: true
   validates :hope, presence: true
 
