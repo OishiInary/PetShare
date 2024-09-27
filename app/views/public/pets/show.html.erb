@@ -92,7 +92,8 @@
 
     // 最大5枚まで表示
     for (let i = currentIndex; i < currentIndex + 5 && i < items.length; i++) {
-      items[i].style.display = 'block';
+    items[i].style.display = 'inline-block';  // 'block'の代わりに'inline-block'
+
       visibleCount++;
     }
 
