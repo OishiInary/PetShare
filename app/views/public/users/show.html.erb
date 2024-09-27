@@ -10,7 +10,7 @@
           <div class="row m-4 shadow-image">
             <%= image_tag @user.get_profile_image, size: '300x300', style: "object-fit: contain;" %>
           </div>
-          <div class="row border">
+          <div class="row border" style="background-color: white; border-radius: 30px">
             <%= @user.introduction %>
           </div>
         </div>

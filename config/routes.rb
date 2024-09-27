@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: "homes#top"
     resources :users, only:[ :show, :index, :edit, :update]
-    resources :pets, only:[:show,:index,:edit,:update,:destroy]do
+    resources :pets, only:[:show,:index,:destroy]do
         resources :albums, only: [] do
          collection do
           get 'load_more', to: 'albums#load_more_albums'
@@ -26,7 +26,7 @@ Rails.application.routes.draw do
        end
      end
     resources :categories, only:[:new,:show,:index, :create, :edit, :update, :destroy]
-    resources :albums, only:[:show,:index, :edit, :update, :destroy]do
+    resources :albums, only:[:show,:index,:destroy]do
       resources :comments, only:[:destroy]
     end
     resources :tags, only:[:index, :destroy]

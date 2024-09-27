@@ -11,22 +11,6 @@ class Admin::AlbumsController < ApplicationController
     end  
     
     
-    def edit
-        @album = Album.find(params[:id])
-    end
-    
-    def update
-      @album = Album.find(params[:id])
-        if @album.update(album_params)
-          flash[:notice] = "更新に成功しました"
-          redirect_to admin_album_path(@album[:id])
-        else
-          flash[:notice] = "更新に失敗しました"
-          @album = Album.find(params[:id])
-          redirect_back(fallback_location: admin_root_path)
-        end
-    end 
-    
     def destroy
       @album = Album.find(params[:id])
       @album.destroy

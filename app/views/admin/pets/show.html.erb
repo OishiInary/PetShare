@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="row">
+    <div class="container">
+      <div class="row">
+        <div class="col mb-5">
+          <%= image_tag @pet.image, size: '700x700', style: "object-fit: contain;" %>
+        </div>
+        <div class="col border">
+          <table class="table border">
+            <tr>
+              <th>お名前</th>
+              <th><%= @pet.name %></th>
+            </tr>
+            <tr>
+              <td>年齢</td>
+              <td><%= @pet.age %></td>
+            </tr>
+            <tr>
+              <td>種類</td>
+              <td><%= @pet.category.name %></td>
+            </tr>
+            <tr>
+              <td>投稿数</td>
+              <td><%= @pet.album.count %></td>
+            </tr>
+            <tr>
+              <td>主演アルバムの獲得いいね総数</td>
+              <td><%= @favorites %>個</td>
+            </tr>
+          </table>
+          <div class="row">
+            <div class="col mb-5">
+              <table class="table border">
+                <thead><tr><th>飼い主</th></tr></thead><br>
+                <tbody><tr><td><%= link_to admin_user_path(@pet.user) do %><%= @pet.user.name %><% end %></td></tr></tbody>
+              </table>
+              <div class="row mb-1">
+                <div class="col">
+                  <%= @favorites %>
+                   <strong>このペットのランキング:</strong> 
+                    <span class="rank-number"><%= @rank_position.present? ? @rank_position : 'ランク外' %>位</span>
+                  <p><strong>登録されているペット:</strong> <%= @total_pets %>_匹中</p>
+                </div>
+              </div>
+               <% if @pet.need_help == true %>
+               <div class="container border" style="border-radius: 100px; background-color: #ee82ee;">
+                 <div class="row justify-content-center mt-4">
+                   <%= image_tag "/need_help.png", size: "60x60" %>
+                 </div> 
+                 <div class="row justify-content-center">
+                   <h4>里親募集中です</h4>
+                 </div>
+               </div>
+               <% end %>
+            </div>
+          </div>
+            <div class="row m-5"><%= link_to "削除する", admin_pet_path ,method: :delete,data: { confirm: '本当にこの子を削除してしまうんですか？' }, class: "btn btn-danger" %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
