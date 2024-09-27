@@ -1,5 +1,5 @@
 class Public::UsersController < ApplicationController
-before_action :authenticate_user!, except: [:index, :show]
+before_action :authenticate_user!, except: [:index,]
 before_action :ensure_correct_user, only: [:edit, :update]
 before_action :set_user, only: [:show,:followings, :followers]
 before_action :ensure_guest_user, only: [:follow_list,:unsubscribe,:edit]
