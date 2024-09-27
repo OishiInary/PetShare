@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <%= form_with model: @group do |f| %>
+      <%= form_with model: @group, url: admin_group_path do |f| %>
       <div class="mb-3 form-group-name">
         <%= f.label :グループ名 %>
         <%= f.text_field :name, class: "form-control" %>
