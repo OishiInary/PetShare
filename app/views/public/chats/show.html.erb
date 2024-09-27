@@ -1,11 +1,12 @@
 <div class="container">
+  <%= @user.name %>さんとのチャット
   <div class="message" style="width: 800px; overflow-y: auto; max-height: 400px;" id="chat-history">
     <% @chats.each do |chat| %>
       <% if chat.user_id == current_user.id %>
         <%= render "public/chats/chat", chat: chat %>
       <% else %>
         <div class="left-container d-flex">
-          <%= image_tag @user.image, size: '30x30', style: 'border-radius: 10%' %>
+          <%= image_tag @user.get_profile_image, size: '30x30', style: 'border-radius: 10%' %>
           <p class="ml-1" style="text-align: left;">
             <span style="background-color: #F5F5DC; padding: 5px; border-radius: 10px;">
               <%= chat.message %>

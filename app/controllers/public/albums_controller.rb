@@ -1,7 +1,8 @@
 class Public::AlbumsController < ApplicationController
 before_action :authenticate_user!
 before_action :ensure_guest_user, only: [:new,:destroy,:edit]
-    
+before_action :ensure_correct_user, only: [:edit, :update]
+
     def show
       @album = Album.find(params[:id])
       @previous_album = Album.where('id < ?', @album.id).order(created_at: :desc).first
@@ -104,5 +105,11 @@ before_action :ensure_guest_user, only: [:new,:destroy,:edit]
     end
   end  
     
+    def ensure_correct_user
+    @album = Album.find(params[:id])
+    unless @album.user == current_user
+      redirect_to user_path(current_user)
+    end
+  end
     
 end

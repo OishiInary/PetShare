@@ -1,6 +1,7 @@
 class Public::ChatsController < ApplicationController
+  before_action :authenticate_user!
   before_action :block_non_related_users, only: [:show]
-
+  before_action :ensure_correct_user, only: [:edit, :update]
   # チャットルームの表示
   def show
     @user = User.find(params[:id])

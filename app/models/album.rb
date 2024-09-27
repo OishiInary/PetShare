@@ -45,25 +45,15 @@ class Album < ApplicationRecord
     end
   end
   
-  def self.tag_search_for(content, method)
-    
-    if method == 'perfect'
-      # tag = Tag.find(name: content)
-      tag = Tag.find_by(name: content)
-      if tag
-        tag.albums
-      else
-      []
-      end
-    else
-      tag = Tag.find_by('name LIKE ?','%' + content + '%')
-      if tag
-        tag.albums
-      else
-      []
-      end
-    end
+def self.tag_search_for(content, method)
+  if method == 'perfect'
+    tag = Tag.find_by(name: content)
+    tag ? tag.albums : Album.none
+  else
+    tag = Tag.find_by('name LIKE ?', '%' + content + '%')
+    tag ? tag.albums : Album.none
   end
+end
   
   # お気に入りの重複確認
   def favorited_by?(user)
