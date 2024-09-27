@@ -41,7 +41,7 @@
         </div>
         <div class="row m-3">
           <div class="col-2">
-              <%= image_tag @album.user.get_profile_image, size: "50x50" %>
+              <%= image_tag @album.user.get_profile_image, size: "50x50",style: "object-fit: contain;" %>
             </div>
           <div class="col-2"><%= link_to user_path(@album.user.id) do %>
           <%= @album.user.name %></div>
@@ -56,23 +56,26 @@
       </div>
     </div>
     <!--画像の隣のスペース、ペットの写真一覧４枚まで-->
-      <div class="col border">
+    <div class="col border">
       <div class="container text-center">
         <h4><%= link_to pet_path(@album.pet) do %>
           <%= @album.pet.name %>
-        <% end %>の他の写真</h4>
-        
-        <div id="pet-photo-slideshow" class="mb-3">
-          <% @album.pet.album.where.not(id: @album.id).limit(3).each do |pet_album| %>
-            <%= link_to image_tag(pet_album.get_album_image, class: "slideshow-image", size: "300x300", style: "object-fit: contain;"), album_path(pet_album) %>
-          <% end %>
-        </div>
+        <% end %>の人気の写真</h4>
     
-        <div id="load-more" class="text-center">
-          <button id="load-more-button" class="btn btn-primary">もっと見る</button>
+        <!-- 他の写真のリスト表示 -->
+        <div class="row">
+          <% @top_favorites.each do |album| %>
+            <div class="col-12 my-5">
+              <%= link_to album_path(album) do %>
+                <%= image_tag album.get_album_image, size: '200x200', alt: album.title %>
+                <%= album.favorites.count %>いいね
+              <% end %>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
+
 
 
     <!--これより下がコメント欄-->
@@ -84,41 +87,5 @@
   </div>
 </div>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    let offset = 3; // 最初に表示するアルバムの数
-    const petId = <%= @album.pet.id %>;
-    const slideshow = document.getElementById("pet-photo-slideshow");
-    
-    function loadMoreAlbums() {
-      fetch(`/pets/${petId}/albums?offset=${offset}`)
-        .then(response => response.json())
-        .then(data => {
-          // 新しいアルバムを追加
-          data.albums.forEach(album => {
-            const newImage = document.createElement("a");
-            newImage.href = `/albums/${album.id}`;
-            newImage.innerHTML = `<img src="${album.image_url}" class="slideshow-image" style="width: 300px; height: 300px; object-fit: contain;">`;
-            slideshow.appendChild(newImage);
-          });
 
-          // アルバムの数を更新
-          offset += data.albums.length;
-
-          // 追加のアルバムがない場合はボタンを非表示にする
-          if (data.albums.length === 0) {
-            document.getElementById("load-more").style.display = "none";
-          }
-        })
-        .catch(error => console.error('Error:', error));
-    }
-
-    // スクロールイベントをリッスン
-    window.addEventListener("scroll", function() {
-      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-        loadMoreAlbums();
-      }
-    });
-  });
-</script>
 

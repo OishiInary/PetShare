@@ -9,13 +9,16 @@ before_action :ensure_guest_user, only: [:new,:destroy,:edit]
       unless ViewCount.find_by(user_id: current_user.id, album_id: @album.id)
        current_user.view_counts.create(album_id: @album.id)
       end
-      @albums = @album.pet.album.all.limit(10)
       @album_tags = @album.tags
       @comment = current_user.comments.new
       page_number = params[:page].present? ? params[:page] : 1
       @comments = @album.comments.page(page_number).order(created_at: :desc).per(5)
       @pet = @album.pet
       @favorites = Favorite.where(album_id: @pet.album_ids).count
+      @top_favorites = @pet.album.joins(:favorites)
+                    .group('albums.id')
+                    .order('COUNT(favorites.id) DESC')
+                    .limit(3)
     end 
      
   def index
