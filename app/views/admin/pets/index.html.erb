@@ -1,0 +1,9 @@
+<div class="container">
+  <% @pets.each do |pet| %>
+  <div class="row">
+  <%= link_to admin_pets_path do %>
+  <%= image_tag pet.image ,size: "100x100" %>
+  <%= pet.name %>
+  </div>
+  <% end %>
+</div>

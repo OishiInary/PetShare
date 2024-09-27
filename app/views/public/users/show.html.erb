@@ -10,6 +10,9 @@
           <div class="row m-4 shadow-image">
             <%= image_tag @user.get_profile_image, size: '300x300', style: "object-fit: contain;" %>
           </div>
+          <div class="row border">
+            <%= @user.introduction %>
+          </div>
         </div>
         <div class="col">
           <table class='table'>

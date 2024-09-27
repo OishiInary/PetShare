@@ -3,7 +3,7 @@ class Admin::PetsController < ApplicationController
     def show
     @pet = Pet.find_by(id: params[:id])
     if @pet.nil?
-      redirect_to pets_path, notice: "ペットが見つかりませんでした。"
+      redirect_to admin_pets_path, notice: "ペットが見つかりませんでした。"
       return
     end
   
@@ -26,18 +26,6 @@ class Admin::PetsController < ApplicationController
 
   def index
     @pets = Pet.all
-
-    # 並び替えの処理
-    case params[:sort]
-    when 'newest'
-      @pets = @pets.order(created_at: :desc)
-    when 'oldest'
-      @pets = @pets.order(created_at: :asc)
-    when 'favorites'
-      @pets = @pets.left_joins(:pet_favorites).group(:id).order('COUNT(pet_favorites.id) DESC')
-    end
-
-    @pets = @pets.page(params[:page])
   end
 
 
@@ -64,5 +52,11 @@ class Admin::PetsController < ApplicationController
     redirect_to my_pet_path
   end
   
+  private
+  
+  
+  def pet_params
+    params.require(:pet).permit(:name, :image, :gender, :age, :category_id, :user_id)
+  end
   
 end

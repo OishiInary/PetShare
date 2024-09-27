@@ -1,4 +1,5 @@
 class Admin::TagsController < ApplicationController
+  before_action :authenticate_admin!
   before_action :set_tag, only: [:destroy]
   
   def index

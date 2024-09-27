@@ -52,9 +52,9 @@ before_action :ensure_correct_user, only: [:edit, :update]
         @album.save_tag(tag_list)
         redirect_to album_path(@album[:id])
       else
-         @album = Album.new(album_params)
-          flash[:notice] = "登録に失敗しました"
-          redirect_back(fallback_location: root_path)
+       @album = Album.new(album_params)
+        flash[:notice] = "登録に失敗しました"
+        redirect_back(fallback_location: root_path)
       end
     end 
     
