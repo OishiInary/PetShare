@@ -30,9 +30,6 @@ ja:
           post_code: "郵便番号"
           address: "住所"
           phone: "電話番号"
-        is_active:
-          true: '有効会員'
-          false: '退会'
         address:
           name: "宛名"
           post_code: "郵便番号"
