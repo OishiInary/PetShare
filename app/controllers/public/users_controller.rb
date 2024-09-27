@@ -54,7 +54,7 @@ before_action :current_my_page, only: [:show]
   private
 
   def user_params
-    params.require(:user).permit(:name, :introduction, :gender, :birthday, :post_code, :hope, :phone, :address, :email, :image, :is_active)
+    params.require(:user).permit(:name, :introduction, :gender, :birthday, :post_code, :hope, :phone, :address, :email, :image, :is_active, :password)
   end
 
   def current_my_page
