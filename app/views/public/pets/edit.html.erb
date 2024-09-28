@@ -14,7 +14,7 @@
               <%= f.file_field :image, accept: "image/*", class: "form-control border-0", onchange: "previewImage(event)" %>
               <div id="image-preview" class="mt-2">
                 <% if @pet.image.attached? %>
-                  <img id="preview" src="<%= url_for(@pet.image) %>" alt="Image Preview" style="max-width: 1000px; max-height: 1000px; height: auto;" />
+                  <img id="preview" src="<%= url_for(@pet.image) %>" alt="Image Preview" style="max-width: 1000px; max-height: 1000px; height: auto; object-fit: contain;" />
                 <% else %>
                   <img id="preview" src="" alt="Image Preview" style="max-width: 1000px; max-height: 1000px; height: auto; display: none;" />
                 <% end %>

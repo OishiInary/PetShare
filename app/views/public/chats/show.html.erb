@@ -19,7 +19,7 @@
       <% end %>
     <% end %>
   </div>
-  <div class="row">画像だけでも送信できます</div>
+  <div class="row">画像だけでも送信できます。</div>
   <div class="row">
     <%= form_with model: @chat, data: { turbo: false }, local: false, html: { multipart: true, id: "chat_form" } do |f| %>
       <%= f.text_field :message, placeholder: "メッセージを入力", class: "form-control" %>
@@ -90,6 +90,7 @@ document.addEventListener("DOMContentLoaded", function() { // turbo:loadイベ�
 
     // 送信後にスクロールを最下部に移動
     chatHistory.scrollTop = chatHistory.scrollHeight;
+    console.log("スクロール開始")
 
     // フォームのリセット
     chatForm.reset();

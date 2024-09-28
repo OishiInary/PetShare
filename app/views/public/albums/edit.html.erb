@@ -8,7 +8,7 @@
     <div class="col-5">
       <%= form_with model: @album do |f| %>
         <table>
-          <tr><th>以前の写真</th><td><%= image_tag @album.get_album_image, size: "300x300" %></td></tr>
+          <tr><th>以前の写真</th><td><%= image_tag @album.get_album_image, size: "300x300" ,style: "object-fit: contain;" %></td></tr>
           <tr>
             <th>投稿写真</th>
             <td class="pt-1 pb-1">
