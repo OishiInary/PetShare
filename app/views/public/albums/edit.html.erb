@@ -1,4 +1,3 @@
-<%= javascript_pack_tag 'preview', 'data-turbolinks-track': 'reload' %>
 <div class="container-fluid">
   <div class="row my-3 justify-content-center">
     <div class="col-7 m-4">
@@ -9,11 +8,12 @@
     <div class="col-5">
       <%= form_with model: @album do |f| %>
         <table>
+          <tr><th>以前の写真</th><td><%= image_tag @album.get_album_image, size: "300x300" %></td></tr>
           <tr>
             <th>投稿写真</th>
-            <div id="new-image"></div>
             <td class="pt-1 pb-1">
-              <%= f.file_field :image, accept: "image/*", class: "form-control border-0" %> <!-- border-0を追加 -->
+              <%= f.file_field :image, accept: "image/*", class: "form-control border-0", id: "album_image" %> <!-- border-0を追加 -->
+             <img id="new_image_preview" src="" style="max-width: 300px; max-height: 300px; display: none;" />
             </td>
           </tr>
           <tr>
@@ -53,3 +53,31 @@
     </div>
   </div>
 </div>
+<script>
+document.addEventListener("turbolinks:load", function() {
+  const imageInput = document.getElementById("album_image");
+  const newImagePreview = document.getElementById("new_image_preview");
+
+  const previewContainer = document.getElementById('new-image-preview');
+  if (previewContainer) {
+    previewContainer.innerHTML = ''; // プレビュー領域をリセット
+  }
+
+
+
+  imageInput.addEventListener("change", function(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        newImagePreview.src = e.target.result;
+        newImagePreview.style.display = 'inline'; // 新しい画像を表示
+      }
+      reader.readAsDataURL(file);
+    } else {
+      newImagePreview.style.display = 'none'; // ファイルが選択されていない場合は非表示
+    }
+  });
+});
+
+</script>

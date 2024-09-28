@@ -14,7 +14,6 @@ import "bootstrap"
 
 import "../stylesheets/application"
 import "packs/cat.js"
-import "packs/preview.js"
 
 Rails.start()
 Turbolinks.start()

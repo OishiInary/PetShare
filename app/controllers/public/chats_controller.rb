@@ -16,7 +16,7 @@ class Public::ChatsController < ApplicationController
       UserRoom.create(user_id: @user.id, room_id: @room.id)
     end
 
-   @chats = @room.chats.order(created_at: :desc).limit(10) # 最新の10件を取得
+  @chats = @room.chats
     @chat = Chat.new(room_id: @room.id)
   end
   

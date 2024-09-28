@@ -101,9 +101,16 @@
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("turbolinks:load", function() {
   const imageInput = document.getElementById("user_image");
   const newImagePreview = document.getElementById("new_image_preview");
+
+  const previewContainer = document.getElementById('new_image_preview');
+  if (previewContainer) {
+    previewContainer.innerHTML = ''; // プレビュー領域をリセット
+  }
+
+
 
   imageInput.addEventListener("change", function(event) {
     const file = event.target.files[0];

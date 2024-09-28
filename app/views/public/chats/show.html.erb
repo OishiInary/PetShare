@@ -1,6 +1,6 @@
 <div class="container">
   <%= @user.name %>さんとのチャット
-  <div class="message" style="width: 800px; overflow-y: auto; max-height: 400px;" id="chat-history">
+  <div class="message" style="width: 100%; overflow-y: auto; max-height: 400px;" id="chat-history">
     <% @chats.each do |chat| %>
       <% if chat.user_id == current_user.id %>
         <%= render "public/chats/chat", chat: chat %>
@@ -19,38 +19,38 @@
       <% end %>
     <% end %>
   </div>
+  <div class="row">画像だけでも送信できます</div>
   <div class="row">
     <%= form_with model: @chat, data: { turbo: false }, local: false, html: { multipart: true, id: "chat_form" } do |f| %>
       <%= f.text_field :message, placeholder: "メッセージを入力", class: "form-control" %>
-      <%= f.file_field :image, accept: 'image/*', class: "form-control", id: "chat_image" %>
+      <%= f.file_field :image, accept: 'image/*', id: "chat_image" %>
+      <img id="new_image_preview" src="" style="max-width: 50px; max-height: 50px; display: none;" />
       <%= f.submit "送信", class: "btn btn-dark btn-sm" %>
       <%= f.hidden_field :room_id %>
     <% end %>
-    <img id="image_preview" src="" style="max-width: 50px; max-height: 50px; display: none;" />
   </div>
 </div>
 
 <script>
-document.addEventListener("turbo:load", function() {
+document.addEventListener("DOMContentLoaded", function() { // turbo:loadイベントを使用
   const chatHistory = document.getElementById("chat-history");
   const chatForm = document.getElementById("chat_form");
   const imageInput = document.getElementById("chat_image");
-  const newImagePreview = document.getElementById("image_preview");
+  const newImagePreview = document.getElementById("new_image_preview");
 
   // チャット履歴が存在する場合のみ処理
   if (chatHistory) {
-    // 最初にスクロールを最下部に移動
+    // ページ遷移時に自動で一番下までスクロール
     chatHistory.scrollTop = chatHistory.scrollHeight;
 
     // スクロール時の処理
     chatHistory.addEventListener('scroll', function() {
       if (chatHistory.scrollTop === 0) {
-        // スクロールが最上部に達したら古いチャットを読み込む処理
         const roomId = "<%= @chat.room_id %>";
         fetch(`/chats/load_more?room_id=${roomId}`)
           .then(response => response.text())
           .then(data => {
-            chatHistory.insertAdjacentHTML('afterbegin', data); // 古いチャットを最上部に追加
+            // chatHistory.insertAdjacentHTML('afterbegin', data); // 古いチャットを最上部に追加
           });
       }
     });
@@ -59,39 +59,45 @@ document.addEventListener("turbo:load", function() {
   }
 
   // 画像プレビュー機能
-  if (imageInput && newImagePreview) {
-    imageInput.addEventListener("change", function(event) {
-      console.log("はらへった"); // イベントが発火するか確認
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          newImagePreview.innerHTML = `<img src="${e.target.result}" style="max-width: 100px; border-radius: 10%; margin-top: 5px;">`;
-        };
-        reader.readAsDataURL(file);
-      } else {
-        newImagePreview.innerHTML = ""; // 画像が選択されていない場合はプレビューを消去
+  imageInput.addEventListener("change", function(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        newImagePreview.src = e.target.result;
+        newImagePreview.style.display = 'inline'; // 新しい画像を表示
       }
-    });
-  } else {
-    console.error("Error: #chat_image or #image_preview element not found");
-  }
+      reader.readAsDataURL(file);
+    } else {
+      newImagePreview.style.display = 'none'; // ファイルが選択されていない場合は非表示
+    }
+  });
 
   // チャット送信時の処理
   if (chatForm) {
-    chatForm.addEventListener('ajax:success', function(event) {
-      const newMessageHTML = event.detail[2].responseText;
-      chatHistory.insertAdjacentHTML('beforeend', newMessageHTML);
-      
-      // 送信後にスクロールを最下部に移動
-      chatHistory.scrollTop = chatHistory.scrollHeight;
-
-      // フォームのリセットとプレビューをクリア
-      chatForm.reset();
-      newImagePreview.innerHTML = ""; // プレビューを消去
-    });
+    // 既存のイベントリスナーを削除
+    chatForm.removeEventListener('ajax:success', handleChatSuccess);
+    
+    // 新しいイベントリスナーを追加
+    chatForm.addEventListener('ajax:success', handleChatSuccess);
   } else {
     console.error("Error: #chat_form element not found");
   }
+
+  function handleChatSuccess(event) {
+    const newMessageHTML = event.detail[2].responseText;
+    // chatHistory.insertAdjacentHTML('beforeend', newMessageHTML);
+
+    // 送信後にスクロールを最下部に移動
+    chatHistory.scrollTop = chatHistory.scrollHeight;
+
+    // フォームのリセット
+    chatForm.reset();
+
+    // 画像プレビューの消去
+    newImagePreview.src = ""; // プレビューを消去
+    newImagePreview.style.display = 'none'; // プレビュー非表示
+  }
 });
 </script>
+
