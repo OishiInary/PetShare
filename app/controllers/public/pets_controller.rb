@@ -87,7 +87,7 @@ before_action :ensure_guest_user, only: [:new,:create,:edit,:update,:destroy]
   private
 
   def pet_params
-    params.require(:pet).permit(:name, :image, :gender, :age, :category_id, :user_id)
+    params.require(:pet).permit(:name, :image, :gender, :age, :category_id, :user_id,:need_help)
   end
 
 

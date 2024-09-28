@@ -36,6 +36,14 @@
             </td>
           </tr>
           <tr>
+          <tr>
+            <th>里親募集中？</th>
+            <td class="p-1">
+              <%= f.label :"里親募集する"  %>
+              <%= f.radio_button :need_help, :true %></td><td><%= f.label :"里親募集しない"  %><%= f.radio_button :need_help, :false %></td>
+            </td>
+          </tr>
+          <tr>
             <div class="row mb-3">
               <th><%= f.label :"性別" %></th>
               <td class="p-1">
