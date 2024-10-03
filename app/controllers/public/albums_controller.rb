@@ -47,9 +47,15 @@ before_action :ensure_correct_user, only: [:edit, :update]
     def create
       @album = Album.new(album_params)
       @album.user_id = current_user.id
-      tag_list = params[:album][:name].split(nil)
+      # tag_list = params[:album][:name].split(nil)
       if @album.save
-        @album.save_tag(tag_list)
+        tag_list = Vision.get_image_date(@album.image)
+        tag_list.each do |tag_name|
+        tag = Tag.find_or_create_by(name: tag_name) # タグが存在しない場合は作成
+        @album.tags << tag # 多対多の関連付け（album_tagsを通す）
+        end
+        # モデルのメソッドを使ったタグ保存処理は以降つかわない
+        # @album.save_tag(tag_list)
         redirect_to album_path(@album[:id])
       else
        @album = Album.new(album_params)

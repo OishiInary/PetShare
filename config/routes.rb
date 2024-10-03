@@ -60,7 +60,6 @@ Rails.application.routes.draw do
       resource :relationships, only: [:create,:destroy]
         get "followings" => "relationships#followings", as: "followings"
         get "followers"  => "relationships#followers",  as: "followers"
-        get "users/follow_list" => "users/follow_list", as: "follow_list"
     end
     resources :pets, only:[:show, :index, :new, :create, :edit, :update, :destroy]do
       resource :pet_favorites, only:[:create, :destroy]
