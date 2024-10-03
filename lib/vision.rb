@@ -44,22 +44,30 @@ module Vision
       else
         # english_labels = response_body['responses'][0]['labelAnnotations'].pluck('description').take(5)
         # translate_labels_to_japanese(english_labels)
-        response_body['responses'][0]['labelAnnotations'].pluck('description').take(3)
+        labels = response_body['responses'][0]['labelAnnotations'].pluck('description').take(3)
+        translate_labels_to_japanese(labels)
       end
     end
     
     
-    # def translate_labels_to_japanese(labels)
-    #   # グーグルクラウドTranstationAPIの初期化
-    #     translate = Google::Cloud::Translate.translation_v2_service(
-    #       project_id: ENV['GOOGLE_PROJECT_ID']
-    #     )
-    #   #翻訳
-    #   translated_labels = labels.map do |label|
-    #     translation = translate.translate label, to: 'ja'
-    #     translation.text
-    #   end
-    #   translated_labels
-    # end
+    def translate_labels_to_japanese(labels)
+
+      #配列で送られてきたlabelsをカンマで区切って１つの文字列化
+      label_str = labels.join(",")
+      #送り先uriはどこかの指定
+      url = URI.parse('https://translation.googleapis.com/language/translate/v2')
+      #qに送る文章 sourceは元の言語 targetは翻訳後の言語　それとキーをparamsに格納
+      params = { q: label_str, source: 'en', target: 'ja', key: "#{ENV['GOOGLE_TRANSLATE_API_KEY']}" } 
+      #先ほど指定したurlにparamsをクエリパラメータの形式にエンコード(encode_www_formの部分)して代入
+      url.query = URI.encode_www_form(params)
+      #resにネットにHTTPリクエスト(urlを提供し)サーバーからのレスポンス(返事)を取得する
+      res = Net::HTTP.get_response(url)
+      #JSON形式でres.bodyが返ってきている想定でparse(解析)して配列やハッシュとして扱えるように
+      #解析されたハッシュの中からdataキーとその中のtranslationsキーにアクセスし最初の１件(first)を取得
+      #['translatedText']: 最初の翻訳結果の中から、translatedTextというキーにアクセスし、実際の翻訳されたテキストを取得します。
+      result = JSON.parse(res.body)['data']['translations'].first['translatedText']
+      #resultに、を入れて配列化
+      result.split("、")
+    end
   end
 end
