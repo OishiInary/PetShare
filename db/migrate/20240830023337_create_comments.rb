@@ -4,6 +4,7 @@ class CreateComments < ActiveRecord::Migration[6.1]
       t.references :user,null: false, foreign_key: true
       t.references :album,null: false, foreign_key: true
       t.text :body,null: false
+      t.integer :comment_score
       t.timestamps
     end
   end

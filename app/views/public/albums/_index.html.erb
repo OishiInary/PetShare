@@ -6,7 +6,7 @@
           <%= link_to user_path(comment.user.id) do %>
           <div class="col"><%= image_tag comment.user.get_profile_image, size: "50x50" %></div>
           <% end %>
-          <div class="col-2 mr-3"><strong><%= comment.user.name %></strong><br><%= comment.created_at.strftime("%Y/%m/%d") %></div>
+          <div class="col-2 mr-3"><strong><%= comment.user.name %></strong><br><%= comment.created_at.strftime("%Y/%m/%d") %><br>感情分析[<%= comment.score %>]点</div>
           <div class="col-8 text-left"><%= comment.body %></div>
           <div class="col">
             <% if comment.user == current_user %>

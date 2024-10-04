@@ -2,9 +2,10 @@ class Public::CommentsController < ApplicationController
 before_action :authenticate_user!
 before_action :ensure_guest_user, only: [:create]
 
- def create
+  def create
     @album = Album.find(params[:album_id])
     @comment = @album.comments.create(comment_params)
+    @comment.score = Language.get_data(comment_params[:body])
     @comment.save
     page_number = params[:page].present? ? params[:page] : 1
     @comments = @album.comments.page(page_number).order(created_at: :desc).per(5)
@@ -22,7 +23,7 @@ before_action :ensure_guest_user, only: [:create]
   
   private
   def comment_params
-    params.require(:comment).permit(:body, :user_id, :album_id)
+    params.require(:comment).permit(:body, :user_id, :album_id, :score)
   end
     
   def ensure_guest_user
