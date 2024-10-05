@@ -48,19 +48,31 @@ before_action :ensure_correct_user, only: [:edit, :update]
       @album = Album.new(album_params)
       @album.user_id = current_user.id
       # tag_list = params[:album][:name].split(nil)
-      if @album.save
-        tag_list = Vision.get_image_date(@album.image)
-        tag_list.each do |tag_name|
-        tag = Tag.find_or_create_by(name: tag_name) # タグが存在しない場合は作成
-        @album.tags << tag # 多対多の関連付け（album_tagsを通す）
+      if album_params[:image].present?
+        result = Vision.image_analysis(album_params[:image])
+        if result
+          if @album.save
+            tag_list = Vision.get_image_date(@album.image)
+            tag_list.each do |tag_name|
+            tag = Tag.find_or_create_by(name: tag_name) # タグが存在しない場合は作成
+            @album.tags << tag # 多対多の関連付け（album_tagsを通す）
+            end
+            # モデルのメソッドを使ったタグ保存処理は以降つかわない
+            # @album.save_tag(tag_list)
+            redirect_to album_path(@album[:id])
+          else
+           @album = Album.new(album_params)
+            flash[:notice] = "登録に失敗しました"
+            redirect_back(fallback_location: root_path)
+          end
+        else
+          flash.now['danger'] = t('.fail_create_post')
+          render :new, status: :unprocessable_entity
         end
-        # モデルのメソッドを使ったタグ保存処理は以降つかわない
-        # @album.save_tag(tag_list)
-        redirect_to album_path(@album[:id])
+      elsif @album.save
       else
-       @album = Album.new(album_params)
-        flash[:notice] = "登録に失敗しました"
-        redirect_back(fallback_location: root_path)
+          flash.now['danger'] = t('.fail_create_post')
+          render :new, status: :unprocessable_entity
       end
     end 
     
@@ -115,7 +127,7 @@ before_action :ensure_correct_user, only: [:edit, :update]
     end
   end  
     
-    def ensure_correct_user
+  def ensure_correct_user
     @album = Album.find(params[:id])
     unless @album.user == current_user
       redirect_to user_path(current_user)

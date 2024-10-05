@@ -35,11 +35,13 @@
         </thead>
         <tbody>
           <% @need_pets.each do |pet| %>
+          <tr>
               <td><%= link_to pet_path(pet) do %><%= image_tag pet.image, size: "100x100" %><% end %></td>
               <td style="padding: auto; vertical-align:middle"><%= pet.name %></td>
             <td style="padding: auto; vertical-align:middle"><%= pet.age %>才</td>
             <td style="padding: auto; vertical-align:middle"><%= pet.gender_i18n %></td>
           <% end %>
+          </tr>
         </tbody>
       </table>
        <%= paginate @need_pets,theme: 'bootstrap-5' %>

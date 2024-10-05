@@ -69,5 +69,78 @@ module Vision
       #resultに、を入れて配列化
       result.split("、")
     end
+    
+    def check_image_data(image_file)
+       api_url = "https://vision.googleapis.com/v1/images:annotate?key=#{ENV['GOOGLE_API_KEY']}"
+       base64_image = Base64.encode64(image_file.download)
+       params = {
+        "requests": [
+          {
+            "image": {
+              "source": {
+                "content": "base64_image"
+              }
+            },
+            "features": [
+              {
+                "type": "SAFE_SEARCH_DETECTION"
+              }
+            ]
+          }
+        ]
+      }.to_json
+      
+      uri = URI.parse(api_url)
+      https = Net::HTTP.new(uri.host, uri.port)
+      https.use_ssl = true
+      request = Net::HTTP::Post.new(uri.request_uri)
+      request['Content-Type'] = 'application/json'
+      response = https.request(request, params)
+      response_body = JSON.parse(response.body)
+      
+      safe_search = response_body['response'][0]['safeSearchAnnotation']
+      
+            # spoof 以外の項目をチェックして "LIKELY" 以上だったら処理を分岐
+      if ['adult', 'medical', 'violence', 'racy'].any? { |key| ['LIKELY', 'VERY_LIKELY'].include?(safe_search[key]) }
+        # LIKELY 以上の項目があった場合の処理
+        raise "Inappropriate content detected!"
+      end
+    end
+    
+    def image_analysis(image_file)
+      api_url = "https://vision.googleapis.com/v1/images:annotate?key=#{ENV['GOOGLE_API_KEY']}"
+      base64_image = Base64.encode64(image_file.tempfile.read)
+      params = {
+        requests: [{
+          image: {
+            content: base64_image
+          },
+          features: [
+            {
+              type: "SAFE_SEARCH_DETECTION"
+            }
+          ]
+        }]
+      }.to_json
+      uri = URI.parse(api_url)
+      https = Net::HTTP.new(uri.host, uri.port)
+      https.use_ssl = true
+      request = Net::HTTP::Post.new(uri.request_uri)
+      request["Content-Type"] = "application/json"
+      response = https.request(request, params)
+      result = JSON.parse(response.body)
+      if (error = result["responses"][0]["error"]).present?
+        raise error["message"]
+      else
+        result_arr = result["responses"].flatten.map do |parsed_image|
+          parsed_image["safeSearchAnnotation"].values
+        end.flatten
+        if result_arr.include?("LIKELY") || result_arr.include?("VERY_LIKELY")
+          false
+        else
+          true
+        end
+      end
+    end
   end
 end

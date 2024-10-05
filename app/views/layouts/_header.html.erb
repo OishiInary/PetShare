@@ -56,6 +56,10 @@
   </div>
  
   <div class=" row">
-    <h4 id="notice mt-5 mb-5 text-center"><%= notice %></h4>
+    <h4 id="notice mt-5 mb-5 text-center"><% flash.each do |key, message| %>
+  <div class="alert alert-<%= key %>">
+    <%= message %>
+  </div>
+<% end %></h4>
   </div>
 </div>
