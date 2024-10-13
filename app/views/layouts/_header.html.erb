@@ -1,65 +1,80 @@
-<div class="container col-12">
- <div class="row my-auto mb-1 border text-center justify-content-center " style="background-color: #C1CFA1; border-radius: 20px;">
-  
-     <p class="my-auto mr-5"><% if admin_signed_in? %> <% else %><%= link_to root_path do %><%= image_tag "/petshare.png" ,size: "250x100",style: "object-fit: contain;" %><% end %><% if user_signed_in? %>ようこそ<strong><%= current_user.name %></strong>さん</p>
-     <p class="m-auto ">こちらから検索できます。→<%= render "public/searches/form" %><% end %></p><% end %></div>
-   
-  <div class=" mb-3 row justify-content-center text-center">
+<div class="container-fluid">
+  <div class="row my-auto mb-1 border text-center justify-content-center" style="background-color: #C1CFA1; border-radius: 20px;">
+    <div class="col-12 col-md-6 my-auto">
+      <% if admin_signed_in? %>
+        <!-- 管理者ログイン時の処理 -->
+      <% else %>
+        <%= link_to root_path do %>
+          <%= image_tag "/petshare.png", class: "img-fluid", style: "object-fit: contain;" %>
+        <% end %>
+        <% if user_signed_in? %>
+          <p class="mt-2">ようこそ<strong><%= current_user.name %></strong>さん</p>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="col-12 col-md-6 m-auto">
+      <p>こちらから検索できます。→ <%= render "public/searches/form" %></p>
+    </div>
+  </div>
+
+  <div class="mb-3 row justify-content-center text-center">
     <div class="col-12 mt-4 mb-1">
       <div class="row bg-primary-subtle text-emphasis-primary justify-content-center" style="border-radius: 10px;">
         <% if admin_signed_in? %>
-         <div class="col border border-4 text-center"  ><%= link_to '管理者トップ', admin_root_path, class: 'text-decoration-none hover-effect mx-3'%></div>
-         <div class="col border border-4 text-center"  ><%= link_to '会員一覧', admin_users_path, class: 'text-decoration-none hover-effect mx-3' %></div>
-         <div class="col border border-4 text-center"  ><%= link_to '投稿一覧', admin_albums_path, class: 'text-decoration-none hover-effect mx-3' %></div>
-         <div class="col border border-4 text-center"  ><%= link_to 'グループ一覧', admin_groups_path, class: 'text-decoration-none hover-effect mx-3' %></div>
-         <div class="col border border-4 text-center"  ><%= link_to 'タグ一覧', admin_tags_path, class: 'text-decoration-none hover-effect mx-3' %></div>
-         <div class="col border border-4 text-center"  ><%= link_to 'ログアウト', destroy_admin_session_path, method: :delete, class: 'text-decoration-none hover-effect mx-3' %></div>
+          <!-- 管理者メニュー -->
+          <% ["管理者トップ", "会員一覧", "投稿一覧", "グループ一覧", "タグ一覧", "ログアウト"].each_with_index do |text, i| %>
+            <div class="col-12 col-md-2 border border-4 text-center mb-2">
+              <%= link_to text, "#" %> <!-- 各リンクのパスを適切に設定 -->
+            </div>
+          <% end %>
         <% else %>
-          <div class="col border border-4 text-center shadow-image"  style= "border-radius: 60px; background-color: #A2C579; ">
-           <%= link_to entrance_path do %><br><%= image_tag "/icon_cat.png", size: "50x50" %><p class="img-overlay">トップ</p><% end %>
-          </div>
-          <div class="col border border-4 text-center shadow-image text-center pt-4" style= "border-radius: 60px; background-color: #A2C579; ">
-             <%= link_to about_path do %><%= image_tag "/icon_inu.png", size: "50x50" %><br><p>アバウト</p><% end %>
-          </div>
-          <div class="col border border-4 text-center shadow-image text-center pt-4" style="text-align: center; border-radius: 60px; background-color: #A2C579; ">
-            <%= link_to mypage_path do %><%= image_tag "/icon_house.png", size: "50x50" %><p>マイページ</p><% end %>
-          </div>
-          
-          <div class="col border border-4 text-center shadow-image align-middle pt-4" style= "border-radius: 60px;background-color: #A2C579; ">
-           <%= link_to albums_path do %><%= image_tag "/dokusho.png", size: "80x50" %><p>みんなの<br>写真</p><% end %>
-          </div>
-          <div class="col border border-4 text-center shadow-image pt-3" style= "border-radius: 60px; background-color: #A2C579; ">
-           <%= link_to pets_path do %><%= image_tag "/icon_juel.png", size: "50x50" %><p>みんなの<br>ペット</p><% end %>
-          </div>
-          <div class="col border border-4 text-center shadow-image pt-4"style= "border-radius: 60px; background-color: #A2C579; " >
-           <%= link_to groups_path do %><%= image_tag "/icon_group.png", size: "50x50" %><p>グループ</p><% end %>
-          </div>
-          <div class="col border border-4 text-center shadow-image pt-3" style= "border-radius: 60px; background-color: #A2C579; " >
-           <%= link_to categories_path do %><%= image_tag "/icon_gorilla.png", size: "50x50" %><p>カテゴリー<br>検索</p><% end %>
-          </div>
-          <div class="col border border-4 text-center pt-4 shadow-image" style= "border-radius: 60px; background-color: #A2C579; " >
-           <%= link_to save_path do %><%= image_tag "/icon_save2.png",size: "50x50" %><p>SAVE</p><% end %>
-          </div>
-          <div class="col border border-4 shadow-image text-center justify-content-center pt-4" style= "border-radius: 10px; background-color: #A2C579; " >
-            <% if user_signed_in? %>
-            <div class="row justify-content-center ">
-              <%= link_to destroy_user_session_path, method: :delete, data: { confirm: "ログアウトしますか？" } do %><%= image_tag "/icon_door.png",size: "50x50" %><p>ログアウト</p><% end %></div>
-            <% else %>
-              <div class="row justify-content-center text-center mb-2 "><%= link_to '会員登録', new_user_registration_path %></div>
-              <div class="row justify-content-center text-center mb-2 "><%= link_to 'ログイン', new_user_session_path %></div>
-              <div class="row justify-content-center text-center mb-2 "><%= link_to "ゲストログイン", user_guest_sign_in_path, class: "sign-in", method: :post %></div>
-            <%  end %>
-          </div>
+          <!-- ユーザーメニュー -->
+          <% [["トップ", "/icon_cat.png", entrance_path], ["アバウト", "/icon_inu.png", about_path], ["マイページ", "/icon_house.png", mypage_path], ["みんなの写真", "/dokusho.png", albums_path], ["みんなのペット", "/icon_juel.png", pets_path], ["グループ", "/icon_group.png", groups_path], ["カテゴリー検索", "/icon_gorilla.png", categories_path], ["SAVE", "/icon_save2.png", save_path]].each do |menu| %>
+            <div class="col-6 col-md-3 border border-4 text-center shadow-image p-3 mb-2" style="border-radius: 60px; background-color: #A2C579;">
+              <%= link_to menu[2] do %>
+                <%= image_tag menu[1], size: "50x50", class: "img-fluid" %>
+                <p><%= menu[0] %></p>
+              <% end %>
+            </div>
+          <% end %>
         <% end %>
       </div>
     </div>
   </div>
- 
-  <div class=" row">
-    <h4 id="notice mt-5 mb-5 text-center"><% flash.each do |key, message| %>
-  <div class="alert alert-<%= key %>">
-    <%= message %>
+
+  <!-- 会員登録、ログイン、ゲストログインの部分 -->
+  <div class="row justify-content-center text-center">
+    <div class="col-12 col-md-4">
+      <% if user_signed_in? %>
+        <div class="row justify-content-center">
+          <%= link_to destroy_user_session_path, method: :delete, data: { confirm: "ログアウトしますか？" } do %>
+            <%= image_tag "/icon_door.png", size: "50x50" %>
+            <p>ログアウト</p>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="row justify-content-center mb-2">
+          <%= link_to '会員登録', new_user_registration_path, class: 'btn btn-primary w-100' %>
+        </div>
+        <div class="row justify-content-center mb-2">
+          <%= link_to 'ログイン', new_user_session_path, class: 'btn btn-primary w-100' %>
+        </div>
+        <div class="row justify-content-center mb-2">
+          <%= link_to "ゲストログイン", user_guest_sign_in_path, method: :post, class: 'btn btn-secondary w-100' %>
+        </div>
+      <% end %>
+    </div>
   </div>
-<% end %></h4>
+
+  <div class="row">
+    <div class="col-12 text-center">
+      <h4 id="notice">
+        <% flash.each do |key, message| %>
+          <div class="alert alert-<%= key %>">
+            <%= message %>
+          </div>
+        <% end %>
+      </h4>
+    </div>
   </div>
 </div>
