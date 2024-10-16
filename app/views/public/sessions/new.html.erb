@@ -1,20 +1,25 @@
-<div class="row">
+<div class="row mb-5">
   <div class="col-6">
     <h2>ログイン</h2>
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <div class="field">
-        <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-      </div>
-      <div class="field">
-        <%= f.label :password %><br />
-        <%= f.password_field :password, autocomplete: "current-password" %>
-      </div>
-      <div class="actions">
-        <%= f.submit "ログイン" %>
-      </div>
+    <% if admin_signed_in? %>
+      <h3>管理者側でログインしています。</h3>
+    <% else %>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="field">
+          <%= f.label :email %><br />
+          <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        </div>
+        <div class="field">
+          <%= f.label :password %><br />
+          <%= f.password_field :password, autocomplete: "current-password" %>
+        </div>
+        <div class="actions">
+          <%= f.submit "ログイン" %>
+        </div>
+      <% end %>
+      <%= render "public/shared/links" %>
     <% end %>
-    <%= render "public/shared/links" %>
+    
   </div>
   <div class="col-6">
     <p class="mb-3">ログインすれば・・・！</p>

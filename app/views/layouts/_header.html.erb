@@ -2,7 +2,7 @@
   <div class="row my-auto mb-1 border text-center justify-content-center" style="background-color: #C1CFA1; border-radius: 20px;">
     <div class="col-12 col-md-6 my-auto">
       <% if admin_signed_in? %>
-        <!-- 管理者ログイン時の処理 -->
+        <%= "管理者" %><!-- 管理者ログイン時の処理 -->
       <% else %>
         <%= link_to root_path do %>
           <%= image_tag "/petshare.png", class: "img-fluid", style: "object-fit: contain;" %>
@@ -49,8 +49,10 @@
   <!-- 会員登録、ログイン、ゲストログインの部分 -->
   <div class="row justify-content-center text-center">
     <div class="col-12 col-md-4">
-      <% if user_signed_in? %>
-        <div class="row justify-content-center">
+      <% if admin_signed_in? %>
+        <!-- 管理者ログイン時の処理 -->
+      <% elsif user_signed_in? %>
+        <div class="row justify-content-center border border-4 shadow-image p-3 mb-2" style="border-radius: 10px; background-color: #A2C579;">
           <%= link_to destroy_user_session_path, method: :delete, data: { confirm: "ログアウトしますか？" } do %>
             <%= image_tag "/icon_door.png", size: "50x50" %>
             <p>ログアウト</p>

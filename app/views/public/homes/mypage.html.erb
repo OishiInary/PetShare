@@ -8,7 +8,7 @@
         <div class="col-9 text-center border"style="font-family: 'Righteous', cursive; border-radius: 80px; background-color: #FFEDD8;">
           <h2><%= current_user.name %>さんのマイページ</h2>
           <div class="row m-4 shadow-image" style="background-color: #B3C8CF;">
-              <%= image_tag current_user.get_profile_image, size: "300x300", style: "object-fit: contain;" %>
+              <%= image_tag current_user.get_profile_image,class: "img-fluid", style: "object-fit: contain;" %>
           </div>
         </div>
         <div class="col text-center mt-5 pr-1 justify-content-center">

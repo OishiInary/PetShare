@@ -18,3 +18,8 @@ import "packs/cat.js"
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+window.addEventListener('popstate', function (e) {
+window.location.reload();
+console.log("Reload!");
+});
