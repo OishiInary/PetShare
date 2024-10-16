@@ -22,7 +22,7 @@
 
   <div class="mb-3 row justify-content-center text-center">
     <div class="col-12 mt-4 mb-1">
-      <div class="row bg-primary-subtle text-emphasis-primary justify-content-center" style="border-radius: 10px;">
+      <div class="row bg-primary-subtle text-emphasis-primary justify-content-center" style="border-radius: 10px; background-color: 8fbc8f;">
         <% if admin_signed_in? %>
           <!-- 管理者メニュー -->
           <% [[admin_root_path,"管理者トップ"], [admin_users_path,"会員一覧"], [admin_albums_path,"投稿一覧"], [admin_groups_path,"グループ一覧"], [admin_tags_path,"タグ一覧"] ].each do |menu| %>
@@ -42,36 +42,32 @@
             </div>
           <% end %>
         <% end %>
+        <div class="col-12 p-3 mb-2">
+          <% if admin_signed_in? %>
+            <!-- 管理者ログイン時の処理 -->
+          <% elsif user_signed_in? %>
+            <div class="row justify-content-center border border-4 shadow-image p-3 mb-2" style="border-radius: 10px; background-color: #A2C579;">
+              <%= link_to destroy_user_session_path, method: :delete, data: { confirm: "ログアウトしますか？" } do %>
+                <p>ログアウト</p>
+              <% end %>
+            </div>
+          <% else %>
+            <% [["会員登録", new_user_registration_path], ["ログイン", new_user_session_path], ].each do |menu2| %>
+              <div class="col-6 col-md-3 border border-4 text-center shadow-image p-3 m-auto" style="border-radius: 60px; background-color: #A2C579;">
+                <%= link_to menu2[1] do %>
+                  <p><%= menu2[0] %></p>
+                <% end %>
+              </div>
+            <% end %>
+            <div class="col-6 col-md-3 border border-4 text-center shadow-image p-3 m-auto" style="border-radius: 60px; background-color: #A2C579;"><%= link_to "ゲストログイン", user_guest_sign_in_path, method: :post %></div>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- 会員登録、ログイン、ゲストログインの部分 -->
-  <div class="row justify-content-center text-center">
-    <div class="col-12 col-md-4">
-      <% if admin_signed_in? %>
-        <!-- 管理者ログイン時の処理 -->
-      <% elsif user_signed_in? %>
-        <div class="row justify-content-center border border-4 shadow-image p-3 mb-2" style="border-radius: 10px; background-color: #A2C579;">
-          <%= link_to destroy_user_session_path, method: :delete, data: { confirm: "ログアウトしますか？" } do %>
-            <%= image_tag "/icon_door.png", size: "50x50" %>
-            <p>ログアウト</p>
-          <% end %>
-        </div>
-      <% elsif  admin_signed_in? %>
-      <% else %>
-        <div class="row justify-content-center mb-2">
-          <%= link_to '会員登録', new_user_registration_path, class: 'btn btn-primary w-100' %>
-        </div>
-        <div class="row justify-content-center mb-2">
-          <%= link_to 'ログイン', new_user_session_path, class: 'btn btn-primary w-100' %>
-        </div>
-        <div class="row justify-content-center mb-2">
-          <%= link_to "ゲストログイン", user_guest_sign_in_path, method: :post, class: 'btn btn-secondary w-100' %>
-        </div>
-      <% end %>
-    </div>
-  </div>
+
 
   <div class="row">
     <div class="col-12 text-center">

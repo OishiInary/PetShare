@@ -4,7 +4,7 @@
       <!--画像の表示領域、その下に投稿者ほか-->
       <div class="container border text-center" style="background-color: white;">
         <div class="row border">
-          <%= image_tag @album.get_album_image, size: '700x700', style: "object-fit: contain;" %>
+          <%= image_tag @album.get_album_image,class: "img-fluid", style: "object-fit: contain;" %>
         </div>
           <div class="row">
           <div class="col-12 text-center">
@@ -67,7 +67,7 @@
           <% @top_favorites.each do |album| %>
             <div class="col-12 my-5">
               <%= link_to album_path(album) do %>
-                <%= image_tag album.get_album_image, size: '200x200', alt: album.title %>
+                <%= image_tag album.get_album_image, style: "object-fit: contain; max-width: 200px; max-height: 200px; width: 100%; height: auto;", alt: album.title %>
                 <%= album.favorites.count %>いいね
               <% end %>
             </div>
