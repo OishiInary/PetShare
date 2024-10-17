@@ -6,21 +6,21 @@ ja:
         previous:   "&lsaquo;"
         next:       "&rsaquo;"
         truncate:   "..."
-  enums:
-    pet:
-      gender:
-        :male: 'オス'
-        female: 'メス'
 
-      gender:
-        other: 'その他'
-        male: '男性'
-        female: '女性'
-      hope:
-        nom: '未設定'
-        req: '里親募集'
-        can: '里子募集'
   activerecord:
+    enums:
+      pet:
+        gender:
+          male: 'オス'
+          female: 'メス'
+        gender:
+          other: 'その他'
+          male: '男性'
+          female: '女性'
+        hope:
+          nom: '未設定'
+          req: '里親募集'
+          can: '里子募集'
     attributes:
         user:
           email: "メール"

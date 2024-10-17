@@ -60,7 +60,7 @@ def self.tag_search_for(content, method)
     tag = Tag.find_by(name: content)
     tag ? tag.albums : Album.none
   else
-    tag = Tag.find_by('name LIKE ?', '%' + content + '%')
+    tag = Tag.find_by('name LIKE ?', "%#{content}%")
     tag ? tag.albums : Album.none
   end
 end
