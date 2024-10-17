@@ -36,7 +36,7 @@
               <div class="card" style="width: 7rem; height: 10rem; object-fit: contain;">
                 <%= image_tag user.user.get_profile_image, size: "100x100", class: "card-img-top" %>
                 <div class="card-body">
-                  <p class="card-title"><%= user.user.name %></p>
+                  <p class="card-title text-truncate"><%= user.user.name %></p>
                 </div>
               </div>
             <% end %>

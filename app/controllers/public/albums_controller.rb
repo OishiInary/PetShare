@@ -78,27 +78,36 @@ before_action :ensure_correct_user, only: [:edit, :update]
     
     def edit
       @album = Album.find(params[:id])
-      @tag_list = @album.tags.map(&:name).join(" ")
+      @tag_list = @album.tags.map(&:name).join(",")
       @tag_lists = @album.tags
     end
     
     def update
       @album = Album.find(params[:id])
-      tag_list = params[:album][:name].split(nil)
-        if @album.update(album_params)
-          old_relations = AlbumTag.where(album_id: @album.id)
-          old_relations.each do |relation|
-            relation.delete
-          end
-          @album.save_tag(tag_list)
+      tag_list = params[:album][:name].split(",")
+      # アルバムの更新処理
+      album_updated = @album.update(album_params)
+      old_relations = AlbumTag.where(album_id: @album.id) if album_updated
+      old_relations.each do |relation|
+      relation.delete
+       end
+      # タグ付け処理
+      tag_updated, error_message = @album.save_tag(tag_list) if album_updated
+    
+      # 更新処理の結果に応じてフラッシュメッセージを設定
+      if album_updated
+        if tag_updated
           flash[:notice] = "更新に成功しました"
           redirect_to album_path(@album[:id])
         else
-          flash[:notice] = "更新に失敗しました"
-          @album = Album.find(params[:id])
-          redirect_back(fallback_location: root_path)
+          flash[:notice] = "タグ付けに失敗しました。#{error_message}"
+          redirect_to album_path(@album[:id])
         end
-    end 
+      else
+        flash[:notice] = "更新に失敗しました"
+        redirect_back(fallback_location: root_path)
+      end
+    end
     
     def destroy
       @album = Album.find(params[:id])
