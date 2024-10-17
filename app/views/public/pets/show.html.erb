@@ -71,14 +71,13 @@
 <div class="row p-2 mb-5 col-12 border" id="albumContainer">
   <% @pet_albums.each_with_index do |album, index| %>
     <div class="col-2 border mx-2 shadow-image album-item" style="background-color: #D8D2C2; <%= index >= 5 ? 'display: none;' : '' %>;">
-      <%= link_to image_tag(album.get_album_image, style: "object-fit: contain; max-width: 300px; max-height: 300px; width: 100%; height: auto;"), album_path(album) %>
+      <%= link_to image_tag(album.get_album_image, style: "object-fit: contain; max-width: 1000px; max-height: 1000px; width: 100%; height: auto;"), album_path(album) %>
       <div class="text-center mt-2">
         <small>登録日時: <%= album.created_at.strftime("%Y年%m月%d日 %H:%M") %></small>
       </div>
     </div>
   <% end %>
 </div>
-
 <div class="text-center mb-5">
   <button id="loadMoreButton" class="btn btn-primary">さらに5枚表示</button>
 </div>

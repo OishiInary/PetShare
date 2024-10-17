@@ -50,6 +50,8 @@
     <div class="col-4">メールアドレス</div>
     <div class="col-8"><%= f.text_field :email %></div>
   </div>
+  <div class="container border text-center">
+    <div class="row mt-2 "><string>パスワードを更新しない場合は空欄のままで保存してください</string></div>
   <div class="row mt-2">
     <div class="col-4">新しいパスワード</div>
     <div class="col-8"><%= f.password_field :password, autocomplete: "new-password" %></div>
@@ -57,6 +59,7 @@
   <div class="row mt-2">
     <div class="col-4">新しいパスワード(確認用)</div>
     <div class="col-8"><%= f.password_field :password_confirmation  %></div>
+  </div>
   </div>
   <div class="row mt-3 mb-3">
     <table class="table">

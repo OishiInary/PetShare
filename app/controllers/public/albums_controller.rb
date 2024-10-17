@@ -78,7 +78,7 @@ before_action :ensure_correct_user, only: [:edit, :update]
     
     def edit
       @album = Album.find(params[:id])
-      @tag_list = @album.tags.pluck(:name).join(nil)
+      @tag_list = @album.tags.map(&:name).join(" ")
       @tag_lists = @album.tags
     end
     

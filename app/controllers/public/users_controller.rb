@@ -40,7 +40,7 @@ before_action :current_my_page, only: [:show]
     
     if @user.update(user_params)
       flash[:notice] = user_params[:password].present? ? "パスワードが更新されました" : "更新に成功しました"
-      redirect_to mypage_path(@user)
+      redirect_to mypage_path
     else
       flash[:alert] = "更新に失敗しました"
       redirect_back(fallback_location: root_path)

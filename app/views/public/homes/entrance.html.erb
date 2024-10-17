@@ -82,7 +82,7 @@
         <%= link_to album_path(comment.album_id) do %>
           <div class="card-img-top"><%= image_tag comment.album.image, size: "100x100", style: "object-fit: contain;" %></div>
           <div class="card-body">
-            <div class="row border text-center mx-auto"><%= comment.body.truncate(10) %></div>
+            <div class="row border text-center mx-auto text-truncate"><%= comment.body.truncate(10) %></div>
             <div class="row mx-auto"><%= comment.created_at.strftime("%Y/%m/%d") %></div>
             <div class="row mx-auto"><%= link_to user_path(comment.user) do %><%= comment.user.name %><% end %></div>
           </div>

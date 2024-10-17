@@ -5,5 +5,5 @@ class Tag < ApplicationRecord
   has_many :albums, through: :album_tags
   
   # 文字数制限
-  validates :name, presence: true ,length: { minimum: 1, maximum: 50 }
+  validates :name, presence: true ,length: { minimum: 1, maximum: 10 }
 end

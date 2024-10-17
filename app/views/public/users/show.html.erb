@@ -3,19 +3,20 @@
     <div class="container col-3">
       <%= render "public/homes/sidebar" %>
     </div>
-    <div class="container col-9">
+    <div class="container col-9 justfy-content-center text-center">
       <div class="row m-2">
-        <div class="col-9">
+        <div class="col-9 justfy-content-center text-center border" style=" border-radius: 30px;">
           <h2><%= @user.name %>さんのページ</h2>
           <div class="row m-4 shadow-image">
-            <%= image_tag @user.get_profile_image, size: '300x300', style: "object-fit: contain;" %>
+            <%= image_tag @user.get_profile_image, style: "object-fit: contain; max-width: 300px; max-height: 300px; width: 100%; height: auto;" %>
           </div>
-          <div class="row border" style="background-color: white; border-radius: 30px">
+          <div class="row m-3 justify-content-center">自己紹介</div>
+          <div class="row border m-3" style="background-color: white; border-radius: 30px">
             <%= @user.introduction %>
           </div>
         </div>
-        <div class="col">
-          <table class='table'>
+        <div class="col border" style="border-radius: 30px;">
+          <table class='table text-center'>
             <tbody>
               <tr><td><h4>SAVE活動</h4></td></tr>
               <tr><td><h5><%= @user.hope_i18n %></h5></td></tr>

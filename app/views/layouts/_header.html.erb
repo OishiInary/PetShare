@@ -25,7 +25,7 @@
       <div class="row bg-primary-subtle text-emphasis-primary justify-content-center" style="border-radius: 10px; background-color: 8fbc8f;">
         <% if admin_signed_in? %>
           <!-- 管理者メニュー -->
-          <% [[admin_root_path,"管理者トップ"], [admin_users_path,"会員一覧"], [admin_albums_path,"投稿一覧"], [admin_groups_path,"グループ一覧"], [admin_tags_path,"タグ一覧"] ].each do |menu| %>
+          <% [[admin_root_path,"管理者トップ"], [admin_users_path,"会員一覧"], [admin_albums_path,"アルバム一覧"], [admin_groups_path,"グループ一覧"], [admin_tags_path,"タグ一覧"] ].each do |menu| %>
             <div class="col-12 col-md-2 border border-4 text-center mb-2">
               <%= link_to menu[0] do %><%= menu[1] %> <% end %><!-- 各リンクのパスを適切に設定 -->
             </div>
@@ -33,7 +33,7 @@
            <%= link_to 'ログアウト', destroy_admin_session_path, method: :delete %>
         <% else %>
           <!-- ユーザーメニュー -->
-          <% [["トップ", "/icon_cat.png", entrance_path], ["アバウト", "/icon_inu.png", about_path], ["マイページ", "/icon_house.png", mypage_path], ["みんなの写真", "/dokusho.png", albums_path], ["みんなのペット", "/icon_juel.png", pets_path], ["グループ", "/icon_group.png", groups_path], ["カテゴリー検索", "/icon_gorilla.png", categories_path], ["SAVE", "/icon_save2.png", save_path]].each do |menu| %>
+          <% [["トップ", "/icon_cat.png", entrance_path], ["アバウト", "/icon_inu.png", about_path], ["マイページ", "/icon_house.png", mypage_path], ["みんなの写真", "/dokusho.png", albums_path], ["みんなのペット", "/icon_juel.png", pets_path], ["グループ一覧", "/icon_group.png", groups_path], ["カテゴリー検索", "/icon_gorilla.png", categories_path], ["SAVE", "/icon_save2.png", save_path]].each do |menu| %>
             <div class="col-6 col-md-3 border border-4 text-center shadow-image p-3 mb-2" style="border-radius: 60px; background-color: #A2C579;">
               <%= link_to menu[2] do %>
                 <%= image_tag menu[1], size: "50x50", class: "img-fluid" %>
