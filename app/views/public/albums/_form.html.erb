@@ -3,7 +3,7 @@
       <%= form.hidden_field :user_id, :value => current_user.id %>
         <div class="row m-3">
           <div><%= form.label :"コメント(2～100文字)" %></div>
-          <div class="m-auto"><%= form.text_area :body ,size: "100x1",class: "comment-textarea" %>
+          <div class="m-auto"><%= form.text_area :body ,size: "100x1",class: "comment-textarea",required: true %>
           <%= form.submit "送信する", class: "btn btn-base-1 pull-right btn-secondary" %>
           </div>
         </div>

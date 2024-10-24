@@ -6,9 +6,13 @@ before_action :ensure_guest_user, only: [:create]
     @album = Album.find(params[:album_id])
     @comment = @album.comments.create(comment_params)
     @comment.score = Language.get_data(comment_params[:body])
-    @comment.save
-    page_number = params[:page].present? ? params[:page] : 1
-    @comments = @album.comments.page(page_number).order(created_at: :desc).per(5)
+    if @comment.save
+      page_number = params[:page].present? ? params[:page] : 1
+      @comments = @album.comments.page(page_number).order(created_at: :desc).per(5)
+    else
+      flash[:alert] = "コメント投稿に失敗しました。空文字投稿は出来ません。"
+     redirect_to album_path(@album)
+    end
     # redirect_to album_path(@album)
   end
 

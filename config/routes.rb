@@ -76,4 +76,7 @@ Rails.application.routes.draw do
     end
       resources :tags, only:[:index, :show] 
   end
+  
+  match "*path", to: "application#routing_error", via: :all
+  
 end

@@ -214,3 +214,8 @@ ja:
       long: "%Y/%m/%d %H:%M"
       short: "%m/%d %H:%M"
     pm: 午後
+  public:
+    albums:
+      create:
+        fail_create_post: "投稿に失敗しました。もう一度お試しください。" # 適切なメッセージをここに追加
+      fail_create_post: "アルバム作成に失敗しました。" # こちらも適切なメッセージを設定
