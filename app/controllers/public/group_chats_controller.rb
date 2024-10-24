@@ -7,8 +7,12 @@ before_action :group_user?, only: [:create]
     @group_chat = GroupChat.new(group_chat_params)
     @group_chat.user_id = current_user.id
     @group_chat.group_id = @group.id
-    @group_chat.save
-    redirect_to group_path(@group),notice: '送信しました。'
+    if @group_chat.save
+      redirect_to group_path(@group),notice: '送信しました。'
+    else
+      redirect_to group_path(@group),notice: '送信に失敗しました。'
+    end
+    
   end
 
   def destroy
