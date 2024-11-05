@@ -25,7 +25,32 @@
  - 困っている子の里親をしてあげたい時
 
 ## 設計書
-後ほど作成予定
+
+- **ER図（エンティティ・リレーションシップ図）**  
+  データベースのエンティティとそれらの関係性を示しています。アプリケーション内でどのようにデータが関連し合っているかが分かります。
+  - [ER図はこちら]([https://app.diagrams.net/#G1vAvAwlHqPWvCdSXcNounocfBKDPqBJUD#%7B%22pageId%22%3A%22R2lEEEUBdFMjLlhIrx00%22%7D])
+
+- **テーブル定義書**  
+  各テーブルの構造や、カラムの型、制約についてまとめたドキュメントです。各テーブルの役割やデータの制約についての情報を提供しています。
+  - [テーブル定義書はこちら](https://docs.google.com/spreadsheets/d/1YIbOlGp4Ruzm5jeNpb_Km44iWuMeY_BRjXVpz3UCR84/edit?gid=1044500859#gid=1044500859)
+
+- **UI_Flow**  
+  アプリケーション内の画面の遷移関係を示した図です。ユーザーがどのように操作しながら各画面を遷移するかを説明しています。
+  - (ユーザー側)(https://app.diagrams.net/#G1M69mDewvGuToONJi-Q62MOExj4gRPNN6#%7B%22pageId%22%3A%22b520641d-4fe3-3701-9064-5fc419738815%22%7D)
+  - (管理者側)(https://app.diagrams.net/#G13ahaUSuM4ks7WtDO6NNhHMvAOfHrdCFi#%7B%22pageId%22%3A%22b520641d-4fe3-3701-9064-5fc419738815%22%7D)
+
+- **API設計書**
+  このアプリケーションでは、Google Vision APIとGoogle Translation APIを活用し、画像解析および翻訳機能を提供しています。
+
+- **Google Vision API**：投稿画像からタグを解析し、各種情報を抽出します。投稿画像に解析したタグが付けられて保存されます。セーフサーチも解析されて不適切な画像コンテンツは投稿できなくなっています。
+- **Google Translation API**：GoogleVisionAPIを通して抽出したタグを指定した言語に翻訳します。
+
+
+- **アプリケーション詳細設計**  
+  -[アプリケーション詳細設計](https://docs.google.com/spreadsheets/d/1lZPGYRYbujimIYo_mzhVNFvKLTaBkETrptJLvYqjXSw/edit?gid=1742520759#gid=1742520759)
+
+各設計書は、今後の開発やメンテナンス時の指針として参照できるようにしています。
+
 
 ## 開発環境
  - OS : Linux(CentOS)
